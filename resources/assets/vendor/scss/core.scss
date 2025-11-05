@@ -1,0 +1,18 @@
+// Default theme
+@import "../../../scss/core";
+
+// Custom theme
+@import "../../../scss/theme-default";
+
+// Core
+@import "../../../scss/colors";
+@import "../../../scss/components";
+@import "../../../scss/utilities";
+
+// Pages
+@import "../../../scss/pages/page-auth";
+@import "../../../scss/pages/page-profile";
+@import "../../../scss/pages/page-misc";
+
+// Custom styles
+@import "../../../scss/custom";

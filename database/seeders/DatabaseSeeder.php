@@ -17,9 +17,35 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Seed roles & permissions first
+        if (class_exists(\Database\Seeders\RolesAndPermissionsSeeder::class)) {
+            $this->call(\Database\Seeders\RolesAndPermissionsSeeder::class);
+        }
+
+        // Create or update a test user (idempotent seed)
+        $user = \App\Models\User::updateOrCreate(
+            ['email' => 'test@example.com'],
+            [
+                'name' => 'Test User',
+                'password' => bcrypt('password'),
+            ]
+        );
+
+        // Ensure test user has SuperAdmin role if roles exist
+        if (class_exists(\Spatie\Permission\Models\Role::class)) {
+            $role = \Spatie\Permission\Models\Role::firstWhere('name', 'SuperAdmin');
+            if ($role) {
+                $user->assignRole($role->name);
+            }
+        }
+
+        // Seed clients and packages
+        if (class_exists(\Database\Seeders\ClientSeeder::class)) {
+            $this->call(\Database\Seeders\ClientSeeder::class);
+        }
+
+        if (class_exists(\Database\Seeders\PackageSeeder::class)) {
+            $this->call(\Database\Seeders\PackageSeeder::class);
+        }
     }
 }

@@ -1,4 +1,10 @@
-import axios from 'axios';
-window.axios = axios;
+// Minimal bootstrap for Vite build
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// Import bootstrap JS if available
+try {
+  // optional: import 'bootstrap';
+} catch (e) {
+  // ignore
+}
+
+export default {};
