@@ -1,52 +1,212 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ELI Voyages Connect
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Client Document Management System for travel and immigration agencies built with Laravel 11.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+✅ **Implemented**
+- Role-based access control (SuperAdmin, Consultant, Agent, Client, Guarantor)
+- User invitation system with secure tokens
+- Document upload and management with S3 storage
+- Unique dossier reference generation (ELI-YYYY-XXXXXX)
+- Comprehensive activity logging and audit trails
+- Document versioning support
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+🚧 **In Progress**
+- DocuSeal integration for e-signatures
+- WhatsApp notifications
+- Frontend Vue.js components
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tech Stack
 
-## Learning Laravel
+- **Backend**: Laravel 11, PHP 8.2+
+- **Database**: PostgreSQL (SQLite for dev)
+- **Frontend**: Inertia.js + Vue.js 3
+- **Styling**: Tailwind CSS
+- **Storage**: S3-compatible storage
+- **Authentication**: Laravel Sanctum + Spatie Permissions
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Quick Start
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Prerequisites
+- PHP 8.2 or higher
+- Composer
+- Node.js 18+ and npm
+- PostgreSQL (or SQLite for development)
 
-## Laravel Sponsors
+### Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Clone the repository
+```bash
+git clone https://github.com/pacmeazih/eli_voyages_connect.git
+cd eli_voyages_connect
+```
 
-### Premium Partners
+2. Install dependencies
+```bash
+composer install
+npm install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3. Environment setup
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+4. Configure your `.env` file
+```env
+DB_CONNECTION=sqlite  # or pgsql for production
+FILESYSTEM_DISK=local # or s3 for production
+MAIL_MAILER=log       # configure for production
+
+# S3 Configuration (optional for local dev)
+AWS_ACCESS_KEY_ID=your_key
+AWS_SECRET_ACCESS_KEY=your_secret
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=your_bucket
+
+# DocuSeal (optional)
+DOCUSEAL_API_KEY=your_key
+```
+
+5. Run migrations and seed
+```bash
+php artisan migrate --seed
+```
+
+6. Start the development server
+```bash
+php artisan serve
+npm run dev
+```
+
+Visit `http://localhost:8000`
+
+### Default Test User
+After seeding, you can login with:
+- Email: `test@example.com`
+- Password: (set during seeding)
+- Role: SuperAdmin
+
+## Architecture
+
+### Models
+- **User**: System users with role-based permissions
+- **Client**: Client information
+- **Dossier**: Immigration case files with unique references
+- **Document**: File attachments with versioning
+- **Invitation**: User invitation tokens
+- **Package**: Service packages
+
+### Permissions System
+
+The application uses Spatie Laravel Permission for RBAC:
+
+**Roles:**
+- SuperAdmin: Full system access
+- Consultant: Review and approval permissions
+- Agent: Core operational access
+- Client: Limited read and upload
+- Guarantor: Related dossier access
+
+**Key Permissions:**
+- User management: `manage users`, `invite users`
+- Dossier management: `create/edit/view/delete/validate/approve dossiers`
+- Document management: `upload/view/edit/delete/download documents`
+- Contract management: `generate/send/view/sign contracts`
+
+### Document Storage
+
+Documents are organized hierarchically:
+```
+s3://bucket/dossiers/{reference}/{type}/{filename}
+```
+
+Example: `dossiers/ELI-2025-000123/passport/john_doe_passport_1699200000_a1b2c3d4.pdf`
+
+### Activity Logging
+
+All important actions are logged using Spatie Activity Log:
+- Dossier creation/updates
+- Document uploads/downloads
+- Permission changes
+- User actions
+
+## Testing
+
+Run the test suite:
+```bash
+php artisan test
+# or
+./vendor/bin/pest
+```
+
+Run with coverage:
+```bash
+php artisan test --coverage
+```
+
+## Development
+
+### Code Quality
+```bash
+# PHP static analysis
+./vendor/bin/phpstan analyse
+
+# Code formatting
+./vendor/bin/pint
+```
+
+### Database
+```bash
+# Fresh migration with seeding
+php artisan migrate:fresh --seed
+
+# Create new migration
+php artisan make:migration create_table_name
+```
+
+## Deployment
+
+### Production Checklist
+- [ ] Set `APP_ENV=production` and `APP_DEBUG=false`
+- [ ] Configure PostgreSQL database
+- [ ] Set up S3 storage
+- [ ] Configure mail service (AWS SES, Mailgun, etc.)
+- [ ] Set up queue worker: `php artisan queue:work`
+- [ ] Enable Laravel Telescope for monitoring (optional)
+- [ ] Configure backup strategy
+- [ ] Set up SSL certificate
+
+### Optimization
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+composer install --optimize-autoloader --no-dev
+```
+
+## API Documentation
+
+API routes are defined in `routes/api.php`. Authentication uses Laravel Sanctum.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-## Code of Conduct
+## Security
+
+If you discover any security issues, please email security@example.com instead of using the issue tracker.
+
+## License
+
+This project is proprietary software. All rights reserved.
+
+## Support
+
+For support, email support@elivoyages.com or create an issue in the repository.
+
 
 In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
