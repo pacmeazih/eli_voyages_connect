@@ -7,8 +7,8 @@ use App\Http\Controllers\DossierController;
 use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
-    return ['Laravel' => app()->version()];
-});
+    return redirect()->route('dashboard');
+})->middleware('auth');
 
 // Public invitation routes
 Route::get('/invitations/{token}', [InvitationController::class, 'show'])->name('invitations.show');
