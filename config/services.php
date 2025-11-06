@@ -35,4 +35,15 @@ return [
         ],
     ],
 
+    'docuseal' => [
+        'api_key' => env('DOCUSEAL_API_KEY'),
+        'api_url' => env('DOCUSEAL_API_URL', 'https://api.docuseal.co'),
+    ],
+
+    'whatsapp' => [
+        'token' => env('WHATSAPP_API_TOKEN'),
+        'phone_number_id' => env('WHATSAPP_PHONE_NUMBER_ID'),
+        'business_account_id' => env('WHATSAPP_BUSINESS_ACCOUNT_ID'),
+    ],
+
 ];
