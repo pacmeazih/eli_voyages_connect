@@ -20,7 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         ]);
 
-        //
+        // Global cache headers for production optimization
+        $middleware->append(\App\Http\Middleware\SetCacheHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

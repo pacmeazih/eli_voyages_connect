@@ -17,6 +17,7 @@ class DossierController extends Controller
         $this->authorize('viewAny', Dossier::class);
 
         $query = Dossier::with(['client'])
+            ->withCount('documents')
             ->latest();
 
         // Filter by user role
@@ -36,11 +37,16 @@ class DossierController extends Controller
             });
         }
 
+        // Status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->string('status')->toString());
+        }
+
         $dossiers = $query->paginate(15);
 
         return inertia('Dossiers/Index', [
             'dossiers' => $dossiers,
-            'filters' => $request->only('search'),
+            'filters' => $request->only('search', 'status'),
         ]);
     }
 
@@ -95,12 +101,12 @@ class DossierController extends Controller
     {
         $this->authorize('view', $dossier);
 
-        $dossier->load([
-            'client',
-            'documents' => function($query) {
-                $query->latest()->limit(10);
-            }
-        ]);
+        $dossier->load(['client']);
+
+        $documents = $dossier->documents()
+            ->with('uploader')
+            ->latest()
+            ->get();
 
         // Get activity logs
         $activities = activity()
@@ -111,6 +117,7 @@ class DossierController extends Controller
 
         return inertia('Dossiers/Show', [
             'dossier' => $dossier,
+            'documents' => $documents,
             'activities' => $activities,
         ]);
     }

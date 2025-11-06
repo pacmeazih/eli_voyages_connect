@@ -25,8 +25,8 @@ class DocumentService
         // Build storage path: dossiers/{reference}/{type}/{filename}
         $path = "dossiers/{$dossier->reference}/{$type}/{$filename}";
         
-        // Store file to S3 (or configured disk)
-        $storedPath = Storage::disk('s3')->put($path, file_get_contents($file->getRealPath()));
+        // Store file to configured disk (local for cPanel, s3 for cloud)
+        $storedPath = Storage::put($path, file_get_contents($file->getRealPath()));
         
         // Create document record
         $document = Document::create([
@@ -63,7 +63,7 @@ class DocumentService
             ->causedBy(auth()->user())
             ->log('Document downloaded: ' . $document->name);
         
-        return Storage::disk('s3')->download($document->path, $document->name);
+        return Storage::download($document->path, $document->name);
     }
 
     /**
@@ -72,7 +72,7 @@ class DocumentService
     public function deleteDocument(Document $document): bool
     {
         // Delete from storage
-        Storage::disk('s3')->delete($document->path);
+        Storage::delete($document->path);
         
         // Log activity
         activity()
@@ -89,7 +89,13 @@ class DocumentService
      */
     public function getTemporaryUrl(Document $document, int $minutes = 60): string
     {
-        return Storage::disk('s3')->temporaryUrl($document->path, now()->addMinutes($minutes));
+        // For local storage, return a route-based URL
+        if (config('filesystems.default') === 'local') {
+            return route('documents.download', $document->id);
+        }
+        
+        // For S3, use temporary signed URLs
+        return Storage::temporaryUrl($document->path, now()->addMinutes($minutes));
     }
 
     /**

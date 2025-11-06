@@ -1,0 +1,8 @@
+# .htaccess pour cPanel - Racine du projet Laravel
+# Ce fichier doit être placé dans le dossier racine du projet (pas dans public/)
+
+# Rediriger vers le dossier public
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

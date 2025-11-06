@@ -32,9 +32,9 @@ Client Document Management System for travel and immigration agencies built with
 - PHP 8.2 or higher
 - Composer
 - Node.js 18+ and npm
-- PostgreSQL (or SQLite for development)
+- MySQL or PostgreSQL (or SQLite for development)
 
-### Installation
+### Local Development Installation
 
 1. Clone the repository
 ```bash
@@ -82,6 +82,18 @@ npm run dev
 ```
 
 Visit `http://localhost:8000`
+
+### cPanel Hosting Installation
+
+**Pour installer sur un hébergement cPanel, consultez le guide complet :**
+👉 **[INSTALLATION_CPANEL.md](INSTALLATION_CPANEL.md)**
+
+Points clés :
+- Stockage local (pas besoin de S3/AWS)
+- Configuration MySQL via cPanel
+- Lien symbolique `public_html` → `public/`
+- Email SMTP intégré cPanel
+- Guide pas à pas avec screenshots
 
 ### Default Test User
 After seeding, you can login with:
@@ -135,17 +147,120 @@ All important actions are logged using Spatie Activity Log:
 
 ## Testing
 
-Run the test suite:
+The project uses Pest for feature and unit testing.
+
+### Running Tests
+
 ```bash
+# Run all tests
 php artisan test
-# or
-./vendor/bin/pest
+
+# Run specific test suite
+php artisan test --testsuite=Feature
+
+# Run with coverage
+php artisan test --coverage
+
+# Run specific test file
+php artisan test --filter=InvitationAcceptTest
 ```
 
-Run with coverage:
-```bash
-php artisan test --coverage
+### Test Suites
+
+- **Feature Tests**: End-to-end flows for invitations, document uploads, authentication
+- **Unit Tests**: Model methods, services, helpers
+
+### Known Issues
+- `AuthenticationTest::users can authenticate using the login screen` currently fails; login flow requires additional session handling for Inertia. Issue tracked in #42.
+
+## CI/CD
+
+The project uses GitHub Actions for continuous integration.
+
+### Workflow
+
+On every push and pull request to `main`:
+1. **PHP Tests**: Composer install, migrate, run Pest suite
+2. **Frontend Build**: npm ci, Vite build
+
+See `.github/workflows/ci.yml` for full configuration.
+
+### Environment Variables for CI
+
+The CI workflow uses MySQL service and requires:
+- `DB_CONNECTION=mysql`
+- S3 credentials (can be mocked with `Storage::fake('s3')` in tests)
+
+## Documents Management & Filtering
+
+The Documents Index page (`/dossiers/{dossier}/documents`) supports:
+
+### Filters
+- **Search**: Filter by document name
+- **Type**: Filter by document type (passport, contract, invoice, etc.)
+- **Uploader**: Filter by user who uploaded the document
+
+### Sorting
+Click any column header to sort:
+- Name (▲/▼)
+- Type
+- Size
+- Uploaded By
+
+### Pagination
+15 documents per page; links appear at bottom when results exceed one page.
+
+### Implementation
+- Backend: `DocumentController@index` with query string filters
+- Frontend: `resources/js/Pages/Documents/Index.vue` with reactive form
+
+## Environment Variables
+
+A comprehensive `.env.example` is provided. Key variables:
+
+### Required for Basic Functionality
+```env
+APP_NAME="ELI Voyages Connect"
+APP_KEY=                      # Run: php artisan key:generate
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_DATABASE=eli_voyages_connect
+DB_USERNAME=root
+DB_PASSWORD=
 ```
+
+### Required for Document Storage
+```env
+# Pour cPanel : stockage local (par défaut)
+FILESYSTEM_DISK=local
+
+# Pour Cloud/AWS S3 (optionnel)
+FILESYSTEM_DISK=s3
+AWS_ACCESS_KEY_ID=your_access_key_id
+AWS_SECRET_ACCESS_KEY=your_secret_access_key
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=eli-voyages-documents
+```
+
+**Note** : Sur cPanel, utilisez `FILESYSTEM_DISK=local`. Les documents seront stockés dans `storage/app/dossiers/`. Assurez-vous que le dossier `storage/` a les bonnes permissions (775).
+
+### Required for E-Signatures (DocuSeal)
+```env
+DOCUSEAL_API_KEY=your_docuseal_api_key
+DOCUSEAL_API_URL=https://api.docuseal.co
+```
+
+### Optional (WhatsApp Notifications)
+```env
+WHATSAPP_API_TOKEN=your_whatsapp_token
+WHATSAPP_PHONE_NUMBER_ID=your_phone_number_id
+WHATSAPP_BUSINESS_ACCOUNT_ID=your_business_account_id
+```
+
+For local development, you can use `FILESYSTEM_DISK=local` and `MAIL_MAILER=log`.
+
+
 
 ## Development
 

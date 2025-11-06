@@ -24,8 +24,19 @@ class InvitationController extends Controller
             ->latest()
             ->paginate(20);
 
+        $stats = [
+            'pending' => Invitation::whereNull('accepted_at')
+                ->where('expires_at', '>', now())
+                ->count(),
+            'accepted' => Invitation::whereNotNull('accepted_at')->count(),
+            'expired' => Invitation::whereNull('accepted_at')
+                ->where('expires_at', '<=', now())
+                ->count(),
+        ];
+
         return inertia('Invitations/Index', [
             'invitations' => $invitations,
+            'stats' => $stats,
         ]);
     }
 
@@ -153,5 +164,25 @@ class InvitationController extends Controller
         $invitation->delete();
 
         return back()->with('success', 'Invitation cancelled successfully.');
+    }
+
+    /**
+     * Resend an invitation email.
+     */
+    public function resend(Invitation $invitation)
+    {
+        $this->authorize('invite users');
+
+        if (!$invitation->isValid()) {
+            // regenerate token and extend expiry by 7 days
+            $invitation->token = Invitation::generateToken();
+            $invitation->expires_at = now()->addDays(7);
+            $invitation->accepted_at = null;
+            $invitation->save();
+        }
+
+        Mail::to($invitation->email)->send(new InvitationMail($invitation));
+
+        return back()->with('success', 'Invitation resent successfully.');
     }
 }

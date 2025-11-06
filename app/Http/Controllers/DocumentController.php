@@ -16,18 +16,44 @@ class DocumentController extends Controller
     /**
      * Display a listing of documents for a dossier.
      */
-    public function index(Dossier $dossier)
+    public function index(Request $request, Dossier $dossier)
     {
         $this->authorize('view', $dossier);
 
-        $documents = $dossier->documents()
-            ->with(['uploader'])
-            ->latest()
-            ->get();
+        $query = $dossier->documents()->with(['uploader']);
+
+        // Search filter (by name)
+        if ($search = $request->input('search')) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        // Type filter
+        if ($type = $request->input('type')) {
+            $query->where('type', $type);
+        }
+
+        // Uploader filter
+        if ($uploader = $request->input('uploader')) {
+            $query->where('uploaded_by', $uploader);
+        }
+
+        // Sort
+        $sortBy = $request->input('sort', 'created_at');
+        $sortDir = $request->input('direction', 'desc');
+        $query->orderBy($sortBy, $sortDir);
+
+        $documents = $query->paginate(15)->withQueryString();
+
+        // Aggregate data for filter dropdowns
+        $types = $dossier->documents()->distinct()->pluck('type');
+        $uploaders = \App\Models\User::whereIn('id', $dossier->documents()->distinct()->pluck('uploaded_by'))->get(['id', 'name']);
 
         return inertia('Documents/Index', [
             'dossier' => $dossier,
             'documents' => $documents,
+            'types' => $types,
+            'uploaders' => $uploaders,
+            'filters' => $request->only(['search', 'type', 'uploader', 'sort', 'direction']),
         ]);
     }
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DossierController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
@@ -17,13 +18,12 @@ Route::post('/invitations/{token}/accept', [InvitationController::class, 'accept
 Route::middleware(['auth', 'verified'])->group(function () {
     
     // Dashboard
-    Route::get('/dashboard', function () {
-        return inertia('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     // Invitations (for users with permission)
     Route::middleware('can:invite users')->group(function () {
         Route::resource('invitations', InvitationController::class)->except(['show', 'edit', 'update']);
+        Route::post('invitations/{invitation}/resend', [InvitationController::class, 'resend'])->name('invitations.resend');
     });
 
     // Dossiers
