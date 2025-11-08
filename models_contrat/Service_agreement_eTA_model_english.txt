@@ -1,0 +1,99 @@
+
+
+
+
+
+
+
+BETWEEN THE UNDERSIGNED:
+ELI-VOYAGES SARL U, registered under number TG-LFW-01-2024-B13-00007 in the Trade and Personal Property Credit Register, with its registered office located at Adidogomé-Kohé, Lomé (Togo), represented by Mr. AZIH Koffi Eli Pacôme, in his capacity as Company Director,
+Phone: +1 (416) 276-8269
+Hereinafter referred to as the "Service Provider,"
+Of the one part,
+AND
+${client_civilite} ${client_full_name}, residing at ${client_address}, holder of passport no. ${client_passport_number}, issued at ${client_passport_place} on ${client_passport_date} and expiring on ${client_passport_expiry},
+Phone: ${client_phone}
+Hereinafter referred to as the "Client,"
+Of the other part,
+IT HAS BEEN AGREED AS FOLLOWS:
+
+ARTICLE 1 – PURPOSE OF THE CONTRACT
+This contract pertains to the provision of assistance services for the Electronic Travel Authorization (eTA) application process for Canada, provided by the Service Provider to the Client, in exchange for a commission as defined in Article 7.
+The services provided include, but are not limited to:
+•	Verification of the Client's eligibility for an eTA (visa-exempt country nationals);
+•	Assistance in completing the online eTA application form;
+•	Verification of compliance with all information required by Immigration, Refugees and Citizenship Canada (IRCC);
+•	Monitoring of the application until the eTA is issued (generally within 72 hours).
+The Service Provider specifies that they are neither a lawyer nor a licensed Canadian immigration consultant (RCIC), and their role is purely administrative and supportive.
+
+ARTICLE 2 – OBLIGATIONS OF THE SERVICE PROVIDER
+The Service Provider undertakes to:
+•	Provide the services with diligence and professionalism;
+•	Continuously inform and advise the Client on the progress of the procedure;
+•	Ensure service continuity throughout the procedure, even in the event of personnel changes.
+It is specified that the Service Provider is an independent contractor with no subordinate relationship to the Client, responsible for their own administrative and legal organization.
+
+ARTICLE 3 – PERFORMANCE TIMELINE
+The Service Provider undertakes to assist the Client throughout the eTA application process, for a maximum duration of ${contract_duration}, renewable by written agreement of both parties.
+The eTA is generally issued within 72 hours after submission.
+In the event of circumstances that may delay the processing (including due to the Client), the Service Provider will inform the Client as soon as possible with an estimate of the additional time required.
+
+ARTICLE 4 – MONITORING OF SERVICES
+The Service Provider will inform the Client of the application status and confirmation of eTA issuance.
+
+ARTICLE 5 – ACCEPTANCE OF SERVICES
+The Service Provider will inform the Client upon receipt of the eTA approval. The acceptance of services will involve verification of the eTA details and validation by the Client.
+
+ARTICLE 6 – OBLIGATIONS OF THE CLIENT
+The Client undertakes to:
+•	Provide all necessary information and a valid passport for the proper execution of the service;
+•	Actively collaborate with the Service Provider and inform them of any difficulties or changes in circumstances;
+•	Pay the fees and charges as per the agreed terms.
+Failure to meet these obligations may result in delays or temporary suspension of services, for which the Service Provider shall not be held liable.
+
+ARTICLE 7 – FEES AND CHARGES
+a. Amount of Fees
+The Service Provider's fees for the services amount to ${total_amount}, excluding the official IRCC eTA fee (7 CAD).
+b. Payment Terms
+Payment shall be made as follows:
+•	${full_payment} upon signing the contract (full payment due to the short processing time).
+Payment must be made as per the Service Provider's instructions. Any delay will automatically incur, without prior notice, the application of statutory late payment interest.
+Payments may be made by bank transfer, cash deposit, or any other means agreed upon by the parties. A receipt will be systematically issued to the Client.
+c. Administrative Costs
+A non-refundable deposit of ${initial_deposit} is required upon signing the contract.
+This amount covers administrative costs and the official IRCC eTA fee (7 CAD).
+d. Cases of Refusal or Cancellation
+•	In case of eTA refusal, no refund will be provided, but the Service Provider will advise the Client on alternative visa options. Administrative costs will remain the responsibility of the Client.
+•	In case of cancellation by the Client before application submission, the ${initial_deposit} deposit will remain with the Service Provider.
+
+ARTICLE 8 – CONFIDENTIALITY
+The Service Provider undertakes to protect the confidentiality of all information and documents exchanged under this contract. No data will be disclosed to third parties without the Client's written consent, except as required by law.
+
+ARTICLE 9 – FORCE MAJEURE
+Neither party shall be held liable for failure to fulfill contractual obligations if such failure results from a force majeure event.
+Force majeure events include, but are not limited to:
+•	Natural disasters, pandemics, wars, riots, or political unrest;
+•	General strikes affecting public services or relevant administrations;
+•	Unforeseeable changes in immigration laws or policies in the destination country;
+•	Significant changes in the Client's situation (e.g., passport issues, travel bans) directly impacting their ability to continue the process.
+In the event of such an occurrence, the parties' obligations will be suspended for the duration of the impediment. Each party undertakes to inform the other as soon as possible.
+
+ARTICLE 10 – AMENDMENTS
+Any amendment to this contract must be made in writing, dated, and signed by both parties.
+
+ARTICLE 11 – APPLICABLE LAW AND JURISDICTION
+This contract is governed by Togolese law.
+In the event of a dispute regarding its interpretation or execution, the parties will endeavour to find an amicable solution.
+Failing this, exclusive jurisdiction is assigned to the courts of Lomé (Togo).
+Validity of the Offer: This contract must be signed within fourteen (14) days from the date of its presentation. After this period, the offer will be considered void unless the Service Provider agrees in writing to an extension.
+
+
+
+
+
+
+	
+Done in Lomé, on ${signature_date}
+In two original copies, one for each party.
+
+Signatures:

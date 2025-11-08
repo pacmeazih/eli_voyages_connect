@@ -1,0 +1,110 @@
+<?php
+
+return [
+    // Navigation
+    'dashboard' => 'Dashboard',
+    'clients' => 'Clients',
+    'dossiers' => 'Files',
+    'packages' => 'Packages',
+    'documents' => 'Documents',
+    'invitations' => 'Invitations',
+    'users' => 'Users',
+    'settings' => 'Settings',
+    'profile' => 'Profile',
+    'logout' => 'Logout',
+
+    // Dashboard
+    'welcome' => 'Welcome to your ELI-VOYAGES workspace',
+    'total_dossiers' => 'Total Files',
+    'active_dossiers' => 'In Progress',
+    'total_documents' => 'Documents',
+    'pending_signatures' => 'Pending Signatures',
+    'recent_dossiers' => 'Recent Files',
+    'recent_activity' => 'Recent Activity',
+    'view_all_dossiers' => 'View all files',
+    'no_recent_dossiers' => 'No recent files',
+    'no_recent_activity' => 'No recent activity',
+
+    // Dossiers
+    'create_dossier' => 'Create file',
+    'edit_dossier' => 'Edit file',
+    'dossier_reference' => 'Reference',
+    'dossier_title' => 'Title',
+    'dossier_status' => 'Status',
+    'dossier_client' => 'Client',
+    'dossier_package' => 'Package',
+    'dossier_assigned_to' => 'Assigned to',
+    'generate_contract' => 'Generate contract',
+    'upload_document' => 'Upload document',
+
+    // Status
+    'status_draft' => 'Draft',
+    'status_pending' => 'Pending',
+    'status_in_progress' => 'In Progress',
+    'status_approved' => 'Approved',
+    'status_rejected' => 'Rejected',
+    'status_completed' => 'Completed',
+    'status_archived' => 'Archived',
+
+    // Contracts
+    'contract_type' => 'Contract type',
+    'select_contract_type' => 'Select a contract type',
+    'study_permit' => 'Study Permit',
+    'work_permit' => 'Work Permit',
+    'visitor_visa' => 'Visitor Visa',
+    'super_visa' => 'Super Visa',
+    'family_sponsorship' => 'Family Sponsorship',
+    'citizenship' => 'Citizenship',
+    'eta' => 'eTA',
+    'csq' => 'Quebec CSQ',
+    'lmia' => 'LMIA',
+    'status_restoration' => 'Status Restoration',
+    'asylum' => 'Asylum Application',
+    'translation' => 'Translation Services',
+
+    // Actions
+    'create' => 'Create',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
+    'search' => 'Search',
+    'filter' => 'Filter',
+    'export' => 'Export',
+    'import' => 'Import',
+    'download' => 'Download',
+    'upload' => 'Upload',
+    'send' => 'Send',
+    'resend' => 'Resend',
+    'accept' => 'Accept',
+    'reject' => 'Reject',
+    'approve' => 'Approve',
+    'archive' => 'Archive',
+
+    // Invitations
+    'invite_user' => 'Invite user',
+    'invitation_sent' => 'Invitation sent successfully',
+    'invitation_accepted' => 'Invitation accepted',
+    'invitation_expired' => 'Invitation expired',
+    'pending_invitations' => 'Pending invitations',
+    'accepted_invitations' => 'Accepted invitations',
+    'expired_invitations' => 'Expired invitations',
+
+    // Roles
+    'role_superadmin' => 'Super Administrator',
+    'role_admin' => 'Administrator',
+    'role_agent' => 'Agent',
+    'role_client' => 'Client',
+
+    // Common
+    'name' => 'Name',
+    'email' => 'Email',
+    'phone' => 'Phone',
+    'address' => 'Address',
+    'date' => 'Date',
+    'description' => 'Description',
+    'notes' => 'Notes',
+    'created_at' => 'Created at',
+    'updated_at' => 'Updated at',
+    'actions' => 'Actions',
+];

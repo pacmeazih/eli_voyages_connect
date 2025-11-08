@@ -111,25 +111,127 @@ class DocumentService
     }
 
     /**
-     * Validate file before upload
+     * Validate file before upload - ENHANCED SECURITY
      */
     public function validateFile(UploadedFile $file): array
     {
         $errors = [];
         
-        // Max size: 50MB
-        if ($file->getSize() > 50 * 1024 * 1024) {
-            $errors[] = 'File size exceeds 50MB limit.';
+        // 1. Check if file is actually uploaded (not tampered)
+        if (!$file->isValid()) {
+            $errors[] = 'Invalid file upload.';
+            return $errors;
+        }
+
+        // 2. Max size by type
+        $maxSizes = [
+            'application/pdf' => 50 * 1024 * 1024, // 50MB for PDFs
+            'image/jpeg' => 10 * 1024 * 1024,      // 10MB for images
+            'image/png' => 10 * 1024 * 1024,       // 10MB for images
+            'application/msword' => 20 * 1024 * 1024, // 20MB for DOC
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 20 * 1024 * 1024, // 20MB for DOCX
+            'application/vnd.ms-excel' => 15 * 1024 * 1024, // 15MB for Excel
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 15 * 1024 * 1024, // 15MB for XLSX
+        ];
+
+        $detectedMime = $file->getMimeType();
+        $maxSize = $maxSizes[$detectedMime] ?? 10 * 1024 * 1024; // Default 10MB
+        
+        if ($file->getSize() > $maxSize) {
+            $errors[] = 'File size exceeds ' . ($maxSize / (1024 * 1024)) . 'MB limit for this file type.';
         }
         
-        // Allowed types
-        $allowedMimes = ['application/pdf', 'image/jpeg', 'image/png', 'application/msword', 
-                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        // 3. Whitelist of allowed MIME types (detected, not from extension)
+        $allowedMimes = [
+            'application/pdf',
+            'image/jpeg',
+            'image/jpg',
+            'image/png',
+            'image/gif',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.ms-excel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'text/plain',
+            'text/csv',
+        ];
         
-        if (!in_array($file->getMimeType(), $allowedMimes)) {
-            $errors[] = 'File type not allowed. Allowed types: PDF, JPG, PNG, DOC, DOCX.';
+        if (!in_array($detectedMime, $allowedMimes)) {
+            $errors[] = 'File type not allowed. Detected type: ' . $detectedMime . '. Allowed: PDF, JPG, PNG, DOC, DOCX, XLS, XLSX, TXT, CSV.';
         }
-        
+
+        // 4. Verify extension matches MIME type (prevent spoofing)
+        $extension = strtolower($file->getClientOriginalExtension());
+        $expectedExtensions = [
+            'application/pdf' => ['pdf'],
+            'image/jpeg' => ['jpg', 'jpeg'],
+            'image/jpg' => ['jpg', 'jpeg'],
+            'image/png' => ['png'],
+            'image/gif' => ['gif'],
+            'application/msword' => ['doc'],
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => ['docx'],
+            'application/vnd.ms-excel' => ['xls'],
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => ['xlsx'],
+            'text/plain' => ['txt'],
+            'text/csv' => ['csv'],
+        ];
+
+        if (isset($expectedExtensions[$detectedMime]) && !in_array($extension, $expectedExtensions[$detectedMime])) {
+            $errors[] = 'File extension does not match file content. Possible file tampering detected.';
+        }
+
+        // 5. Check for executable extensions (blacklist)
+        $dangerousExtensions = ['php', 'exe', 'sh', 'bat', 'cmd', 'com', 'pif', 'scr', 'vbs', 'js', 'jar', 'zip', 'rar'];
+        if (in_array($extension, $dangerousExtensions)) {
+            $errors[] = 'Executable and archive files are not allowed for security reasons.';
+        }
+
+        // 6. Check for double extensions (e.g., file.pdf.exe)
+        $filename = $file->getClientOriginalName();
+        $parts = explode('.', $filename);
+        if (count($parts) > 2) {
+            // Check if any part before the last is a dangerous extension
+            array_pop($parts); // Remove last extension
+            foreach ($parts as $part) {
+                if (in_array(strtolower($part), $dangerousExtensions)) {
+                    $errors[] = 'Double extensions detected. File rejected for security.';
+                    break;
+                }
+            }
+        }
+
+        // 7. Filename sanitation check
+        if (preg_match('/[<>:\"\/\\\\|?*\x00-\x1F]/', $filename)) {
+            $errors[] = 'Filename contains invalid characters.';
+        }
+
+        // 8. Check filename length
+        if (strlen($filename) > 255) {
+            $errors[] = 'Filename is too long (max 255 characters).';
+        }
+
+        // 9. PHP file content detection (for images that might contain PHP code)
+        if (in_array($detectedMime, ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'])) {
+            $fileContent = file_get_contents($file->getRealPath());
+            if (preg_match('/<\?php|<\?=|<script|eval\(|base64_decode/i', $fileContent)) {
+                $errors[] = 'Image file contains suspicious code. Upload rejected.';
+            }
+        }
+
+        // 10. Verify actual file content for common types
+        if ($detectedMime === 'application/pdf') {
+            $fileContent = file_get_contents($file->getRealPath());
+            // PDF files must start with %PDF
+            if (substr($fileContent, 0, 4) !== '%PDF') {
+                $errors[] = 'Invalid PDF file structure.';
+            }
+        }
+
+        // 11. Check for null bytes in filename (directory traversal attempt)
+        if (strpos($filename, "\0") !== false) {
+            $errors[] = 'Invalid filename: null byte detected.';
+        }
+
         return $errors;
     }
 

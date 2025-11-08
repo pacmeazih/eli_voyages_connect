@@ -1,0 +1,98 @@
+
+
+
+
+
+
+
+ENTRE LES SOUSSIGNÉS :
+ELI-VOYAGES SARL U, enregistrée sous le numéro TG-LFW-01-2024-B13-00007 au Registre du Commerce et du Crédit Mobilier, dont le siège social est situé à Adidogomé-Kohé, Lomé (Togo), représentée par Monsieur AZIH Koffi Eli Pacôme, en qualité de Directeur de société,
+Tél : +1 (416) 276-8269
+Ci-après désignée le « Prestataire »,   
+D'une part,
+ET
+${client_civilite} ${client_nom_complet}, demeurant à ${client_adresse}, titulaire de la carte nationale d'identité n° ${client_cin_numero}, délivrée à ${client_cin_lieu} le ${client_cin_date} et expirant le ${client_cin_expiration},
+Tél : ${client_telephone}
+Ci-après désigné le « Client »,
+D'autre part,
+IL A ÉTÉ CONVENU CE QUI SUIT :
+
+ARTICLE 1 – OBJET DU CONTRAT
+Le présent contrat a pour objet la prestation de services d'assistance à la procédure d'obtention d'un visa de visiteur temporaire pour le Canada, fournie par le Prestataire au Client, en contrepartie d'une commission définie à l'article 7.
+Les services fournis comprennent notamment :
+•	L'accompagnement pour la constitution du dossier de demande de visa visiteur ;
+•	La vérification de conformité de tous les documents requis par Immigration, Réfugiés et Citoyenneté Canada (IRCC) ;
+•	L'assistance dans la préparation des justificatifs de voyage (motif de visite, liens avec le pays d'origine, capacités financières) ;
+•	Le suivi du dossier jusqu'à l'obtention de la décision finale ;
+•	Des conseils pour la préparation de l'entrevue consulaire si requise.
+Le Prestataire précise qu'il n'est ni avocat ni consultant agréé en immigration canadienne (RCIC), et que son rôle est purement administratif et d'assistance.
+
+ARTICLE 2 – OBLIGATIONS DU PRESTATAIRE
+Le Prestataire s'engage à :
+•	Fournir les prestations avec diligence, professionnalisme ;
+•	Informer et conseiller le Client de manière continue sur le déroulement de la procédure ;
+•	Maintenir la continuité du service tout au long de la procédure, même en cas de changement de personnel.
+Il est précisé que le Prestataire est un entrepreneur indépendant sans lien de subordination avec le Client, responsable de sa propre organisation administrative et juridique.
+
+ARTICLE 3 – DÉLAIS D'EXÉCUTION
+Le Prestataire s'engage à accompagner le Client tout au long du processus de demande de visa visiteur, pour une durée maximale de ${duree_contrat}, renouvelable d'un commun accord écrit des deux parties.
+En cas d'événement pouvant retarder l'exécution des prestations (même du fait du Client), le Prestataire en informera ce dernier dans les plus brefs délais avec une estimation des délais supplémentaires.
+
+ARTICLE 4 – SUIVI DES PRESTATIONS
+Le Prestataire s'engage à effectuer un suivi régulier de l'état d'avancement des démarches, via des appels téléphoniques ou échanges électroniques tous les deux mois, ou selon une autre fréquence convenue entre les parties.
+
+ARTICLE 5 – RÉCEPTION DES PRESTATIONS
+Le Prestataire informera le Client dès la finalisation de chaque étape importante du processus. La réception des prestations donnera lieu à une vérification de conformité et à une validation par le Client.
+
+ARTICLE 6 – OBLIGATIONS DU CLIENT
+Le Client s'engage à :
+•	Fournir dans les délais tous les documents et informations nécessaires à la bonne exécution du service ;
+•	Collaborer activement avec le Prestataire et informer de toute difficulté ou changement de situation.
+•	Payer les frais et honoraires selon les modalités prévues.
+Le manquement à ces obligations pourra entraîner des retards ou la suspension temporaire des services sans que le Prestataire en soit tenu pour responsable.
+
+ARTICLE 7 – COMMISSIONS ET FRAIS
+a. Montant des commissions
+Les honoraires du Prestataire s'élèvent à ${montant_total}, hors frais administratifs.
+b. Modalités de paiement
+Le paiement s'effectuera comme suit :
+•	${montant_ouverture} à l'ouverture du dossier ;
+•	${montant_soumission} à la soumission de la demande de visa (cinq jours ouvrables après cette soumission).
+Le règlement devra être effectué avant la collecte de données biométriques, selon les instructions du Prestataire. Tout retard entraînera de plein droit, sans mise en demeure préalable, l'application d'un intérêt légal de retard.
+Les paiements peuvent être effectués par virement bancaire, dépôt en espèces ou tout autre moyen convenu entre les parties. Un reçu sera systématiquement remis au Client.
+c. Frais administratifs
+Un dépôt non remboursable de ${depot_initial} est exigé à la signature du contrat.
+Ce montant couvre les frais liés aux démarches administratives (traductions, authentifications, frais de traitement IRCC, photos, etc.). 
+Un état de compte détaillé des dépenses effectuées sur le dépôt sera fourni par le Prestataire au Client après la soumission de la demande, accompagné des pièces justificatives.
+En cas de non-utilisation partielle de ce montant à ce stade, le solde non consommé sera déduit du montant restant dû par le Client et apparaîtra comme crédit sur la facture finale.
+d. Cas de refus ou d'annulation
+•	En cas de refus de visa, aucun remboursement ne sera effectué, mais le Prestataire s'engage à accompagner le Client gratuitement pour une nouvelle demande. Les charges administratives seront toujours à la charge du client.
+•	En cas d'annulation du Client avant la soumission de la demande, le dépôt de ${depot_initial} reste acquis au Prestataire.
+e. Examens médicaux
+Les examens médicaux requis par les autorités canadiennes sont à la charge exclusive du Client. Ils doivent être effectués dans leur pays de résidence ou dans le centre agréé le plus proche, conformément aux exigences d'Immigration, Réfugiés et Citoyenneté Canada (IRCC).
+
+ARTICLE 8 – CONFIDENTIALITÉ
+Le Prestataire s'engage à protéger la confidentialité de toutes les informations et documents échangés dans le cadre du présent contrat. Aucune donnée ne sera communiquée à des tiers sans l'accord écrit du Client, sauf obligations légales.
+
+ARTICLE 9 – FORCE MAJEURE
+Aucune des parties ne pourra être tenue responsable d'un manquement à ses obligations contractuelles si celui-ci résulte d'un événement de force majeure.
+Sont notamment considérés comme cas de force majeure, sans que cette liste soit limitative :
+•	Les catastrophes naturelles, pandémies, guerres, émeutes ou troubles politiques ;
+•	Les grèves générales affectant les services publics ou les administrations concernées ;
+•	Les changements imprévisibles des lois ou politiques d'immigration en vigueur dans le pays de destination ;
+•	Les modifications majeures de la situation socio-professionnelle du Client (perte d'emploi, interdiction de sortie du territoire, problèmes de santé graves, etc.) ayant un impact direct sur sa capacité à poursuivre le processus.
+En cas de survenance d'un tel événement, les obligations des parties seront suspendues pendant toute la durée de l'empêchement. Chaque partie s'engage à en informer l'autre dans les plus brefs délais.
+
+ARTICLE 10 – MODIFICATIONS
+Toute modification du présent contrat devra faire l'objet d'un avenant écrit, daté et signé par les deux parties.
+
+ARTICLE 11 – LOI APPLICABLE ET JURIDICTION COMPÉTENTE
+Le présent contrat est régi par le droit togolais.
+En cas de litige relatif à son interprétation ou à son exécution, les parties s'efforceront de trouver une solution amiable.
+À défaut, compétence exclusive est attribuée aux juridictions de Lomé (Togo).
+Durée de validité de l'offre : Le présent contrat doit être signé dans un délai de quatorze (14) jours à compter de sa date de présentation. Passé ce délai, l'offre sera considérée comme caduque, sauf accord écrit du Prestataire pour une prolongation.
+
+Fait à Lomé, le ${date_signature}
+En deux exemplaires originaux, un pour chaque partie.
+
+Signatures :

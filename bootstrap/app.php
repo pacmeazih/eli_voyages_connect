@@ -26,6 +26,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Global cache headers for production optimization
         $middleware->append(\App\Http\Middleware\SetCacheHeaders::class);
+        // Global security headers
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -3,8 +3,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="mb-6">
-                <h1 class="text-3xl font-bold text-gray-900">Tableau de bord</h1>
-                <p class="mt-1 text-sm text-gray-600">Bienvenue sur votre espace ELI Voyages</p>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Tableau de bord</h1>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Bienvenue sur votre espace ELI Voyages</p>
             </div>
 
             <!-- Stats Grid -->
@@ -21,8 +21,8 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Total Dossiers</dt>
-                                <dd class="text-3xl font-semibold text-gray-900">{{ stats.totalDossiers }}</dd>
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Total Dossiers</dt>
+                                <dd class="text-3xl font-semibold text-gray-900 dark:text-white">{{ stats.totalDossiers }}</dd>
                             </dl>
                         </div>
                     </div>
@@ -40,8 +40,8 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">En cours</dt>
-                                <dd class="text-3xl font-semibold text-gray-900">{{ stats.activeDossiers }}</dd>
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">En cours</dt>
+                                <dd class="text-3xl font-semibold text-gray-900 dark:text-white">{{ stats.activeDossiers }}</dd>
                             </dl>
                         </div>
                     </div>
@@ -59,8 +59,8 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Documents</dt>
-                                <dd class="text-3xl font-semibold text-gray-900">{{ stats.totalDocuments }}</dd>
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Documents</dt>
+                                <dd class="text-3xl font-semibold text-gray-900 dark:text-white">{{ stats.totalDocuments }}</dd>
                             </dl>
                         </div>
                     </div>
@@ -78,8 +78,8 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Signatures en attente</dt>
-                                <dd class="text-3xl font-semibold text-gray-900">{{ stats.pendingSignatures }}</dd>
+                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Signatures en attente</dt>
+                                <dd class="text-3xl font-semibold text-gray-900 dark:text-white">{{ stats.pendingSignatures }}</dd>
                             </dl>
                         </div>
                     </div>
@@ -94,32 +94,32 @@
                         <div
                             v-for="dossier in recentDossiers"
                             :key="dossier.id"
-                            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                            class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition cursor-pointer"
                             @click="visitDossier(dossier.id)"
                         >
                             <div class="flex-1">
                                 <div class="flex items-center">
-                                    <h4 class="text-sm font-semibold text-gray-900">{{ dossier.reference }}</h4>
+                                    <h4 class="text-sm font-semibold text-gray-900 dark:text-white">{{ dossier.reference }}</h4>
                                     <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full" 
                                         :class="statusClass(dossier.status)">
                                         {{ dossier.status }}
                                     </span>
                                 </div>
-                                <p class="text-sm text-gray-600 mt-1">{{ dossier.title }}</p>
-                                <p class="text-xs text-gray-500 mt-1">{{ dossier.client?.name }}</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">{{ dossier.title }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ dossier.client?.name }}</p>
                             </div>
-                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                             </svg>
                         </div>
 
-                        <div v-if="recentDossiers.length === 0" class="text-center py-8 text-gray-500">
+                        <div v-if="recentDossiers.length === 0" class="text-center py-8 text-gray-500 dark:text-gray-400">
                             Aucun dossier récent
                         </div>
                     </div>
 
                     <div class="mt-4">
-                        <Link :href="route('dossiers.index')" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                        <Link :href="route('dossiers.index')" class="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium">
                             Voir tous les dossiers →
                         </Link>
                     </div>
@@ -132,11 +132,11 @@
                             <li v-for="(activity, activityIdx) in recentActivities" :key="activity.id">
                                 <div class="relative pb-8">
                                     <span v-if="activityIdx !== recentActivities.length - 1" 
-                                        class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" 
+                                        class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-700" 
                                         aria-hidden="true" />
                                     <div class="relative flex space-x-3">
                                         <div>
-                                            <span class="h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center ring-8 ring-white">
+                                            <span class="h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center ring-8 ring-white dark:ring-gray-800">
                                                 <svg class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                                                 </svg>
@@ -144,11 +144,11 @@
                                         </div>
                                         <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                                             <div>
-                                                <p class="text-sm text-gray-700">
+                                                <p class="text-sm text-gray-700 dark:text-gray-300">
                                                     {{ activity.description }}
                                                 </p>
                                             </div>
-                                            <div class="whitespace-nowrap text-right text-sm text-gray-500">
+                                            <div class="whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
                                                 {{ activity.created_at }}
                                             </div>
                                         </div>
@@ -158,7 +158,7 @@
                         </ul>
                     </div>
 
-                    <div v-if="recentActivities.length === 0" class="text-center py-8 text-gray-500">
+                    <div v-if="recentActivities.length === 0" class="text-center py-8 text-gray-500 dark:text-gray-400">
                         Aucune activité récente
                     </div>
                 </Card>

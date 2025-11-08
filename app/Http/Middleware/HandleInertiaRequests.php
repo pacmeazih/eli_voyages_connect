@@ -41,6 +41,7 @@ class HandleInertiaRequests extends Middleware
                     'id' => $request->user()->id,
                     'name' => $request->user()->name,
                     'email' => $request->user()->email,
+                    'dark_mode' => $request->user()->dark_mode,
                     'roles' => $request->user()->roles->pluck('name'),
                     'permissions' => $request->user()->getAllPermissions()->pluck('name'),
                 ] : null,
@@ -50,11 +51,6 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
             ],
-            'ziggy' => function () use ($request) {
-                return array_merge((new \Tightenco\Ziggy\Ziggy)->toArray(), [
-                    'location' => $request->url(),
-                ]);
-            },
         ]);
     }
 }

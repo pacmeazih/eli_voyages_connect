@@ -46,8 +46,8 @@ class DashboardController extends Controller
             ->take(5)
             ->get()
             ->map(function ($dossier) {
-                // Derive a lightweight status for display purposes
-                $status = $dossier->documents_count > 0 ? 'in_progress' : 'new';
+                // Use the status field if it exists, otherwise derive it
+                $status = $dossier->status ?? ($dossier->documents_count > 0 ? 'in_progress' : 'draft');
                 return [
                     'id' => $dossier->id,
                     'reference' => $dossier->reference,
@@ -55,7 +55,9 @@ class DashboardController extends Controller
                     'status' => $status,
                     'client' => $dossier->client ? [
                         'id' => $dossier->client->id,
-                        'name' => $dossier->client->name,
+                        'name' => $dossier->client->nom . ' ' . $dossier->client->prenom ?? 
+                                  $dossier->client->first_name . ' ' . $dossier->client->last_name ?? 
+                                  'N/A',
                     ] : null,
                 ];
             });

@@ -1,0 +1,127 @@
+
+
+
+
+
+
+
+ENTRE LES SOUSSIGNÉS :
+ELI-VOYAGES SARL U, enregistrée sous le numéro TG-LFW-01-2024-B13-00007 au Registre du Commerce et du Crédit Mobilier, dont le siège social est situé à Adidogomé-Kohé, Lomé (Togo), représentée par Monsieur AZIH Koffi Eli Pacôme, en qualité de Directeur de société,
+Tél : +1 (416) 276-8269
+Ci-après désignée le « Prestataire »,   
+D'une part,
+ET
+${client_civilite} ${client_nom_complet}, demeurant à ${client_adresse}, titulaire de la carte nationale d'identité n° ${client_cin_numero}, délivrée à ${client_cin_lieu} le ${client_cin_date} et expirant le ${client_cin_expiration},
+Tél : ${client_telephone}
+Ci-après désigné le « Client »,
+D'autre part,
+IL A ÉTÉ CONVENU CE QUI SUIT :
+
+ARTICLE 1 – OBJET DU CONTRAT
+Le présent contrat a pour objet la prestation de services de traduction certifiée et d'authentification de documents pour procédures d'immigration canadienne, fournie par le Prestataire au Client, en contrepartie d'une commission définie à l'article 7.
+Les services fournis comprennent notamment :
+•	La traduction certifiée de ${nombre_documents} document(s) de ${langue_source} vers ${langue_cible} ;
+•	Le total de pages à traduire s'élève à ${nombre_pages} page(s) ;
+•	L'authentification et l'apostille des documents si requis ;
+•	La certification conforme aux exigences d'Immigration, Réfugiés et Citoyenneté Canada (IRCC).
+Les traductions seront effectuées par des traducteurs agréés et certifiés conformément aux normes IRCC.
+
+ARTICLE 2 – OBLIGATIONS DU PRESTATAIRE
+Le Prestataire s'engage à :
+•	Fournir des traductions de qualité professionnelle par traducteur agréé ;
+•	Certifier les traductions conformément aux normes IRCC ;
+•	Respecter les délais convenus ;
+•	Assurer la confidentialité des documents confiés.
+Il est précisé que le Prestataire est un entrepreneur indépendant sans lien de subordination avec le Client, responsable de sa propre organisation administrative et juridique.
+
+ARTICLE 3 – DÉLAIS D'EXÉCUTION
+Le Prestataire s'engage à livrer les traductions dans un délai de ${delai_traduction} jours ouvrables après réception des documents originaux ou des scans haute résolution.
+Un service urgent est disponible sur demande avec un délai réduit de ${delai_urgent} jours ouvrables moyennant un supplément de 50% sur le tarif standard.
+En cas d'événement pouvant retarder l'exécution des prestations (documents illisibles, informations manquantes), le Prestataire en informera le Client dans les plus brefs délais avec une estimation des délais supplémentaires.
+
+ARTICLE 4 – SUIVI DES PRESTATIONS
+Le Prestataire informera le Client de l'état d'avancement des traductions et confirmera la date de livraison prévue.
+
+ARTICLE 5 – RÉCEPTION DES PRESTATIONS
+Le Prestataire remettra au Client les traductions certifiées accompagnées des documents suivants :
+•	Certificat de traduction signé par le traducteur agréé ;
+•	Copie conforme des documents originaux si requis ;
+•	Apostille ou authentification consulaire si demandée.
+La réception des prestations donnera lieu à une vérification de conformité et à une validation par le Client.
+
+ARTICLE 6 – OBLIGATIONS DU CLIENT
+Le Client s'engage à :
+•	Fournir des documents originaux lisibles ou des scans haute résolution (minimum 300 dpi) ;
+•	Fournir toute information complémentaire nécessaire à la compréhension des documents ;
+•	Payer les frais et honoraires selon les modalités prévues.
+Le manquement à ces obligations pourra entraîner des retards sans que le Prestataire en soit tenu pour responsable.
+
+ARTICLE 7 – COMMISSIONS ET FRAIS
+a. Tarification des services
+Les tarifs appliqués sont les suivants :
+•	Traduction standard : ${tarif_par_page} par page ;
+•	Authentification/Apostille : ${tarif_authentification} par document ;
+•	Service urgent (supplément 50%) : ${supplement_urgent} ;
+•	Montant total : ${montant_total}.
+b. Modalités de paiement
+Le paiement s'effectuera comme suit :
+•	50% à la commande (acompte de ${montant_acompte}) ;
+•	50% à la livraison des traductions certifiées (solde de ${montant_solde}).
+Le règlement devra être effectué selon les instructions du Prestataire. Tout retard entraînera de plein droit, sans mise en demeure préalable, l'application d'un intérêt légal de retard.
+Les paiements peuvent être effectués par virement bancaire, dépôt en espèces ou tout autre moyen convenu entre les parties. Un reçu sera systématiquement remis au Client.
+c. Documents supplémentaires
+Si le Client souhaite ajouter des documents supplémentaires après la signature du contrat, ceux-ci seront facturés selon le tarif en vigueur.
+
+ARTICLE 8 – PROPRIÉTÉ INTELLECTUELLE
+Les traductions réalisées deviennent la propriété du Client dès le paiement intégral des honoraires.
+Le Prestataire conserve une copie des traductions dans ses archives pendant une période de cinq (5) ans conformément aux obligations légales.
+
+ARTICLE 9 – GARANTIE QUALITÉ
+Le Prestataire garantit la qualité et l'exactitude des traductions fournies.
+En cas d'erreur de traduction signalée par le Client dans un délai de trente (30) jours suivant la livraison, le Prestataire s'engage à effectuer les corrections nécessaires sans frais supplémentaires.
+Il est précisé que le Prestataire ne peut être tenu responsable du refus ou de la non-acceptation des documents par les autorités canadiennes, cette décision relevant exclusivement d'IRCC.
+
+ARTICLE 10 – CONFIDENTIALITÉ
+Le Prestataire s'engage à protéger la confidentialité de tous les documents confiés par le Client. Aucune donnée ne sera communiquée à des tiers sans l'accord écrit du Client, sauf obligations légales.
+
+ARTICLE 11 – FORCE MAJEURE
+Aucune des parties ne pourra être tenue responsable d'un manquement à ses obligations contractuelles si celui-ci résulte d'un événement de force majeure.
+Sont notamment considérés comme cas de force majeure, sans que cette liste soit limitative :
+•	Les catastrophes naturelles, pandémies, guerres, émeutes ou troubles politiques ;
+•	Les grèves générales affectant les services publics ou les administrations concernées ;
+•	Les pannes informatiques majeures affectant les systèmes de traduction.
+En cas de survenance d'un tel événement, les obligations des parties seront suspendues pendant toute la durée de l'empêchement. Chaque partie s'engage à en informer l'autre dans les plus brefs délais.
+
+ARTICLE 12 – MODIFICATIONS
+Toute modification du présent contrat devra faire l'objet d'un avenant écrit, daté et signé par les deux parties.
+
+ARTICLE 13 – LOI APPLICABLE ET JURIDICTION COMPÉTENTE
+Le présent contrat est régi par le droit togolais.
+En cas de litige relatif à son interprétation ou à son exécution, les parties s'efforceront de trouver une solution amiable.
+À défaut, compétence exclusive est attribuée aux juridictions de Lomé (Togo).
+Durée de validité de l'offre : Le présent contrat doit être signé dans un délai de quatorze (14) jours à compter de sa date de présentation. Passé ce délai, l'offre sera considérée comme caduque, sauf accord écrit du Prestataire pour une prolongation.
+
+
+
+
+
+
+	
+Fait à Lomé, le ${date_signature}
+En deux exemplaires originaux, un pour chaque partie.
+
+Signatures :
+
+
+ARTICLE 9 – GARANTIE QUALITÉ
+Révision gratuite si erreur traduction dans 30 jours. Aucune garantie sur acceptation documents par autorités (décision IRCC).
+
+ARTICLE 10 – CONFIDENTIALITÉ
+Protection absolue des documents traduits. Destruction sécurisée après délai légal.
+
+ARTICLE 11 – LOI APPLICABLE
+Droit togolais. Juridictions de Lomé (Togo).
+Validité offre : 14 jours.
+
+Fait à Lomé, le ${date_signature}
+Signatures :

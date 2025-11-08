@@ -1,0 +1,110 @@
+<?php
+
+return [
+    // Navigation
+    'dashboard' => 'Tableau de bord',
+    'clients' => 'Clients',
+    'dossiers' => 'Dossiers',
+    'packages' => 'Forfaits',
+    'documents' => 'Documents',
+    'invitations' => 'Invitations',
+    'users' => 'Utilisateurs',
+    'settings' => 'Paramètres',
+    'profile' => 'Profil',
+    'logout' => 'Déconnexion',
+
+    // Dashboard
+    'welcome' => 'Bienvenue sur votre espace ELI-VOYAGES',
+    'total_dossiers' => 'Total Dossiers',
+    'active_dossiers' => 'En cours',
+    'total_documents' => 'Documents',
+    'pending_signatures' => 'Signatures en attente',
+    'recent_dossiers' => 'Dossiers Récents',
+    'recent_activity' => 'Activité Récente',
+    'view_all_dossiers' => 'Voir tous les dossiers',
+    'no_recent_dossiers' => 'Aucun dossier récent',
+    'no_recent_activity' => 'Aucune activité récente',
+
+    // Dossiers
+    'create_dossier' => 'Créer un dossier',
+    'edit_dossier' => 'Modifier le dossier',
+    'dossier_reference' => 'Référence',
+    'dossier_title' => 'Titre',
+    'dossier_status' => 'Statut',
+    'dossier_client' => 'Client',
+    'dossier_package' => 'Forfait',
+    'dossier_assigned_to' => 'Assigné à',
+    'generate_contract' => 'Générer un contrat',
+    'upload_document' => 'Télécharger un document',
+
+    // Status
+    'status_draft' => 'Brouillon',
+    'status_pending' => 'En attente',
+    'status_in_progress' => 'En cours',
+    'status_approved' => 'Approuvé',
+    'status_rejected' => 'Rejeté',
+    'status_completed' => 'Terminé',
+    'status_archived' => 'Archivé',
+
+    // Contracts
+    'contract_type' => 'Type de contrat',
+    'select_contract_type' => 'Sélectionnez un type de contrat',
+    'study_permit' => 'Permis d\'études',
+    'work_permit' => 'Permis de travail',
+    'visitor_visa' => 'Visa visiteur',
+    'super_visa' => 'Super Visa',
+    'family_sponsorship' => 'Parrainage familial',
+    'citizenship' => 'Citoyenneté',
+    'eta' => 'AVE',
+    'csq' => 'CSQ Québec',
+    'lmia' => 'LMIA',
+    'status_restoration' => 'Restauration de statut',
+    'asylum' => 'Demande d\'asile',
+    'translation' => 'Services de traduction',
+
+    // Actions
+    'create' => 'Créer',
+    'edit' => 'Modifier',
+    'delete' => 'Supprimer',
+    'save' => 'Enregistrer',
+    'cancel' => 'Annuler',
+    'search' => 'Rechercher',
+    'filter' => 'Filtrer',
+    'export' => 'Exporter',
+    'import' => 'Importer',
+    'download' => 'Télécharger',
+    'upload' => 'Téléverser',
+    'send' => 'Envoyer',
+    'resend' => 'Renvoyer',
+    'accept' => 'Accepter',
+    'reject' => 'Rejeter',
+    'approve' => 'Approuver',
+    'archive' => 'Archiver',
+
+    // Invitations
+    'invite_user' => 'Inviter un utilisateur',
+    'invitation_sent' => 'Invitation envoyée avec succès',
+    'invitation_accepted' => 'Invitation acceptée',
+    'invitation_expired' => 'Invitation expirée',
+    'pending_invitations' => 'Invitations en attente',
+    'accepted_invitations' => 'Invitations acceptées',
+    'expired_invitations' => 'Invitations expirées',
+
+    // Roles
+    'role_superadmin' => 'Super Administrateur',
+    'role_admin' => 'Administrateur',
+    'role_agent' => 'Agent',
+    'role_client' => 'Client',
+
+    // Common
+    'name' => 'Nom',
+    'email' => 'Email',
+    'phone' => 'Téléphone',
+    'address' => 'Adresse',
+    'date' => 'Date',
+    'description' => 'Description',
+    'notes' => 'Notes',
+    'created_at' => 'Créé le',
+    'updated_at' => 'Mis à jour le',
+    'actions' => 'Actions',
+];

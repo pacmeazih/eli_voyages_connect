@@ -6,6 +6,14 @@
 
         <title inertia>{{ config('app.name', 'ELI Voyages Connect') }}</title>
 
+        <!-- PWA Meta Tags -->
+        <meta name="theme-color" content="#1e3a8a">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="ELI Connect">
+        <link rel="manifest" href="/manifest.json">
+        <link rel="apple-touch-icon" href="/assets/img/logo.png">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />

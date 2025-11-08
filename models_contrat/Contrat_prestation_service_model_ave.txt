@@ -1,0 +1,83 @@
+
+
+
+
+
+
+
+ENTRE LES SOUSSIGNÉS :
+ELI-VOYAGES SARL U, enregistrée sous le numéro TG-LFW-01-2024-B13-00007 au Registre du Commerce et du Crédit Mobilier, dont le siège social est situé à Adidogomé-Kohé, Lomé (Togo), représentée par Monsieur AZIH Koffi Eli Pacôme, en qualité de Directeur de société,
+Tél : +1 (416) 276-8269
+Ci-après désignée le « Prestataire »,   
+D'une part,
+ET
+${client_civilite} ${client_nom_complet}, demeurant à ${client_adresse}, titulaire du passeport n° ${client_passeport_numero}, délivré à ${client_passeport_lieu} le ${client_passeport_date} et expirant le ${client_passeport_expiration},
+Tél : ${client_telephone}
+Ci-après désigné le « Client »,
+D'autre part,
+IL A ÉTÉ CONVENU CE QUI SUIT :
+
+ARTICLE 1 – OBJET DU CONTRAT
+Le présent contrat a pour objet la prestation de services d'assistance à la procédure d'obtention d'une Autorisation de Voyage Électronique (AVE) pour le Canada, fournie par le Prestataire au Client, en contrepartie d'une commission définie à l'article 7.
+Les services fournis comprennent notamment :
+•	La vérification de l'éligibilité du Client à l'AVE ;
+•	L'assistance pour le remplissage du formulaire de demande en ligne ;
+•	La vérification de conformité de toutes les informations fournies ;
+•	Le suivi de la demande jusqu'à l'obtention de l'autorisation.
+Le Prestataire précise qu'il n'est ni avocat ni consultant agréé en immigration canadienne (RCIC), et que son rôle est purement administratif et d'assistance.
+
+ARTICLE 2 – OBLIGATIONS DU PRESTATAIRE
+Le Prestataire s'engage à :
+•	Fournir les prestations avec diligence, professionnalisme ;
+•	Informer et conseiller le Client de manière continue sur le déroulement de la procédure ;
+•	Maintenir la continuité du service tout au long de la procédure, même en cas de changement de personnel.
+Il est précisé que le Prestataire est un entrepreneur indépendant sans lien de subordination avec le Client, responsable de sa propre organisation administrative et juridique.
+
+ARTICLE 3 – DÉLAIS D'EXÉCUTION
+Le Prestataire s'engage à accompagner le Client dans le processus de demande d'AVE, généralement traité dans un délai de 72 heures par les autorités canadiennes.
+En cas d'événement pouvant retarder l'exécution des prestations, le Prestataire en informera le Client dans les plus brefs délais.
+
+ARTICLE 4 – SUIVI DES PRESTATIONS
+Le Prestataire informera le Client immédiatement dès réception de la décision concernant l'AVE.
+
+ARTICLE 5 – OBLIGATIONS DU CLIENT
+Le Client s'engage à :
+•	Fournir toutes les informations exactes et complètes nécessaires à la demande ;
+•	Détenir un passeport valide pour au moins 6 mois à compter de la date d'entrée prévue au Canada ;
+•	Payer les frais et honoraires selon les modalités prévues.
+Le manquement à ces obligations pourra entraîner des retards ou le rejet de la demande sans que le Prestataire en soit tenu pour responsable.
+
+ARTICLE 7 – COMMISSIONS ET FRAIS
+a. Montant des commissions
+Les honoraires du Prestataire s'élèvent à ${montant_total}, frais gouvernementaux inclus.
+b. Modalités de paiement
+Le paiement intégral de ${montant_total} devra être effectué avant la soumission de la demande d'AVE.
+Les paiements peuvent être effectués par virement bancaire, dépôt en espèces ou tout autre moyen convenu entre les parties. Un reçu sera systématiquement remis au Client.
+c. Cas de refus
+En cas de refus d'AVE par les autorités canadiennes, les frais gouvernementaux ne seront pas remboursables. Le Prestataire pourra, à sa discrétion, assister le Client gratuitement pour une nouvelle demande si le refus est dû à une erreur administrative corrigible.
+
+ARTICLE 8 – CONFIDENTIALITÉ
+Le Prestataire s'engage à protéger la confidentialité de toutes les informations et documents échangés dans le cadre du présent contrat. Aucune donnée ne sera communiquée à des tiers sans l'accord écrit du Client, sauf obligations légales.
+
+ARTICLE 9 – FORCE MAJEURE
+Aucune des parties ne pourra être tenue responsable d'un manquement à ses obligations contractuelles si celui-ci résulte d'un événement de force majeure.
+Sont notamment considérés comme cas de force majeure, sans que cette liste soit limitative :
+•	Les catastrophes naturelles, pandémies, guerres, émeutes ou troubles politiques ;
+•	Les grèves générales affectant les services publics ou les administrations concernées ;
+•	Les changements imprévisibles des lois ou politiques d'immigration en vigueur dans le pays de destination ;
+•	Les pannes techniques des systèmes gouvernementaux en ligne.
+En cas de survenance d'un tel événement, les obligations des parties seront suspendues pendant toute la durée de l'empêchement.
+
+ARTICLE 10 – MODIFICATIONS
+Toute modification du présent contrat devra faire l'objet d'un avenant écrit, daté et signé par les deux parties.
+
+ARTICLE 11 – LOI APPLICABLE ET JURIDICTION COMPÉTENTE
+Le présent contrat est régi par le droit togolais.
+En cas de litige relatif à son interprétation ou à son exécution, les parties s'efforceront de trouver une solution amiable.
+À défaut, compétence exclusive est attribuée aux juridictions de Lomé (Togo).
+Durée de validité de l'offre : Le présent contrat doit être signé dans un délai de quatorze (14) jours à compter de sa date de présentation. Passé ce délai, l'offre sera considérée comme caduque, sauf accord écrit du Prestataire pour une prolongation.
+
+Fait à Lomé, le ${date_signature}
+En deux exemplaires originaux, un pour chaque partie.
+
+Signatures :

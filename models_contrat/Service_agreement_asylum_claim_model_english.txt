@@ -1,0 +1,106 @@
+
+
+
+
+
+
+
+BETWEEN THE UNDERSIGNED:
+ELI-VOYAGES SARL U, registered under number TG-LFW-01-2024-B13-00007 in the Trade and Personal Property Credit Register, with its registered office located at Adidogomé-Kohé, Lomé (Togo), represented by Mr. AZIH Koffi Eli Pacôme, in his capacity as Company Director,
+Phone: +1 (416) 276-8269
+Hereinafter referred to as the "Service Provider,"
+Of the one part,
+AND
+${client_civilite} ${client_full_name}, residing at ${client_address}, holder of national identity card no. ${client_id_number}, issued at ${client_id_place} on ${client_id_date} and expiring on ${client_id_expiry},
+Phone: ${client_phone}
+Hereinafter referred to as the "Claimant,"
+Of the other part,
+IT HAS BEEN AGREED AS FOLLOWS:
+
+ARTICLE 1 – PURPOSE OF THE CONTRACT
+This contract pertains to the provision of assistance services for the asylum (refugee protection) application process in Canada, provided by the Service Provider to the Claimant, in exchange for a commission as defined in Article 7.
+The services provided include, but are not limited to:
+•	Assessment of the Claimant's eligibility for refugee protection under the Geneva Convention;
+•	Assistance in preparing the asylum application file (Personal Information Form - PIF, supporting evidence);
+•	Preparation for the hearing before the Immigration and Refugee Board of Canada (IRB);
+•	Monitoring of the file until the final decision is obtained.
+The Service Provider specifies that they are neither a lawyer nor a licensed Canadian immigration consultant (RCIC), and their role is purely administrative and supportive. Given the complexity and sensitivity of asylum procedures, it is strongly recommended that the Claimant consult a lawyer specialized in asylum law.
+
+ARTICLE 2 – OBLIGATIONS OF THE SERVICE PROVIDER
+The Service Provider undertakes to:
+•	Provide the services with diligence, professionalism, and absolute discretion;
+•	Continuously inform and advise the Claimant on the progress of the procedure;
+•	Prepare the Claimant for hearings and IRB requirements;
+•	Ensure service continuity throughout the procedure, even in the event of personnel changes.
+It is specified that the Service Provider is an independent contractor with no subordinate relationship to the Claimant, responsible for their own administrative and legal organization.
+
+ARTICLE 3 – PERFORMANCE TIMELINE
+The Service Provider undertakes to assist the Claimant throughout the asylum application process, for a maximum duration of ${contract_duration}, renewable by written agreement of both parties.
+Processing times by the IRB vary depending on the case complexity and may range from several months to several years.
+In the event of circumstances that may delay the performance of services (including due to the Claimant), the Service Provider will inform the Claimant as soon as possible with an estimate of the additional time required.
+
+ARTICLE 4 – MONITORING OF SERVICES
+The Service Provider undertakes to regularly monitor the progress of the procedures through phone calls or electronic exchanges every two months, or at another frequency agreed upon by the parties.
+
+ARTICLE 5 – ACCEPTANCE OF SERVICES
+The Service Provider will inform the Claimant upon completion of each significant stage of the process. The acceptance of services will involve a compliance check and validation by the Claimant.
+
+ARTICLE 6 – OBLIGATIONS OF THE CLAIMANT
+The Claimant undertakes to:
+•	Provide all necessary documents and information in a timely manner for the proper execution of the service, including a detailed and truthful account of the facts justifying the asylum claim;
+•	Provide all evidence of persecution (threats, official documents, testimonies, medical reports, etc.);
+•	Actively collaborate with the Service Provider and inform them of any difficulties or changes in circumstances;
+•	Pay the fees and charges as per the agreed terms.
+Failure to meet these obligations may result in delays or temporary suspension of services, for which the Service Provider shall not be held liable.
+
+ARTICLE 7 – FEES AND CHARGES
+a. Amount of Fees
+The Service Provider's fees for the services amount to ${total_amount}, excluding legal fees if the Claimant decides to hire a lawyer.
+b. Payment Terms
+Payment shall be made as follows:
+•	${opening_amount} upon opening of the file;
+•	${preparation_amount} upon preparation for the IRB hearing;
+•	${final_amount} after the hearing has taken place.
+Payment must be made as per the Service Provider's instructions. Any delay will automatically incur, without prior notice, the application of statutory late payment interest.
+Payments may be made by bank transfer, cash deposit, or any other means agreed upon by the parties. A receipt will be systematically issued to the Claimant.
+c. Administrative Costs
+A non-refundable deposit of ${initial_deposit} is required upon signing the contract.
+This amount covers administrative costs (translations, certifications, documentation fees, etc.).
+A detailed statement of expenses incurred from the deposit will be provided to the Claimant after the file preparation, accompanied by supporting documents.
+If part of this amount remains unused at this stage, the unspent balance will be deducted from the remaining amount owed by the Claimant and will appear as a credit on the final invoice.
+d. Cases of Refusal or Cancellation
+•	In case of asylum claim refusal, no refund will be provided, but the Service Provider may assist the Claimant with a Federal Court appeal (separate fees to be discussed). Administrative costs will remain the responsibility of the Claimant.
+•	In case of cancellation by the Claimant before claim submission, the ${initial_deposit} deposit will remain with the Service Provider.
+
+ARTICLE 8 – ENHANCED CONFIDENTIALITY
+The Service Provider undertakes to protect the absolute confidentiality of all information and documents exchanged under this contract, particularly given the sensitive nature of asylum claims. No data will be disclosed to third parties without the Claimant's written consent, except as required by law.
+The Service Provider will take all necessary measures to ensure the security of the Claimant's personal data.
+
+ARTICLE 9 – FORCE MAJEURE
+Neither party shall be held liable for failure to fulfill contractual obligations if such failure results from a force majeure event.
+Force majeure events include, but are not limited to:
+•	Natural disasters, pandemics, wars, riots, or political unrest;
+•	General strikes affecting public services or relevant administrations;
+•	Unforeseeable changes in immigration or asylum laws or policies in the destination country;
+•	Significant changes in the Claimant's personal situation (serious health issues, detention, etc.) directly impacting their ability to continue the process.
+In the event of such an occurrence, the parties' obligations will be suspended for the duration of the impediment. Each party undertakes to inform the other as soon as possible.
+
+ARTICLE 10 – AMENDMENTS
+Any amendment to this contract must be made in writing, dated, and signed by both parties.
+
+ARTICLE 11 – APPLICABLE LAW AND JURISDICTION
+This contract is governed by Togolese law.
+In the event of a dispute regarding its interpretation or execution, the parties will endeavour to find an amicable solution.
+Failing this, exclusive jurisdiction is assigned to the courts of Lomé (Togo).
+Validity of the Offer: This contract must be signed within fourteen (14) days from the date of its presentation. After this period, the offer will be considered void unless the Service Provider agrees in writing to an extension.
+
+
+
+
+
+
+	
+Done in Lomé, on ${signature_date}
+In two original copies, one for each party.
+
+Signatures:

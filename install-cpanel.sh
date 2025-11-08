@@ -28,13 +28,13 @@ DB_HOST=${DB_HOST:-localhost}
 echo ""
 echo "🌐 Configuration du domaine"
 echo "----------------------------"
-read -p "URL du site (ex: https://eli-voyages.com) : " APP_URL
+read -p "URL du site (ex: https://clients.elivoyages.com) : " APP_URL
 
 # Demander l'email
 echo ""
 echo "📧 Configuration Email"
 echo "----------------------"
-read -p "Email d'envoi (ex: no-reply@eli-voyages.com) : " MAIL_FROM
+read -p "Email d'envoi (ex: no-reply@elivoyages.com) : " MAIL_FROM
 read -p "Mot de passe email : " MAIL_PASS
 
 echo ""

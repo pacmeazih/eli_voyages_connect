@@ -12,7 +12,14 @@ class Dossier extends Model
     use HasFactory;
 
     protected $fillable = [
-        'client_id', 'reference', 'title', 'notes'
+        'client_id', 
+        'package_id', 
+        'reference', 
+        'title', 
+        'description',
+        'status',
+        'assigned_to',
+        'notes'
     ];
 
     public static function booted()
@@ -34,6 +41,16 @@ class Dossier extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
+    }
+
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 
     public function documents()

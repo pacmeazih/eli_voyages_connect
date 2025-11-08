@@ -1,0 +1,113 @@
+
+
+
+
+
+
+
+BETWEEN THE UNDERSIGNED:
+ELI-VOYAGES SARL U, registered under number TG-LFW-01-2024-B13-00007 in the Trade and Personal Property Credit Register, with its registered office located at Adidogomé-Kohé, Lomé (Togo), represented by Mr. AZIH Koffi Eli Pacôme, in his capacity as Company Director,
+Phone: +1 (416) 276-8269
+Hereinafter referred to as the "Service Provider,"
+Of the one part,
+AND
+${client_civilite} ${client_full_name}, residing at ${client_address}, holder of national identity card no. ${client_id_number}, issued at ${client_id_place} on ${client_id_date} and expiring on ${client_id_expiry},
+Phone: ${client_phone}
+Hereinafter referred to as the "Client,"
+Of the other part,
+IT HAS BEEN AGREED AS FOLLOWS:
+
+ARTICLE 1 – PURPOSE OF THE CONTRACT
+This contract pertains to the provision of certified translation and document authentication services for Canadian immigration procedures, provided by the Service Provider to the Client, in exchange for fees as defined in Article 7.
+The services provided include, but are not limited to:
+•	Certified translation of ${number_of_documents} document(s) from ${source_language} to ${target_language};
+•	Total pages to be translated: ${number_of_pages} page(s);
+•	Authentication and apostille of documents if required;
+•	Certification compliant with Immigration, Refugees and Citizenship Canada (IRCC) requirements.
+Translations will be performed by certified and accredited translators in accordance with IRCC standards.
+
+ARTICLE 2 – OBLIGATIONS OF THE SERVICE PROVIDER
+The Service Provider undertakes to:
+•	Provide professional quality translations by certified translators;
+•	Certify translations in accordance with IRCC standards;
+•	Respect agreed deadlines;
+•	Ensure the confidentiality of entrusted documents.
+It is specified that the Service Provider is an independent contractor with no subordinate relationship to the Client, responsible for their own administrative and legal organization.
+
+ARTICLE 3 – PERFORMANCE TIMELINE
+The Service Provider undertakes to deliver the translations within ${translation_deadline} business days after receiving the original documents or high-resolution scans.
+An expedited service is available upon request with a reduced deadline of ${urgent_deadline} business days for a 50% surcharge on the standard rate.
+In the event of circumstances that may delay the performance of services (illegible documents, missing information), the Service Provider will inform the Client as soon as possible with an estimate of the additional time required.
+
+ARTICLE 4 – MONITORING OF SERVICES
+The Service Provider will inform the Client of the translation progress and confirm the expected delivery date.
+
+ARTICLE 5 – ACCEPTANCE OF SERVICES
+The Service Provider will deliver to the Client the certified translations accompanied by the following documents:
+•	Translation certificate signed by the certified translator;
+•	Certified copy of original documents if required;
+•	Apostille or consular authentication if requested.
+The acceptance of services will involve a compliance check and validation by the Client.
+
+ARTICLE 6 – OBLIGATIONS OF THE CLIENT
+The Client undertakes to:
+•	Provide legible original documents or high-resolution scans (minimum 300 dpi);
+•	Provide any additional information necessary for understanding the documents;
+•	Pay the fees and charges as per the agreed terms.
+Failure to meet these obligations may result in delays for which the Service Provider shall not be held liable.
+
+ARTICLE 7 – FEES AND CHARGES
+a. Service Pricing
+The rates applied are as follows:
+•	Standard translation: ${rate_per_page} per page;
+•	Authentication/Apostille: ${authentication_rate} per document;
+•	Expedited service (50% surcharge): ${urgent_surcharge};
+•	Total amount: ${total_amount}.
+b. Payment Terms
+Payment shall be made as follows:
+•	50% upon order (down payment of ${down_payment});
+•	50% upon delivery of certified translations (balance of ${final_payment}).
+Payment must be made as per the Service Provider's instructions. Any delay will automatically incur, without prior notice, the application of statutory late payment interest.
+Payments may be made by bank transfer, cash deposit, or any other means agreed upon by the parties. A receipt will be systematically issued to the Client.
+c. Additional Documents
+If the Client wishes to add additional documents after signing the contract, these will be invoiced according to the current rate.
+
+ARTICLE 8 – INTELLECTUAL PROPERTY
+The translations produced become the property of the Client upon full payment of the fees.
+The Service Provider retains a copy of the translations in its archives for a period of five (5) years in accordance with legal obligations.
+
+ARTICLE 9 – QUALITY GUARANTEE
+The Service Provider guarantees the quality and accuracy of the translations provided.
+In case of a translation error reported by the Client within thirty (30) days following delivery, the Service Provider undertakes to make the necessary corrections at no additional cost.
+It is specified that the Service Provider cannot be held responsible for the refusal or non-acceptance of documents by Canadian authorities, as this decision is solely at IRCC's discretion.
+
+ARTICLE 10 – CONFIDENTIALITY
+The Service Provider undertakes to protect the confidentiality of all documents entrusted by the Client. No data will be disclosed to third parties without the Client's written consent, except as required by law.
+
+ARTICLE 11 – FORCE MAJEURE
+Neither party shall be held liable for failure to fulfill contractual obligations if such failure results from a force majeure event.
+Force majeure events include, but are not limited to:
+•	Natural disasters, pandemics, wars, riots, or political unrest;
+•	General strikes affecting public services or relevant administrations;
+•	Major computer failures affecting translation systems.
+In the event of such an occurrence, the parties' obligations will be suspended for the duration of the impediment. Each party undertakes to inform the other as soon as possible.
+
+ARTICLE 12 – AMENDMENTS
+Any amendment to this contract must be made in writing, dated, and signed by both parties.
+
+ARTICLE 13 – APPLICABLE LAW AND JURISDICTION
+This contract is governed by Togolese law.
+In the event of a dispute regarding its interpretation or execution, the parties will endeavour to find an amicable solution.
+Failing this, exclusive jurisdiction is assigned to the courts of Lomé (Togo).
+Validity of the Offer: This contract must be signed within fourteen (14) days from the date of its presentation. After this period, the offer will be considered void unless the Service Provider agrees in writing to an extension.
+
+
+
+
+
+
+	
+Done in Lomé, on ${signature_date}
+In two original copies, one for each party.
+
+Signatures:

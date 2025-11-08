@@ -10,11 +10,13 @@ class Package extends Model
     use HasFactory;
 
     protected $fillable = [
+        'service_type_id',
         'name',
         'description',
         'destination',
         'duration',
         'price',
+        'services',
         'includes',
         'excludes',
         'max_travelers',
@@ -28,4 +30,9 @@ class Package extends Model
         'end_date' => 'datetime',
         'price' => 'decimal:2',
     ];
+
+    public function serviceType()
+    {
+        return $this->belongsTo(ServiceType::class);
+    }
 }

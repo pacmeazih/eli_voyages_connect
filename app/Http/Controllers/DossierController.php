@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Dossier;
 use App\Models\Client;
+use App\Models\User;
+use App\Notifications\DossierCreatedNotification;
+use App\Notifications\DossierStatusChangedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -89,6 +92,16 @@ class DossierController extends Controller
 
             return $dossier;
         });
+
+        // Send notification to client
+        $client = $dossier->client;
+        if ($client && $client->email) {
+            // Find user account linked to this client
+            $user = User::where('email', $client->email)->first();
+            if ($user) {
+                $user->notify(new DossierCreatedNotification($dossier, app()->getLocale()));
+            }
+        }
 
         return redirect()->route('dossiers.show', $dossier)
             ->with('success', "Dossier {$dossier->reference} created successfully!");
@@ -215,5 +228,49 @@ class DossierController extends Controller
             ->log('Dossier approved');
 
         return back()->with('success', 'Dossier approved successfully!');
+    }
+
+    /**
+     * Change dossier status with notifications
+     */
+    public function changeStatus(Request $request, Dossier $dossier)
+    {
+        $this->authorize('update', $dossier);
+
+        $validated = $request->validate([
+            'status' => ['required', 'string', 'in:draft,pending,in_progress,approved,rejected,completed'],
+        ]);
+
+        $oldStatus = $dossier->status;
+        $newStatus = $validated['status'];
+
+        // Update status
+        $dossier->update(['status' => $newStatus]);
+
+        // Log activity
+        activity()
+            ->performedOn($dossier)
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'old_status' => $oldStatus,
+                'new_status' => $newStatus,
+            ])
+            ->log("Dossier status changed from {$oldStatus} to {$newStatus}");
+
+        // Send notification to client
+        $client = $dossier->client;
+        if ($client && $client->email) {
+            $user = User::where('email', $client->email)->first();
+            if ($user) {
+                $user->notify(new DossierStatusChangedNotification(
+                    $dossier,
+                    $oldStatus,
+                    $newStatus,
+                    app()->getLocale()
+                ));
+            }
+        }
+
+        return back()->with('success', 'Dossier status updated successfully!');
     }
 }
