@@ -10,15 +10,17 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class InvitationController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of invitations.
      */
     public function index()
     {
-        $this->authorize('invite users');
+        // Authorization already enforced by route middleware 'can:invite users'
         
         $invitations = Invitation::with(['inviter', 'dossier'])
             ->latest()
@@ -45,7 +47,7 @@ class InvitationController extends Controller
      */
     public function create()
     {
-        $this->authorize('invite users');
+        // Authorization handled by middleware
 
         return inertia('Invitations/Create');
     }
@@ -55,7 +57,7 @@ class InvitationController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('invite users');
+        // Authorization handled by middleware
 
         $validated = $request->validate([
             'email' => ['required', 'email', 'max:255'],
@@ -171,7 +173,7 @@ class InvitationController extends Controller
      */
     public function resend(Invitation $invitation)
     {
-        $this->authorize('invite users');
+        // Authorization handled by middleware
 
         if (!$invitation->isValid()) {
             // regenerate token and extend expiry by 7 days

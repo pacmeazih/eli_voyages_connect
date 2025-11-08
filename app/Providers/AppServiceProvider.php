@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Notifications\ResetPassword;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,6 +29,24 @@ class AppServiceProvider extends ServiceProvider
 
         ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
             return config('app.frontend_url')."/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
+        });
+
+        // Share auth user with roles and permissions to Inertia
+        Inertia::share('auth', function () {
+            $user = auth()->user();
+            if (!$user) {
+                return ['user' => null, 'unreadNotifications' => 0];
+            }
+            return [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'roles' => $user->getRoleNames(),
+                    'permissions' => $user->getPermissionNames(),
+                ],
+                'unreadNotifications' => $user->unreadNotifications()->count(),
+            ];
         });
     }
 }

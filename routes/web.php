@@ -23,9 +23,24 @@ Route::post('/invitations/{token}/accept', [InvitationController::class, 'accept
 
 // Authenticated routes
 Route::middleware(['auth', 'verified'])->group(function () {
+    // Local debug: list logged-in user permissions & roles (remove in production)
+    if (app()->environment(['local', 'development'])) {
+        Route::get('/debug/permissions', function () {
+            return response()->json([
+                'user' => auth()->user()?->only(['id','email','name']),
+                'roles' => auth()->user()?->getRoleNames(),
+                'permissions' => auth()->user()?->getPermissionNames(),
+            ]);
+        });
+    }
     
     // Dashboard
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+
+    // Profile (missing previously) - convert to Inertia
+    Route::get('/profile', function() { return inertia('Profile/Edit', [ 'user' => auth()->user() ]); })->name('profile.edit');
+    Route::put('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [\App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // User Preferences
     Route::post('/preferences/dark-mode', [PreferencesController::class, 'updateDarkMode'])->name('preferences.darkMode');

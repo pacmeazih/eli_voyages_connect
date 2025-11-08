@@ -53,13 +53,13 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
-        // Expose Laravel data globally for components
+        // Optional: mirror to window for legacy components
         window.Laravel = {
             permissions: props.initialPage.props.auth?.user?.permissions || [],
             roles: props.initialPage.props.auth?.user?.roles || [],
             darkMode: props.initialPage.props.auth?.user?.dark_mode || false,
         };
-        
+
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)

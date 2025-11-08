@@ -6,9 +6,12 @@ use App\Models\Document;
 use App\Models\Dossier;
 use App\Services\DocumentService;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DocumentController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(
         protected DocumentService $documentService
     ) {}

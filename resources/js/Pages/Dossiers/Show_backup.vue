@@ -150,23 +150,6 @@
                     <Card v-if="canChangeStatus">
                         <template #header>Actions</template>
                         <div class="space-y-2">
-                            <!-- Validate and Approve buttons -->
-                            <PrimaryButton
-                                v-if="canValidate && dossier.status === 'in_progress'"
-                                @click="validateDossier"
-                                class="w-full justify-center bg-green-600 hover:bg-green-700"
-                            >
-                                Valider le dossier
-                            </PrimaryButton>
-                            <PrimaryButton
-                                v-if="canApprove && dossier.status === 'in_progress'"
-                                @click="approveDossier"
-                                class="w-full justify-center bg-blue-600 hover:bg-blue-700"
-                            >
-                                Approuver le dossier
-                            </PrimaryButton>
-                            
-                            <!-- Status change buttons -->
                             <PrimaryButton
                                 v-if="dossier.status === 'new'"
                                 @click="updateStatus('in_progress')"
@@ -377,14 +360,6 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    canValidate: {
-        type: Boolean,
-        default: false,
-    },
-    canApprove: {
-        type: Boolean,
-        default: false,
-    },
 });
 
 const currentTab = ref('overview');
@@ -439,18 +414,6 @@ const updateStatus = (status) => {
         router.patch(route('dossiers.update', props.dossier.id), {
             status: status,
         });
-    }
-};
-
-const validateDossier = () => {
-    if (confirm('Valider ce dossier ?')) {
-        router.post(route('dossiers.validate', props.dossier.id));
-    }
-};
-
-const approveDossier = () => {
-    if (confirm('Approuver ce dossier ?')) {
-        router.post(route('dossiers.approve', props.dossier.id));
     }
 };
 

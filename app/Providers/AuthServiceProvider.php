@@ -6,6 +6,8 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Models\Document;
 use App\Policies\DocumentPolicy;
+use App\Models\Dossier;
+use App\Policies\DossierPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Document::class => DocumentPolicy::class,
+        Dossier::class => DossierPolicy::class,
     ];
 
     /**

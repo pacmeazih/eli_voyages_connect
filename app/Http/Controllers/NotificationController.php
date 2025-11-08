@@ -29,7 +29,16 @@ class NotificationController extends Controller
      */
     public function page()
     {
-        return inertia('Notifications/Index');
+        $paginator = Auth::user()->notifications()->latest()->paginate(20);
+
+        return inertia('Notifications/Index', [
+            'bootstrap' => [
+                'unread' => Auth::user()->unreadNotifications->count(),
+                'total' => $paginator->total(),
+            ],
+            'initialNotifications' => $paginator->items(),
+            'hasMore' => $paginator->hasMorePages(),
+        ]);
     }
 
     /**

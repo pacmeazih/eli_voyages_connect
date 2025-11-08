@@ -9,9 +9,11 @@ use App\Notifications\DossierCreatedNotification;
 use App\Notifications\DossierStatusChangedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DossierController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of dossiers.
      */
@@ -50,6 +52,7 @@ class DossierController extends Controller
         return inertia('Dossiers/Index', [
             'dossiers' => $dossiers,
             'filters' => $request->only('search', 'status'),
+            'canCreate' => auth()->user()->can('create', Dossier::class),
         ]);
     }
 
@@ -132,6 +135,13 @@ class DossierController extends Controller
             'dossier' => $dossier,
             'documents' => $documents,
             'activities' => $activities,
+            'canEdit' => auth()->user()->can('update', $dossier),
+            'canDelete' => auth()->user()->can('delete', $dossier),
+            'canValidate' => auth()->user()->can('validate', $dossier),
+            'canApprove' => auth()->user()->can('approve', $dossier),
+            'canChangeStatus' => auth()->user()->can('update', $dossier),
+            'canUploadDocuments' => auth()->user()->hasPermissionTo('upload documents'),
+            'canDeleteDocuments' => auth()->user()->hasPermissionTo('delete documents'),
         ]);
     }
 
@@ -147,6 +157,7 @@ class DossierController extends Controller
         return inertia('Dossiers/Edit', [
             'dossier' => $dossier->load('client'),
             'clients' => $clients,
+            'canDelete' => auth()->user()->can('delete', $dossier),
         ]);
     }
 
