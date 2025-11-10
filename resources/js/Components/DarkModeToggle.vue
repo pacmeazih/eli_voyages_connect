@@ -2,7 +2,7 @@
     <button
         @click="toggleDarkMode"
         class="p-2 rounded-lg transition-colors duration-200"
-        :class="isDark ? 'text-yellow-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100'"
+        :class="isDark ? 'text-brand-accent hover:bg-gray-700' : 'text-white hover:bg-brand-primary/50'"
         :title="isDark ? 'Mode clair' : 'Mode sombre'"
     >
         <!-- Sun icon (light mode) -->
@@ -40,39 +40,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { usePreferencesStore } from '@/stores/preferences';
 
-const isDark = ref(false);
+const preferencesStore = usePreferencesStore();
 
-onMounted(() => {
-    // Check user preference from server
-    isDark.value = window.Laravel?.darkMode || false;
-    
-    // Apply dark mode class
-    if (isDark.value) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
-    }
-});
+const isDark = computed(() => preferencesStore.theme === 'dark');
 
 const toggleDarkMode = () => {
-    isDark.value = !isDark.value;
-    
-    // Toggle class on html element
-    if (isDark.value) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
-    }
-    
-    // Save preference to server
-    router.post('/preferences/dark-mode', {
-        dark_mode: isDark.value,
-    }, {
-        preserveScroll: true,
-        preserveState: true,
-    });
+    preferencesStore.toggleTheme();
 };
 </script>
