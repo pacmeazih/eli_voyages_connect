@@ -43,7 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // ========== API ROUTES (routes/api.php) ==========
 
-use App\Http\Controllers\ContractController;
+// Note: ContractController is already imported above, no need to import again
 
 // DocuSeal Webhook Endpoint (exclude from CSRF protection)
 Route::post('/webhooks/docuseal', [ContractController::class, 'webhook'])

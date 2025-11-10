@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <VerticalLayout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Header -->
             <div class="mb-6">
@@ -140,12 +140,12 @@
                 </button>
             </div>
         </div>
-    </AppLayout>
+    </VerticalLayout>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import AppLayout from '@/Layouts/AppLayout.vue';
+import VerticalLayout from '@/Layouts/VerticalLayout.vue';
 import Card from '@/Components/Card.vue';
 import axios from 'axios';
 

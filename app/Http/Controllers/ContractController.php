@@ -4,18 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Dossier;
 use App\Models\Package;
-use App\Services\ContractGenerationService;
+use App\Models\Document;
+use App\Services\ContractGeneratorService;
+use App\Services\DocuSealService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ContractController extends Controller
 {
-    protected ContractGenerationService $contractService;
+    protected ContractGeneratorService $contractService;
+    protected DocuSealService $docuSeal;
 
-    public function __construct(ContractGenerationService $contractService)
+    public function __construct(ContractGeneratorService $contractService, DocuSealService $docuSeal)
     {
         $this->contractService = $contractService;
+        $this->docuSeal = $docuSeal;
     }
 
     /**
@@ -86,6 +92,138 @@ class ContractController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    /**
+     * New flow: Generate + Send for e-signature (DocuSeal)
+     * Compatible with resources/js/Pages/Contracts/GenerateEnhanced.vue
+     */
+    public function store(Request $request, Dossier $dossier)
+    {
+        $validated = $request->validate([
+            'type' => 'required|string',
+            'language' => 'required|in:fr,en,ar',
+            'variables' => 'required|array',
+            'template_id' => 'nullable|integer',
+            'signers' => 'required|array|min:1',
+            'signers.*.type' => 'required|string',
+            'signers.*.name' => 'required|string',
+            'signers.*.email' => 'required|email',
+            'signers.*.phone' => 'nullable|string',
+        ]);
+
+        $dossier->load('client', 'package');
+
+        // 1) Prepare variables and generate PDF from Word template (for archive/preview)
+        $variables = $this->prepareContractVariables($dossier, $validated['variables']);
+        $generatedPath = $this->contractService->generateContract(
+            $validated['type'],
+            $variables,
+            'pdf'
+        );
+
+        // Persist as a Document linked to the dossier
+        $document = $dossier->documents()->create([
+            'type' => 'contract',
+            'name' => basename($generatedPath),
+            'path' => $generatedPath, // already relative to storage/app in our service
+            'mime_type' => 'application/pdf',
+            'size' => Storage::size($generatedPath) ?? 0,
+            'uploaded_by' => auth()->id(),
+            'description' => 'Contrat généré (avant signature)',
+        ]);
+
+        // 2) Send for e-signature using DocuSeal templates
+        $templateId = $validated['template_id']
+            ?? Config::get('docuseal.templates.' . $validated['type']);
+
+        if (!$templateId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Aucun template DocuSeal configuré pour ce type de contrat.',
+            ], 422);
+        }
+
+        // Map signers to DocuSeal submitters format
+        // IMPORTANT: Consultant must sign FIRST, then client
+        $submitters = collect($validated['signers'])
+            ->sortBy(function ($signer) {
+                // Consultant gets order 0 (first), client gets order 1 (second)
+                return $signer['type'] === 'consultant' ? 0 : 1;
+            })
+            ->values()
+            ->map(function ($signer, $index) use ($dossier, $variables) {
+                return [
+                    'role' => $signer['type'], // must match DocuSeal role in template
+                    'name' => $signer['name'],
+                    'email' => $signer['email'],
+                    'phone' => $signer['phone'] ?? null,
+                    'order' => $index, // Ensures sequential signing
+                    'values' => [
+                        // Optional prefill values for DocuSeal template fields
+                        // Example: ['field_name' => 'value']
+                    ],
+                    'external_id' => 'dossier:' . $dossier->id,
+                ];
+            })
+            ->toArray();
+
+        $options = [
+            'completed_redirect_url' => route('contracts.show', $dossier->id),
+            'message' => 'Veuillez signer le contrat pour le dossier #' . ($dossier->numero ?? $dossier->id),
+        ];
+
+        $submission = $this->docuSeal->createSubmission($templateId, $submitters, $options);
+
+        // The API returns an array of submitters with submission_id and embed_src
+        $submissionId = $submission[0]['submission_id'] ?? null;
+        $embedUrl = $submission[0]['embed_src'] ?? null;
+
+        // Update our document with DocuSeal metadata (requires columns on documents table)
+        if (Schema::hasColumn('documents', 'docuseal_submission_id')) {
+            $document->update([
+                'docuseal_submission_id' => $submissionId,
+                'docuseal_template_id' => $templateId,
+                'docuseal_signers' => $validated['signers'],
+                'consultant_id' => collect($validated['signers'])
+                    ->firstWhere('type', 'consultant')['user_id'] ?? auth()->id(),
+                'sent_for_signature_at' => now(),
+                'status' => 'sent',
+            ]);
+        }
+
+        // Return data for frontend to redirect to Sign.vue
+        return response()->json([
+            'success' => true,
+            'document_id' => $document->id,
+            'submission_id' => $submissionId,
+            'embed_url' => $embedUrl,
+            'message' => 'Contrat généré et envoyé pour signature',
+        ]);
+    }
+
+    /**
+     * Show signature page
+     */
+    public function show(Dossier $dossier)
+    {
+        $latestContract = $dossier->documents()->ofType('contract')->latest()->first();
+
+        return Inertia::render('Contracts/Sign', [
+            'contract' => [
+                'id' => $latestContract?->id,
+                'status' => $latestContract?->status ?? 'sent',
+                'dossier' => [
+                    'id' => $dossier->id,
+                    'reference' => $dossier->numero ?? (string)$dossier->id,
+                    'client' => [
+                        'name' => $dossier->client?->full_name,
+                    ],
+                ],
+                'signatures' => [], // could be filled from a tracking table later
+            ],
+            'embedUrl' => null, // Frontend can receive from store() response
+        ]);
     }
 
     /**

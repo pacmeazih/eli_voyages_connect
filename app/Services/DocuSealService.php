@@ -4,6 +4,8 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Document;
 
 /**
  * DocuSeal API Service for e-signature integration
@@ -265,16 +267,44 @@ class DocuSealService
      */
     protected function handleFormCompleted(array $data): void
     {
-        // TODO: Implement business logic
-        // - Update contract status to 'signed'
-        // - Download and store signed document
-        // - Send notification to consultant
-        // - Log activity
-        
+        $submissionId = $data['submission_id'] ?? $data['submission']['id'] ?? null;
+
         Log::info('DocuSeal: Form completed', [
             'submitter_email' => $data['email'] ?? null,
             'external_id' => $data['external_id'] ?? null,
+            'submission_id' => $submissionId,
         ]);
+
+        if (!$submissionId) {
+            return;
+        }
+
+        // Locate our document by submission id
+        $document = Document::where('docuseal_submission_id', $submissionId)->latest()->first();
+        if (!$document) {
+            Log::warning('DocuSeal: Document not found for submission', ['submission_id' => $submissionId]);
+            return;
+        }
+
+        // Download signed documents and store the first one
+        try {
+            $docs = $this->getSubmissionDocuments((int)$submissionId);
+            if (!empty($docs)) {
+                $first = $docs[0];
+                $content = $this->downloadDocument($first['url']);
+                $signedPath = 'contracts/signed/contract_signed_' . $submissionId . '_' . time() . '.pdf';
+                Storage::put($signedPath, $content);
+                $document->markCompleted($signedPath);
+            } else {
+                $document->markCompleted();
+            }
+        } catch (\Throwable $e) {
+            Log::error('DocuSeal: Failed to download/store signed document', [
+                'submission_id' => $submissionId,
+                'error' => $e->getMessage(),
+            ]);
+            $document->markCompleted();
+        }
     }
 
     /**
@@ -298,15 +328,39 @@ class DocuSealService
      */
     protected function handleSubmissionCompleted(array $data): void
     {
-        // TODO: Implement business logic
-        // - Update contract status to 'completed'
-        // - Download all signed documents
-        // - Send completion email to all parties
-        // - Generate invoice if needed
-        
+        $submissionId = $data['id'] ?? null;
         Log::info('DocuSeal: Submission completed', [
-            'submission_id' => $data['id'] ?? null,
+            'submission_id' => $submissionId,
         ]);
+
+        if (!$submissionId) {
+            return;
+        }
+
+        $document = Document::where('docuseal_submission_id', $submissionId)->latest()->first();
+        if (!$document) {
+            Log::warning('DocuSeal: Document not found for submission', ['submission_id' => $submissionId]);
+            return;
+        }
+
+        try {
+            $docs = $this->getSubmissionDocuments((int)$submissionId);
+            if (!empty($docs)) {
+                $first = $docs[0];
+                $content = $this->downloadDocument($first['url']);
+                $signedPath = 'contracts/signed/contract_signed_' . $submissionId . '_' . time() . '.pdf';
+                Storage::put($signedPath, $content);
+                $document->markCompleted($signedPath);
+            } else {
+                $document->markCompleted();
+            }
+        } catch (\Throwable $e) {
+            Log::error('DocuSeal: Failed to download/store signed document on submission.completed', [
+                'submission_id' => $submissionId,
+                'error' => $e->getMessage(),
+            ]);
+            $document->markCompleted();
+        }
     }
 
     /**
@@ -314,14 +368,16 @@ class DocuSealService
      */
     protected function handleSubmissionExpired(array $data): void
     {
-        // TODO: Implement business logic
-        // - Update contract status to 'expired'
-        // - Send notification to consultant
-        // - Optionally create new submission
+        $submissionId = $data['id'] ?? null;
         
         Log::info('DocuSeal: Submission expired', [
-            'submission_id' => $data['id'] ?? null,
+            'submission_id' => $submissionId,
         ]);
+
+        if ($submissionId) {
+            Document::where('docuseal_submission_id', $submissionId)
+                ->update(['status' => 'expired']);
+        }
     }
 
     /**

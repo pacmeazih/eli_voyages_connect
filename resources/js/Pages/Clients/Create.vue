@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <VerticalLayout>
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Header -->
             <div class="mb-8">
@@ -452,20 +452,20 @@
                 </form>
             </Card>
         </div>
-    </AppLayout>
+    </VerticalLayout>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import { useForm, Link } from '@inertiajs/vue3';
 import { useUserStore } from '@/stores/user';
-import { useUiStore } from '@/stores/ui';
-import AppLayout from '@/Layouts/AppLayout.vue';
+import { useUIStore } from '@/stores/ui';
+import VerticalLayout from '@/Layouts/VerticalLayout.vue';
 import Card from '@/Components/Card.vue';
 import FormField from '@/Components/FormField.vue';
 
 const userStore = useUserStore();
-const uiStore = useUiStore();
+const uiStore = useUIStore();
 
 const props = defineProps({
     client: {

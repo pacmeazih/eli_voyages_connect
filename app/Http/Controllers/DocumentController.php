@@ -175,4 +175,44 @@ class DocumentController extends Controller
 
         return back()->with('success', 'New version uploaded successfully!');
     }
+
+    /**
+     * Approve uploaded document (Team only)
+     */
+    public function approve(Document $document)
+    {
+        $this->authorize('view', $document->dossier);
+        $this->authorize('validate documents'); // Staff permission
+
+        $document->approve(auth()->user());
+
+        activity()
+            ->performedOn($document)
+            ->causedBy(auth()->user())
+            ->log('Document approved: ' . $document->name);
+
+        return back()->with('success', 'Document approuvé avec succès!');
+    }
+
+    /**
+     * Reject uploaded document with reason (Team only)
+     */
+    public function reject(Request $request, Document $document)
+    {
+        $this->authorize('view', $document->dossier);
+        $this->authorize('validate documents'); // Staff permission
+
+        $validated = $request->validate([
+            'reason' => 'required|string|max:500',
+        ]);
+
+        $document->reject(auth()->user(), $validated['reason']);
+
+        activity()
+            ->performedOn($document)
+            ->causedBy(auth()->user())
+            ->log('Document rejected: ' . $document->name . ' - Reason: ' . $validated['reason']);
+
+        return back()->with('success', 'Document rejeté. Le client sera notifié.');
+    }
 }

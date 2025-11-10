@@ -13,6 +13,8 @@ export const useUserStore = defineStore('user', () => {
     const fullName = computed(() => user.value?.name || '');
     const email = computed(() => user.value?.email || '');
     const primaryRole = computed(() => roles.value[0] || null);
+    const clientId = computed(() => user.value?.client_id || null);
+    const hasClientAccount = computed(() => !!user.value?.client_id);
     
     // Role checks
     const isSuperAdmin = computed(() => roles.value.includes('SuperAdmin'));
@@ -72,6 +74,8 @@ export const useUserStore = defineStore('user', () => {
         fullName,
         email,
         primaryRole,
+        clientId,
+        hasClientAccount,
         isSuperAdmin,
         isConsultant,
         isAgent,

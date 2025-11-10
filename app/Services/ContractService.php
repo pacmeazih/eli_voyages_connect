@@ -175,13 +175,55 @@ class ContractService
      */
     protected function handleFormCompleted(array $payload): void
     {
-        // TODO: Update dossier status
-        // TODO: Send notifications
-        // TODO: Store signed document
+        $submissionId = $payload['submission_id'] ?? null;
+        $submitter = $payload['submitter'] ?? [];
         
-        activity()
-            ->withProperties($payload)
-            ->log('Contract signed and completed');
+        if (!$submissionId) {
+            return;
+        }
+
+        // Find document by submission ID
+        $document = \App\Models\Document::where('docuseal_submission_id', $submissionId)->first();
+        
+        if (!$document) {
+            Log::warning('Document not found for submission', ['submission_id' => $submissionId]);
+            return;
+        }
+
+        // Check if this is a consultant signing
+        $role = $submitter['role'] ?? null;
+        if ($role === 'consultant' && !$document->consultant_signed_at) {
+            $document->update([
+                'consultant_signed_at' => now(),
+            ]);
+            
+            activity()
+                ->performedOn($document)
+                ->withProperties([
+                    'submitter' => $submitter,
+                    'role' => 'consultant',
+                ])
+                ->log('Contract signed by consultant');
+                
+            // Notify client that consultant has signed and it's their turn
+            // TODO: Send notification to client
+        }
+        
+        // Check if all signers have completed (form.completed means ALL signers done)
+        if (isset($payload['status']) && $payload['status'] === 'completed') {
+            $document->update([
+                'status' => 'completed',
+                'completed_at' => now(),
+            ]);
+            
+            activity()
+                ->performedOn($document)
+                ->withProperties($payload)
+                ->log('Contract fully signed by all parties');
+                
+            // TODO: Store final signed PDF
+            // TODO: Send completion notifications
+        }
     }
 
     /**

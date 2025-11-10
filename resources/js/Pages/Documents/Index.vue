@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <VerticalLayout>
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="mb-6 flex items-center justify-between">
                 <div>
@@ -225,7 +225,7 @@
                 </div>
             </Card>
         </div>
-    </AppLayout>
+    </VerticalLayout>
 </template>
 
 
@@ -233,12 +233,12 @@
 import { ref, reactive } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
 import { useUserStore } from '@/stores/user';
-import { useUiStore } from '@/stores/ui';
-import AppLayout from '@/Layouts/AppLayout.vue';
+import { useUIStore } from '@/stores/ui';
+import VerticalLayout from '@/Layouts/VerticalLayout.vue';
 import Card from '@/Components/Card.vue';
 
 const userStore = useUserStore();
-const uiStore = useUiStore();
+const uiStore = useUIStore();
 
 const props = defineProps({
     dossier: { type: Object, required: true },

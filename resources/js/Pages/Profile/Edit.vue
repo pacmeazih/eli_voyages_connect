@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <VerticalLayout>
         <div class="max-w-4xl mx-auto px-4 py-8">
             <h1 class="text-2xl font-bold mb-6">Mon profil</h1>
             <form @submit.prevent="submit" class="space-y-6">
@@ -17,11 +17,11 @@
                 </div>
             </form>
         </div>
-    </AppLayout>
+    </VerticalLayout>
 </template>
 
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
+import VerticalLayout from '@/Layouts/VerticalLayout.vue';
 import { useForm, router } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 

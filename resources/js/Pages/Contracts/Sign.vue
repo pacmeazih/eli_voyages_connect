@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <VerticalLayout>
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Header -->
             <div class="mb-8">
@@ -253,18 +253,18 @@
                 </div>
             </div>
         </div>
-    </AppLayout>
+    </VerticalLayout>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
-import { useUiStore } from '@/stores/ui';
-import AppLayout from '@/Layouts/AppLayout.vue';
+import { useUIStore } from '@/stores/ui';
+import VerticalLayout from '@/Layouts/VerticalLayout.vue';
 import Card from '@/Components/Card.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
 
-const uiStore = useUiStore();
+const uiStore = useUIStore();
 
 const props = defineProps({
     contract: { type: Object, required: true },

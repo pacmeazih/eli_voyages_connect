@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <VerticalLayout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="mb-6">
@@ -168,12 +168,12 @@
                 </div>
             </Card>
         </div>
-    </AppLayout>
+    </VerticalLayout>
 </template>
 
 <script setup>
 import { useTranslation } from '@/composables/useTranslation';
-import AppLayout from '@/Layouts/AppLayout.vue';
+import VerticalLayout from '@/Layouts/VerticalLayout.vue';
 import Card from '@/Components/Card.vue';
 import StatCard from '@/Components/StatCard.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';

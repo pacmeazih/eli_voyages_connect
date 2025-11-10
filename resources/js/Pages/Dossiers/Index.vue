@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <VerticalLayout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="sm:flex sm:items-center sm:justify-between mb-6">
@@ -167,13 +167,13 @@
                 </nav>
             </div>
         </div>
-    </AppLayout>
+    </VerticalLayout>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
-import AppLayout from '@/Layouts/AppLayout.vue';
+import VerticalLayout from '@/Layouts/VerticalLayout.vue';
 import Card from '@/Components/Card.vue';
 
 const props = defineProps({

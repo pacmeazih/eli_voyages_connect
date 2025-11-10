@@ -10,6 +10,7 @@ class Client extends Model
     use HasFactory;
 
     protected $fillable = [
+        'client_code',
         'civilite',
         'nom',
         'prenom',
@@ -39,6 +40,47 @@ class Client extends Model
         'passeport_date_emission' => 'date',
         'date_naissance' => 'date',
     ];
+
+    /**
+     * Boot method to auto-generate client_code
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($client) {
+            if (!$client->client_code) {
+                $client->client_code = self::generateClientCode();
+            }
+        });
+    }
+
+    /**
+     * Generate unique client code: EV-YYYY-XXXX
+     */
+    public static function generateClientCode(): string
+    {
+        $year = now()->year;
+        $lastClient = self::where('client_code', 'like', "EV-{$year}-%")
+            ->orderBy('client_code', 'desc')
+            ->first();
+
+        if ($lastClient && preg_match('/EV-\d{4}-(\d{4})/', $lastClient->client_code, $matches)) {
+            $sequence = str_pad((int)$matches[1] + 1, 4, '0', STR_PAD_LEFT);
+        } else {
+            $sequence = '0001';
+        }
+
+        $code = "EV-{$year}-{$sequence}";
+
+        // Ensure uniqueness with invitation codes
+        while (self::where('client_code', $code)->exists() || ClientInvitation::where('client_code', $code)->exists()) {
+            $sequence = str_pad((int)$sequence + 1, 4, '0', STR_PAD_LEFT);
+            $code = "EV-{$year}-{$sequence}";
+        }
+
+        return $code;
+    }
 
     /**
      * Get dossiers for this client

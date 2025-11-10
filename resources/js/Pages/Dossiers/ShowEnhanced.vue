@@ -370,7 +370,7 @@
 import { ref } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
 import { useUserStore } from '@/stores/user';
-import { useUiStore } from '@/stores/ui';
+import { useUIStore } from '@/stores/ui';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Card from '@/Components/Card.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
@@ -381,7 +381,7 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 
 const userStore = useUserStore();
-const uiStore = useUiStore();
+const uiStore = useUIStore();
 
 const props = defineProps({
     dossier: { type: Object, required: true },

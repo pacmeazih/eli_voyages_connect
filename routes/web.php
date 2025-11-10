@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\ClientInvitationController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DossierController;
 use App\Http\Controllers\DashboardController;
@@ -17,7 +18,11 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 })->middleware('auth');
 
-// Public invitation routes
+// Public client invitation routes (no auth required)
+Route::get('/client-invitations/{token}', [ClientInvitationController::class, 'show'])->name('client-invitations.show');
+Route::post('/client-invitations/{token}/accept', [ClientInvitationController::class, 'accept'])->name('client-invitations.accept');
+
+// Public invitation routes (legacy - keep for compatibility)
 Route::get('/invitations/{token}', [InvitationController::class, 'show'])->name('invitations.show');
 Route::post('/invitations/{token}/accept', [InvitationController::class, 'accept'])->name('invitations.accept');
 
@@ -77,7 +82,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/client-tracking', [ClientTrackingController::class, 'index'])->name('client.tracking');
     Route::get('/client-tracking/{dossier}', [ClientTrackingController::class, 'show'])->name('client.tracking.show');
 
-    // Invitations (for users with permission)
+    // Client Invitations (team can send invitations to create client accounts)
+    Route::middleware('can:invite users')->group(function () {
+        Route::get('/client-invitations', [ClientInvitationController::class, 'index'])->name('client-invitations.index');
+        Route::get('/client-invitations/create', [ClientInvitationController::class, 'create'])->name('client-invitations.create');
+        Route::post('/client-invitations', [ClientInvitationController::class, 'store'])->name('client-invitations.store');
+        Route::post('/client-invitations/{invitation}/resend', [ClientInvitationController::class, 'resend'])->name('client-invitations.resend');
+        Route::delete('/client-invitations/{invitation}', [ClientInvitationController::class, 'destroy'])->name('client-invitations.destroy');
+    });
+
+    // Invitations (for users with permission - legacy)
     Route::middleware('can:invite users')->group(function () {
         Route::resource('invitations', InvitationController::class)->except(['show', 'edit', 'update']);
         Route::post('invitations/{invitation}/resend', [InvitationController::class, 'resend'])->name('invitations.resend');
@@ -98,6 +112,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Documents (direct access)
     Route::resource('documents', DocumentController::class)->except(['index', 'create', 'store']);
     Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+    Route::post('/documents/{document}/approve', [DocumentController::class, 'approve'])->name('documents.approve');
+    Route::post('/documents/{document}/reject', [DocumentController::class, 'reject'])->name('documents.reject');
     Route::post('/documents/{document}/version', [DocumentController::class, 'version'])->name('documents.version');
 
     // Contracts

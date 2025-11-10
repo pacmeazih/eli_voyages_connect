@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <VerticalLayout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="mb-6">
@@ -244,7 +244,7 @@
                 </div>
             </div>
         </div>
-    </AppLayout>
+    </VerticalLayout>
 </template>
 
 <script setup>
@@ -254,7 +254,7 @@ import { useUserStore } from '@/stores/user';
 import { usePreferencesStore } from '@/stores/preferences';
 import { useUIStore } from '@/stores/ui';
 import { useTranslation } from '@/composables/useTranslation';
-import AppLayout from '@/Layouts/AppLayout.vue';
+import VerticalLayout from '@/Layouts/VerticalLayout.vue';
 import Card from '@/Components/Card.vue';
 import FormField from '@/Components/FormField.vue';
 
