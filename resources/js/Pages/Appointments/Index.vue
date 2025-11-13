@@ -268,13 +268,18 @@ onMounted(() => {
     <VerticalLayout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Header -->
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-                    📅 Calendrier des rendez-vous
-                </h1>
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+                        Calendrier des rendez-vous
+                    </h1>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        Gérez vos rendez-vous et consultations
+                    </p>
+                </div>
                 <button
                     @click="openBookingModal()"
-                    class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all"
+                    class="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 dark:focus:ring-offset-gray-800"
                 >
                     + Nouveau rendez-vous
                 </button>
@@ -455,8 +460,8 @@ onMounted(() => {
                                     :class="[
                                         'px-3 py-2 text-sm rounded-lg border transition-colors',
                                         bookingForm.scheduled_at === slot.datetime
-                                            ? 'bg-blue-600 text-white border-blue-600'
-                                            : 'border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                                            ? 'bg-brand-primary text-white border-brand-primary'
+                                            : 'border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
                                     ]">
                                     {{ slot.label }}
                                 </button>
@@ -474,8 +479,8 @@ onMounted(() => {
                                     :class="[
                                         'px-4 py-3 text-sm rounded-lg border transition-colors text-left',
                                         bookingForm.type === type.value
-                                            ? 'bg-blue-600 text-white border-blue-600'
-                                            : 'border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                                            ? 'bg-brand-primary text-white border-brand-primary'
+                                            : 'border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
                                     ]">
                                     <span class="mr-2">{{ type.icon }}</span>
                                     {{ type.label }}
@@ -516,7 +521,7 @@ onMounted(() => {
                                 Annuler
                             </button>
                             <button type="submit" :disabled="loading"
-                                class="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-semibold shadow-lg transition-all disabled:opacity-50">
+                                class="flex-1 px-6 py-3 bg-brand-primary hover:bg-brand-primary/90 text-white rounded-lg font-semibold shadow-lg transition-all disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 dark:focus:ring-offset-gray-800">
                                 Réserver
                             </button>
                         </div>
