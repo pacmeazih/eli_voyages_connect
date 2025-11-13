@@ -12,7 +12,7 @@
                 <div class="mt-4 sm:mt-0">
                     <Link
                         :href="route('invitations.create')"
-                        class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700"
+                        class="inline-flex items-center px-4 py-2 bg-brand-primary border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-brand-primary/90"
                     >
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -118,7 +118,7 @@
                                     {{ invitation.email }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand-primary/10 text-brand-primary">
                                         {{ invitation.role }}
                                     </span>
                                 </td>
@@ -144,7 +144,7 @@
                                         <button
                                             v-if="invitation.status === 'pending'"
                                             @click="resendInvitation(invitation.id)"
-                                            class="text-indigo-600 hover:text-indigo-900"
+                                            class="text-brand-primary hover:text-brand-primary/80"
                                             title="Renvoyer"
                                         >
                                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

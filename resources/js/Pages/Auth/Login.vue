@@ -18,6 +18,15 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
+// Demo login helper
+const loginAsDemo = (email, password) => {
+    form.email = email;
+    form.password = password;
+    form.post(route('login'), {
+        onFinish: () => form.reset('password'),
+    });
+};
 </script>
 
 <template>
@@ -101,6 +110,44 @@ const submit = () => {
             <span v-else>Se connecter</span>
           </PrimaryButton>
         </form>
+
+        <!-- Demo Mode Login Buttons -->
+        <div class="mt-8 border-t border-gray-200 pt-6">
+          <p class="text-center text-xs text-gray-500 mb-4 font-medium uppercase tracking-wide">🎭 Mode Démo</p>
+          <div class="grid grid-cols-2 gap-3">
+            <!-- Admin Demo -->
+            <button
+              @click="loginAsDemo('admin@elivoyages.com', 'password')"
+              class="relative overflow-hidden px-3 py-2 text-xs font-semibold text-white rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 active:scale-95 bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900"
+            >
+              <span class="relative z-10">👑 Admin</span>
+            </button>
+
+            <!-- Agent Demo -->
+            <button
+              @click="loginAsDemo('agent@elivoyages.com', 'password')"
+              class="relative overflow-hidden px-3 py-2 text-xs font-semibold text-white rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 active:scale-95 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900"
+            >
+              <span class="relative z-10">🎯 Agent</span>
+            </button>
+
+            <!-- Client Demo -->
+            <button
+              @click="loginAsDemo('client@elivoyages.com', 'password')"
+              class="relative overflow-hidden px-3 py-2 text-xs font-semibold text-white rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 active:scale-95 bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900"
+            >
+              <span class="relative z-10">👤 Client</span>
+            </button>
+
+            <!-- Consultant Demo -->
+            <button
+              @click="loginAsDemo('consultant@elivoyages.com', 'password')"
+              class="relative overflow-hidden px-3 py-2 text-xs font-semibold text-white rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 active:scale-95 bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900"
+            >
+              <span class="relative z-10">💼 Consultant</span>
+            </button>
+          </div>
+        </div>
 
         <p class="mt-10 text-center text-xs text-gray-500">© 2025 SOUS TOUTES RÉSERVES</p>
       </div>

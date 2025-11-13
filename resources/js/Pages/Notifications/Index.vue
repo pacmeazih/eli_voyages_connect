@@ -14,7 +14,7 @@
                         @click="filter = 'all'"
                         class="px-4 py-2 rounded-lg text-sm font-medium transition"
                         :class="filter === 'all' 
-                            ? 'bg-indigo-600 text-white' 
+                            ? 'bg-brand-primary text-white' 
                             : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
                     >
                         Toutes ({{ stats.total }})
@@ -23,7 +23,7 @@
                         @click="filter = 'unread'"
                         class="px-4 py-2 rounded-lg text-sm font-medium transition"
                         :class="filter === 'unread' 
-                            ? 'bg-indigo-600 text-white' 
+                            ? 'bg-brand-primary text-white' 
                             : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
                     >
                         Non lues ({{ stats.unread }})
@@ -33,7 +33,7 @@
                 <button
                     v-if="stats.unread > 0"
                     @click="markAllAsRead"
-                    class="px-4 py-2 bg-white dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition"
+                    class="px-4 py-2 bg-white dark:bg-gray-800 text-brand-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition"
                 >
                     Tout marquer comme lu
                 </button>
@@ -42,7 +42,7 @@
             <!-- Notifications List -->
             <Card>
                 <div v-if="loading" class="flex justify-center items-center py-12">
-                    <svg class="animate-spin h-12 w-12 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg class="animate-spin h-12 w-12 text-brand-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -62,13 +62,13 @@
                         v-for="notification in filteredNotifications"
                         :key="notification.id"
                         class="p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-                        :class="{ 'bg-indigo-50 dark:bg-indigo-900/20': !notification.read_at }"
+                        :class="{ 'bg-brand-primary/5 dark:bg-brand-primary/10': !notification.read_at }"
                     >
                         <div class="flex items-start space-x-4">
                             <!-- Icon -->
                             <div class="flex-shrink-0">
-                                <div class="h-12 w-12 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center">
-                                    <svg class="h-6 w-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="h-12 w-12 rounded-full bg-brand-primary/10 flex items-center justify-center">
+                                    <svg class="h-6 w-6 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                                     </svg>
                                 </div>
@@ -92,7 +92,7 @@
                                     <!-- Unread Badge -->
                                     <span
                                         v-if="!notification.read_at"
-                                        class="ml-4 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200"
+                                        class="ml-4 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand-primary/10 text-brand-primary"
                                     >
                                         Non lu
                                     </span>
@@ -103,7 +103,7 @@
                                     <a
                                         v-if="notification.data.action_url"
                                         :href="notification.data.action_url"
-                                        class="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium"
+                                        class="text-sm text-brand-primary hover:text-brand-primary/80 font-medium"
                                         @click="markAsRead(notification.id)"
                                     >
                                         {{ notification.data.action_text || 'Voir' }} →

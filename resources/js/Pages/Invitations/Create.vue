@@ -27,7 +27,7 @@
                             v-model="form.email"
                             type="email"
                             required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-brand-primary focus:ring-brand-primary sm:text-sm"
                             :class="{ 'border-red-300': errors.email }"
                         />
                         <p v-if="errors.email" class="mt-1 text-sm text-red-600">
@@ -44,7 +44,7 @@
                             id="role"
                             v-model="form.role"
                             required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-brand-primary focus:ring-brand-primary sm:text-sm"
                             :class="{ 'border-red-300': errors.role }"
                         >
                             <option value="">Sélectionner un rôle</option>
@@ -69,7 +69,7 @@
                         <select
                             id="dossier_id"
                             v-model="form.dossier_id"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-brand-primary focus:ring-brand-primary sm:text-sm"
                             :class="{ 'border-red-300': errors.dossier_id }"
                         >
                             <option value="">Aucun dossier</option>
@@ -98,7 +98,7 @@
                             id="message"
                             v-model="form.message"
                             rows="4"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-brand-primary focus:ring-brand-primary sm:text-sm"
                             placeholder="Ajoutez un message personnel à l'invitation..."
                         />
                         <p class="mt-1 text-sm text-gray-500">
