@@ -2,21 +2,49 @@
     <VerticalLayout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
-            <div class="mb-6">
+            <div class="mb-8">
                 <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-                    {{ t('dashboard.title') }} - Agent
+                    Tableau de bord Agent
                 </h1>
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Suivez vos clients et gérez leurs dossiers
+                    Gérez vos clients et suivez vos dossiers en cours
                 </p>
             </div>
 
-            <!-- Stats Grid -->
+            <!-- Stats Grid - Reordered for workflow priority -->
             <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
                 <StatCard
-                    label="Mes dossiers"
+                    label="Documents manquants"
+                    :value="stats.missingDocuments || 0"
+                    icon-color="red"
+                    clickable
+                    @click="$inertia.visit(route('documents.index', { status: 'missing' }))"
+                >
+                    <template #icon>
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </template>
+                </StatCard>
+
+                <StatCard
+                    label="RDV cette semaine"
+                    :value="stats.weekAppointments || 0"
+                    icon-color="blue"
+                    clickable
+                    @click="$inertia.visit(route('appointments.index'))"
+                >
+                    <template #icon>
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </template>
+                </StatCard>
+
+                <StatCard
+                    label="Mes dossiers actifs"
                     :value="stats.myDossiers || 0"
-                    icon-color="indigo"
+                    icon-color="brand-primary"
                     clickable
                     @click="$inertia.visit(route('dossiers.index', { assigned_to: 'me' }))"
                 >
@@ -38,26 +66,7 @@
                         </svg>
                     </template>
                 </StatCard>
-
-                <StatCard
-                    label="Documents manquants"
-                    :value="stats.missingDocuments || 0"
-                    icon-color="red"
-                >
-                    <template #icon>
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                    </template>
-                </StatCard>
-
-                <StatCard
-                    label="RDV cette semaine"
-                    :value="stats.weekAppointments || 0"
-                    icon-color="blue"
-                    clickable
-                    @click="$inertia.visit(route('appointments.index'))"
-                >
+            </div>
                     <template #icon>
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />

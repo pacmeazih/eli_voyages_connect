@@ -2,31 +2,17 @@
     <VerticalLayout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
-            <div class="mb-6">
+            <div class="mb-8">
                 <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-                    {{ t('dashboard.title') }} - Consultant
+                    Tableau de bord Consultant
                 </h1>
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Gérez vos dossiers et validez les documents
+                    Révisez et validez les dossiers clients
                 </p>
             </div>
 
-            <!-- Stats Grid -->
+            <!-- Stats Grid - Reordered for review priority -->
             <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-                <StatCard
-                    label="Dossiers assignés"
-                    :value="stats.assignedDossiers || 0"
-                    icon-color="indigo"
-                    clickable
-                    @click="$inertia.visit(route('dossiers.index', { assigned_to: 'me' }))"
-                >
-                    <template #icon>
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                    </template>
-                </StatCard>
-
                 <StatCard
                     label="À réviser"
                     :value="stats.toReview || 0"
@@ -45,6 +31,8 @@
                     label="Documents en attente"
                     :value="stats.pendingDocuments || 0"
                     icon-color="orange"
+                    clickable
+                    @click="$inertia.visit(route('documents.index', { status: 'pending' }))"
                 >
                     <template #icon>
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,7 +42,21 @@
                 </StatCard>
 
                 <StatCard
-                    :label="t('dashboard.stats.appointments')"
+                    label="Dossiers assignés"
+                    :value="stats.assignedDossiers || 0"
+                    icon-color="brand-primary"
+                    clickable
+                    @click="$inertia.visit(route('dossiers.index', { assigned_to: 'me' }))"
+                >
+                    <template #icon>
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </template>
+                </StatCard>
+
+                <StatCard
+                    label="RDV à venir"
                     :value="stats.upcomingAppointments || 0"
                     icon-color="green"
                     clickable
@@ -106,7 +108,7 @@
                             @click="$inertia.visit(route('analytics.page'))"
                             class="flex flex-col items-center p-4 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 rounded-lg transition-colors"
                         >
-                            <svg class="h-8 w-8 text-blue-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="h-8 w-8 text-blue-600 dark:text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                             </svg>
                             <span class="text-sm font-medium text-gray-900 dark:text-white">Analytics</span>

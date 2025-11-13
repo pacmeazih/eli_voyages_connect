@@ -2,22 +2,24 @@
     <VerticalLayout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
-            <div class="mb-6">
+            <div class="mb-8">
                 <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-                    {{ t('dashboard.title') }} - Super Admin
+                    Tableau de bord - Super Admin
                 </h1>
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Vue d'ensemble globale de la plateforme
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                    Vue d'ensemble globale de la plateforme ELI-VOYAGES
                 </p>
             </div>
 
             <!-- Stats Grid -->
             <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
                 <StatCard
-                    :label="t('dashboard.stats.totalDossiers')"
+                    label="Total Dossiers"
                     :value="stats.totalDossiers || 0"
-                    icon-color="indigo"
+                    icon-color="brand-primary"
                     :change="stats.dossiersChange"
+                    clickable
+                    @click="$inertia.visit(route('dossiers.index'))"
                 >
                     <template #icon>
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,7 +29,7 @@
                 </StatCard>
 
                 <StatCard
-                    :label="t('dashboard.stats.totalClients')"
+                    label="Clients"
                     :value="stats.totalClients || 0"
                     icon-color="green"
                     :change="stats.clientsChange"
@@ -40,9 +42,11 @@
                 </StatCard>
 
                 <StatCard
-                    label="Consultants / Agents"
+                    label="Équipe (Consultants/Agents)"
                     :value="stats.totalStaff || 0"
                     icon-color="blue"
+                    clickable
+                    @click="$inertia.visit(route('invitations.index'))"
                 >
                     <template #icon>
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,7 +56,7 @@
                 </StatCard>
 
                 <StatCard
-                    :label="t('dashboard.stats.documents')"
+                    label="Documents"
                     :value="stats.totalDocuments || 0"
                     icon-color="orange"
                     :change="stats.documentsChange"
@@ -63,6 +67,54 @@
                         </svg>
                     </template>
                 </StatCard>
+            </div>
+
+            <!-- Quick Admin Actions -->
+            <div class="mb-8">
+                <Card title="Actions administratives">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <button
+                            @click="$inertia.visit(route('invitations.create'))"
+                            class="flex flex-col items-center p-4 bg-brand-primary/10 hover:bg-brand-primary/20 dark:bg-brand-primary/20 dark:hover:bg-brand-primary/30 rounded-lg transition-colors"
+                        >
+                            <svg class="h-8 w-8 text-brand-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
+                            <span class="text-sm font-medium text-gray-900 dark:text-white">Inviter utilisateur</span>
+                        </button>
+
+                        <button
+                            @click="$inertia.visit(route('dossiers.index'))"
+                            class="flex flex-col items-center p-4 bg-eli-turquoise-100 hover:bg-eli-turquoise-200 dark:bg-eli-turquoise-900/20 dark:hover:bg-eli-turquoise-900/30 rounded-lg transition-colors"
+                        >
+                            <svg class="h-8 w-8 text-eli-turquoise-600 dark:text-eli-turquoise-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span class="text-sm font-medium text-gray-900 dark:text-white">Tous les dossiers</span>
+                        </button>
+
+                        <button
+                            @click="$inertia.visit(route('analytics.page'))"
+                            class="flex flex-col items-center p-4 bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/20 dark:hover:bg-purple-900/30 rounded-lg transition-colors"
+                        >
+                            <svg class="h-8 w-8 text-purple-600 dark:text-purple-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                            <span class="text-sm font-medium text-gray-900 dark:text-white">Analytics</span>
+                        </button>
+
+                        <button
+                            @click="$inertia.visit(route('settings.index'))"
+                            class="flex flex-col items-center p-4 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors"
+                        >
+                            <svg class="h-8 w-8 text-gray-600 dark:text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="text-sm font-medium text-gray-900 dark:text-white">Paramètres</span>
+                        </button>
+                    </div>
+                </Card>
             </div>
 
             <!-- Two Column Layout -->

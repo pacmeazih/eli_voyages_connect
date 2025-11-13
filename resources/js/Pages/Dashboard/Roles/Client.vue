@@ -6,8 +6,8 @@
                 <h1 class="text-3xl font-bold mb-2">
                     Bienvenue, {{ userStore.user?.name }} 👋
                 </h1>
-                <p class="text-brand-accent">
-                    Suivez l'évolution de votre dossier d'immigration
+                <p class="text-brand-accent text-lg">
+                    Suivez l'évolution de votre dossier d'immigration ELI-VOYAGES
                 </p>
             </div>
 
@@ -109,16 +109,16 @@
                             <div class="flex-shrink-0 mt-1">
                                 <div class="w-8 h-8 rounded-full flex items-center justify-center"
                                     :class="{
-                                        'bg-green-100 dark:bg-green-900': activity.type === 'success',
-                                        'bg-blue-100 dark:bg-blue-900': activity.type === 'info',
-                                        'bg-yellow-100 dark:bg-yellow-900': activity.type === 'warning',
+                                        'bg-green-100 dark:bg-green-900/20': activity.type === 'success',
+                                        'bg-blue-100 dark:bg-blue-900/20': activity.type === 'info',
+                                        'bg-yellow-100 dark:bg-yellow-900/20': activity.type === 'warning',
                                     }"
                                 >
                                     <svg class="h-4 w-4" 
                                         :class="{
-                                            'text-green-600': activity.type === 'success',
-                                            'text-blue-600': activity.type === 'info',
-                                            'text-yellow-600': activity.type === 'warning',
+                                            'text-green-600 dark:text-green-400': activity.type === 'success',
+                                            'text-blue-600 dark:text-blue-400': activity.type === 'info',
+                                            'text-yellow-600 dark:text-yellow-400': activity.type === 'warning',
                                         }"
                                         fill="currentColor" viewBox="0 0 20 20"
                                     >
