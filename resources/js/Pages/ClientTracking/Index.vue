@@ -3,8 +3,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-900">Suivi de mon Dossier</h1>
-                <p class="mt-2 text-sm text-gray-600">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Suivi de mon Dossier</h1>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                     Suivez l'avancement de votre dossier d'immigration en temps réel
                 </p>
             </div>
@@ -13,8 +13,8 @@
             <Card class="mb-8">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h2 class="text-xl font-semibold text-gray-900">{{ dossier.reference }}</h2>
-                        <p class="text-sm text-gray-600 mt-1">{{ dossier.title }}</p>
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">{{ dossier.reference }}</h2>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ dossier.title }}</p>
                     </div>
                     <div>
                         <span
@@ -31,18 +31,18 @@
             <Card class="mb-8">
                 <template #header>
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-semibold">Progression du Dossier</h3>
-                        <span class="text-sm text-gray-500">{{ progressPercentage }}% complété</span>
+                        <h3 class="text-lg font-semibold dark:text-white">Progression du Dossier</h3>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ progressPercentage }}% complété</span>
                     </div>
                 </template>
 
                 <!-- Progress Bar -->
                 <div class="mb-8">
                     <div class="relative">
-                        <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
+                        <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200 dark:bg-gray-700">
                             <div
                                 :style="{ width: progressPercentage + '%' }"
-                                class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-600 transition-all duration-500"
+                                class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-brand-primary transition-all duration-500"
                             ></div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                         <!-- Step Indicator -->
                         <div class="flex-shrink-0 relative">
                             <div
-                                class="h-10 w-10 rounded-full flex items-center justify-center ring-8 ring-white"
+                                class="h-10 w-10 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800"
                                 :class="stepCircleClass(step.status)"
                             >
                                 <svg
@@ -83,7 +83,7 @@
                                 </svg>
                                 <svg
                                     v-else
-                                    class="h-5 w-5 text-gray-400"
+                                    class="h-5 w-5 text-gray-400 dark:text-gray-500"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -96,7 +96,7 @@
                             <div
                                 v-if="index < timelineSteps.length - 1"
                                 class="absolute top-10 left-5 -ml-px h-full w-0.5"
-                                :class="step.status === 'completed' ? 'bg-indigo-600' : 'bg-gray-300'"
+                                :class="step.status === 'completed' ? 'bg-brand-primary' : 'bg-gray-300 dark:bg-gray-600'"
                             ></div>
                         </div>
 
@@ -104,18 +104,18 @@
                         <div class="ml-4 min-w-0 flex-1 pb-8">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <h4 class="text-sm font-medium text-gray-900">{{ step.title }}</h4>
-                                    <p class="mt-1 text-sm text-gray-500">{{ step.description }}</p>
+                                    <h4 class="text-sm font-medium text-gray-900 dark:text-white">{{ step.title }}</h4>
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ step.description }}</p>
                                 </div>
-                                <div v-if="step.date" class="ml-4 flex-shrink-0 text-sm text-gray-500">
+                                <div v-if="step.date" class="ml-4 flex-shrink-0 text-sm text-gray-500 dark:text-gray-400">
                                     {{ formatDate(step.date) }}
                                 </div>
                             </div>
 
                             <!-- Documents for this step -->
                             <div v-if="step.documents && step.documents.length > 0" class="mt-4">
-                                <div class="bg-gray-50 rounded-lg p-4">
-                                    <h5 class="text-xs font-medium text-gray-700 mb-2">Documents requis:</h5>
+                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                    <h5 class="text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Documents requis:</h5>
                                     <ul class="space-y-2">
                                         <li
                                             v-for="doc in step.documents"
@@ -125,7 +125,7 @@
                                             <div class="flex items-center">
                                                 <svg
                                                     class="h-4 w-4 mr-2"
-                                                    :class="doc.uploaded ? 'text-green-500' : 'text-gray-400'"
+                                                    :class="doc.uploaded ? 'text-green-500 dark:text-green-400' : 'text-gray-400 dark:text-gray-500'"
                                                     fill="currentColor"
                                                     viewBox="0 0 20 20"
                                                 >
@@ -142,17 +142,17 @@
                                                         clip-rule="evenodd"
                                                     />
                                                 </svg>
-                                                <span :class="doc.uploaded ? 'text-gray-900' : 'text-gray-500'">
+                                                <span :class="doc.uploaded ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'">
                                                     {{ doc.name }}
                                                 </span>
                                             </div>
                                             <span
                                                 v-if="doc.uploaded"
-                                                class="text-xs text-green-600 font-medium"
+                                                class="text-xs text-green-600 dark:text-green-400 font-medium"
                                             >
                                                 ✓ Uploadé
                                             </span>
-                                            <span v-else class="text-xs text-yellow-600 font-medium">
+                                            <span v-else class="text-xs text-yellow-600 dark:text-yellow-400 font-medium">
                                                 En attente
                                             </span>
                                         </li>
@@ -166,7 +166,7 @@
                                     v-for="action in step.actions"
                                     :key="action.label"
                                     @click="handleAction(action.type)"
-                                    class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-brand-primary bg-brand-primary/10 hover:bg-brand-primary/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary dark:ring-offset-gray-800"
                                 >
                                     {{ action.label }}
                                 </button>
@@ -180,14 +180,14 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <Card>
                     <div class="flex items-center">
-                        <div class="flex-shrink-0 p-3 bg-blue-100 rounded-lg">
-                            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex-shrink-0 p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
+                            <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">Documents</p>
-                            <p class="text-2xl font-semibold text-gray-900">
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Documents</p>
+                            <p class="text-2xl font-semibold text-gray-900 dark:text-white">
                                 {{ documentsUploaded }} / {{ totalDocuments }}
                             </p>
                         </div>
@@ -196,14 +196,14 @@
 
                 <Card>
                     <div class="flex items-center">
-                        <div class="flex-shrink-0 p-3 bg-green-100 rounded-lg">
-                            <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex-shrink-0 p-3 bg-green-100 dark:bg-green-900/20 rounded-lg">
+                            <svg class="h-6 w-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">Étapes complétées</p>
-                            <p class="text-2xl font-semibold text-gray-900">
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Étapes complétées</p>
+                            <p class="text-2xl font-semibold text-gray-900 dark:text-white">
                                 {{ stepsCompleted }} / {{ totalSteps }}
                             </p>
                         </div>
@@ -212,14 +212,14 @@
 
                 <Card>
                     <div class="flex items-center">
-                        <div class="flex-shrink-0 p-3 bg-purple-100 rounded-lg">
-                            <svg class="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex-shrink-0 p-3 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
+                            <svg class="h-6 w-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">Temps écoulé</p>
-                            <p class="text-2xl font-semibold text-gray-900">{{ daysElapsed }} jours</p>
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Temps écoulé</p>
+                            <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ daysElapsed }} jours</p>
                         </div>
                     </div>
                 </Card>
@@ -240,7 +240,7 @@
                                 <div class="relative flex space-x-3">
                                     <div>
                                         <span
-                                            class="h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center ring-8 ring-white"
+                                            class="h-8 w-8 rounded-full bg-brand-primary flex items-center justify-center ring-8 ring-white dark:ring-gray-800"
                                         >
                                             <svg class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                 <path
@@ -253,9 +253,9 @@
                                     </div>
                                     <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                                         <div>
-                                            <p class="text-sm text-gray-700">{{ activity.description }}</p>
+                                            <p class="text-sm text-gray-700 dark:text-gray-300">{{ activity.description }}</p>
                                         </div>
-                                        <div class="whitespace-nowrap text-right text-sm text-gray-500">
+                                        <div class="whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
                                             {{ activity.created_at }}
                                         </div>
                                     </div>
@@ -265,7 +265,7 @@
                     </ul>
                 </div>
 
-                <div v-if="recentActivities.length === 0" class="text-center py-8 text-gray-500">
+                <div v-if="recentActivities.length === 0" class="text-center py-8 text-gray-500 dark:text-gray-400">
                     Aucune activité récente
                 </div>
             </Card>
@@ -340,14 +340,14 @@ const daysElapsed = computed(() => {
 // Methods
 const statusClass = (status) => {
     const classes = {
-        'draft': 'bg-gray-100 text-gray-800',
-        'pending': 'bg-yellow-100 text-yellow-800',
-        'in_progress': 'bg-blue-100 text-blue-800',
-        'approved': 'bg-green-100 text-green-800',
-        'rejected': 'bg-red-100 text-red-800',
-        'completed': 'bg-indigo-100 text-indigo-800',
+        'draft': 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
+        'pending': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
+        'in_progress': 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+        'approved': 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+        'rejected': 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
+        'completed': 'bg-brand-primary/10 text-brand-primary dark:bg-brand-primary/20',
     };
-    return classes[status] || 'bg-gray-100 text-gray-800';
+    return classes[status] || 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
 };
 
 const statusLabel = (status) => {
@@ -364,11 +364,11 @@ const statusLabel = (status) => {
 
 const stepCircleClass = (status) => {
     if (status === 'completed') {
-        return 'bg-indigo-600';
+        return 'bg-brand-primary';
     } else if (status === 'current') {
-        return 'bg-blue-600';
+        return 'bg-blue-600 dark:bg-blue-500';
     } else {
-        return 'bg-gray-300';
+        return 'bg-gray-300 dark:bg-gray-600';
     }
 };
 

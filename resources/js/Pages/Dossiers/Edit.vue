@@ -2,8 +2,8 @@
     <VerticalLayout>
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="mb-6">
-                <h1 class="text-2xl font-bold text-gray-900">Éditer Dossier {{ dossier.reference }}</h1>
-                <p class="text-sm text-gray-600 mt-1">Mettre à jour le client, le titre ou les notes.</p>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Éditer Dossier {{ dossier.reference }}</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Mettre à jour le client, le titre ou les notes.</p>
             </div>
             <Card>
                 <DossierForm

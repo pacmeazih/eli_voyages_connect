@@ -25,6 +25,19 @@ class AppointmentController extends Controller
     }
 
     /**
+     * Display appointment confirmation page
+     */
+    public function confirmation(Appointment $appointment)
+    {
+        // Load agent relation
+        $appointment->load('agent');
+
+        return Inertia::render('Appointments/Confirmation', [
+            'appointment' => $appointment,
+        ]);
+    }
+
+    /**
      * Get appointments for calendar
      */
     public function getAppointments(Request $request)

@@ -98,45 +98,71 @@
 
             <!-- Two Column Layout -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Timeline / Recent Activity -->
-                <Card title="Activité récente">
-                    <div class="space-y-4">
+                <!-- Timeline de suivi -->
+                <Card title="Timeline de suivi du dossier">
+                    <div class="relative space-y-4">
+                        <!-- Vertical line -->
+                        <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700"></div>
+                        
                         <div
-                            v-for="activity in recentActivity.slice(0, 5)"
+                            v-for="(activity, index) in recentActivity.slice(0, 6)"
                             :key="activity.id"
-                            class="flex items-start space-x-3"
+                            class="relative flex items-start space-x-4"
                         >
-                            <div class="flex-shrink-0 mt-1">
-                                <div class="w-8 h-8 rounded-full flex items-center justify-center"
+                            <!-- Timeline dot -->
+                            <div class="relative flex-shrink-0 z-10">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-white dark:border-gray-800"
                                     :class="{
-                                        'bg-green-100 dark:bg-green-900/20': activity.type === 'success',
-                                        'bg-blue-100 dark:bg-blue-900/20': activity.type === 'info',
-                                        'bg-yellow-100 dark:bg-yellow-900/20': activity.type === 'warning',
+                                        'bg-green-500': activity.type === 'success' || index === 0,
+                                        'bg-brand-primary': activity.type === 'info',
+                                        'bg-yellow-500': activity.type === 'warning',
+                                        'bg-gray-400': !activity.type,
                                     }"
                                 >
-                                    <svg class="h-4 w-4" 
-                                        :class="{
-                                            'text-green-600 dark:text-green-400': activity.type === 'success',
-                                            'text-blue-600 dark:text-blue-400': activity.type === 'info',
-                                            'text-yellow-600 dark:text-yellow-400': activity.type === 'warning',
-                                        }"
-                                        fill="currentColor" viewBox="0 0 20 20"
-                                    >
+                                    <!-- Success icon -->
+                                    <svg v-if="activity.type === 'success' || index === 0" class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <!-- Info icon -->
+                                    <svg v-else-if="activity.type === 'info'" class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                    </svg>
+                                    <!-- Warning icon -->
+                                    <svg v-else-if="activity.type === 'warning'" class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                    <!-- Default icon -->
+                                    <svg v-else class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
                             </div>
-                            <div class="flex-1">
+                            
+                            <!-- Content -->
+                            <div class="flex-1 pb-6">
                                 <p class="text-sm font-medium text-gray-900 dark:text-white">
                                     {{ activity.title }}
                                 </p>
                                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                     {{ activity.description }}
                                 </p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1 flex items-center">
+                                    <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
                                     {{ activity.date }}
                                 </p>
                             </div>
+                        </div>
+
+                        <!-- View all link -->
+                        <div class="text-center pt-2">
+                            <Link
+                                :href="route('dossiers.show', stats.currentDossier?.id) + '#timeline'"
+                                class="text-sm text-brand-primary hover:text-brand-primary/80 font-medium"
+                            >
+                                Voir l'historique complet →
+                            </Link>
                         </div>
                     </div>
                 </Card>
@@ -166,7 +192,7 @@
                             </div>
                             <button
                                 v-if="!doc.uploaded"
-                                @click="$inertia.visit(route('documents.index', { dossier: stats.currentDossier?.id }))"
+                                @click="$inertia.visit(route('dossiers.show', stats.currentDossier?.id) + '#documents')"
                                 class="px-3 py-1 text-sm bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition-colors"
                             >
                                 Télécharger
@@ -211,6 +237,7 @@
 
 <script setup>
 import { useUserStore } from '@/stores/user';
+import { Link } from '@inertiajs/vue3';
 import VerticalLayout from '@/Layouts/VerticalLayout.vue';
 import Card from '@/Components/Card.vue';
 import StatCard from '@/Components/StatCard.vue';

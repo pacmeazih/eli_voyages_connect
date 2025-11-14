@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'login' => ['required', 'string'], // Accept both client_code and email
             'password' => ['required', 'string'],
         ];
     }
@@ -41,15 +41,43 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        // Determine if login is client_code (ELV-YYYY-###) or email
+        $login = $this->input('login');
+        $loginField = $this->isClientCode($login) ? 'client_code' : 'email';
+
+        // If client_code, get email from Client model
+        if ($loginField === 'client_code') {
+            $client = \App\Models\Client::where('client_code', $login)->first();
+            
+            if (!$client || !$client->email) {
+                RateLimiter::hit($this->throttleKey());
+                throw ValidationException::withMessages([
+                    'login' => __('auth.failed'),
+                ]);
+            }
+            
+            $credentials = ['email' => $client->email, 'password' => $this->input('password')];
+        } else {
+            $credentials = ['email' => $login, 'password' => $this->input('password')];
+        }
+
+        if (! Auth::attempt($credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'login' => __('auth.failed'),
             ]);
         }
 
         RateLimiter::clear($this->throttleKey());
+    }
+
+    /**
+     * Check if login string is a client code (ELV-YYYY-###)
+     */
+    protected function isClientCode(string $login): bool
+    {
+        return preg_match('/^ELV-\d{4}-\d{3}$/', $login) === 1;
     }
 
     /**
@@ -68,7 +96,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'login' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -80,6 +108,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input('login')).'|'.$this->ip());
     }
 }

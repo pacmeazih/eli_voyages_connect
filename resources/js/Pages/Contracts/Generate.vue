@@ -1,20 +1,20 @@
 <template>
     <AppLayout>
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Header -->
             <div class="mb-8">
                 <div class="flex items-center mb-4">
                     <Link
                         :href="route('dossiers.show', dossier.id)"
-                        class="mr-4 text-gray-500 hover:text-gray-700"
+                        class="mr-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                     >
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
                     </Link>
                     <div>
-                        <h1 class="text-3xl font-bold text-gray-900">Générer un Contrat</h1>
-                        <p class="mt-1 text-sm text-gray-600">
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Générer un Contrat</h1>
+                        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                             Dossier: {{ dossier.reference }} - {{ client.nom }} {{ client.prenom }}
                         </p>
                     </div>
@@ -22,22 +22,22 @@
             </div>
 
             <!-- Contract Generation Form -->
-            <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+            <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg overflow-hidden">
                 <div class="p-6">
                     <!-- Step 1: Contract Type & Language -->
                     <div class="mb-8">
-                        <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             1. Type de contrat et langue
                         </h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Contract Type -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Type de contrat
                                 </label>
                                 <select
                                     v-model="form.contract_type"
-                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                    class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-brand-primary focus:ring-brand-primary"
                                     @change="loadPreview"
                                 >
                                     <option value="">Sélectionnez un type</option>
@@ -74,7 +74,7 @@
 
                             <!-- Language -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Langue du contrat
                                 </label>
                                 <div class="flex space-x-4">
@@ -83,20 +83,20 @@
                                             v-model="form.language"
                                             type="radio"
                                             value="fr"
-                                            class="text-blue-600 focus:ring-blue-500"
+                                            class="text-brand-primary focus:ring-brand-primary"
                                             @change="loadPreview"
                                         />
-                                        <span class="ml-2 text-sm text-gray-700">🇫🇷 Français</span>
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">🇫🇷 Français</span>
                                     </label>
                                     <label class="flex items-center">
                                         <input
                                             v-model="form.language"
                                             type="radio"
                                             value="en"
-                                            class="text-blue-600 focus:ring-blue-500"
+                                            class="text-brand-primary focus:ring-brand-primary"
                                             @change="loadPreview"
                                         />
-                                        <span class="ml-2 text-sm text-gray-700">🇬🇧 English</span>
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">🇬🇧 English</span>
                                     </label>
                                 </div>
                             </div>
@@ -104,12 +104,12 @@
                     </div>
 
                     <!-- Step 2: Variables (Auto-filled + Editable) -->
-                    <div v-if="form.contract_type" class="mb-8 border-t pt-6">
-                        <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                    <div v-if="form.contract_type" class="mb-8 border-t dark:border-gray-700 pt-6">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             2. Informations du contrat
                         </h2>
-                        <div class="bg-blue-50 border border-blue-200 rounded-md p-4 mb-4">
-                            <p class="text-sm text-blue-800">
+                        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-4 mb-4">
+                            <p class="text-sm text-blue-800 dark:text-blue-300">
                                 ℹ️ Les informations sont pré-remplies automatiquement depuis le dossier. 
                                 Vous pouvez les modifier si nécessaire.
                             </p>
@@ -119,44 +119,44 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Client Variables -->
                             <div v-for="(value, key) in form.variables" :key="key">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     {{ formatVariableName(key) }}
                                 </label>
                                 <input
                                     v-model="form.variables[key]"
                                     type="text"
-                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                    class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-brand-primary focus:ring-brand-primary"
                                 />
                             </div>
                         </div>
                     </div>
 
                     <!-- Step 3: Preview (Optional) -->
-                    <div v-if="previewText" class="mb-8 border-t pt-6">
+                    <div v-if="previewText" class="mb-8 border-t dark:border-gray-700 pt-6">
                         <div class="flex items-center justify-between mb-4">
-                            <h2 class="text-lg font-semibold text-gray-900">
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
                                 3. Prévisualisation
                             </h2>
                             <button
                                 @click="showPreview = !showPreview"
-                                class="text-sm text-blue-600 hover:text-blue-800"
+                                class="text-sm text-brand-primary hover:underline"
                             >
                                 {{ showPreview ? 'Masquer' : 'Afficher' }}
                             </button>
                         </div>
                         <div
                             v-if="showPreview"
-                            class="bg-gray-50 border border-gray-200 rounded-lg p-6 max-h-96 overflow-y-auto"
+                            class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-6 max-h-96 overflow-y-auto"
                         >
-                            <div class="prose prose-sm max-w-none" v-html="formatPreview(previewText)"></div>
+                            <div class="prose prose-sm max-w-none dark:prose-invert" v-html="formatPreview(previewText)"></div>
                         </div>
                     </div>
 
                     <!-- Actions -->
-                    <div class="flex items-center justify-between border-t pt-6">
+                    <div class="flex items-center justify-between border-t dark:border-gray-700 pt-6">
                         <Link
                             :href="route('dossiers.show', dossier.id)"
-                            class="text-sm text-gray-600 hover:text-gray-900"
+                            class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                         >
                             ← Retour au dossier
                         </Link>
@@ -165,7 +165,7 @@
                                 v-if="form.contract_type"
                                 @click="loadPreview"
                                 type="button"
-                                class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition"
+                                class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition"
                                 :disabled="form.processing"
                             >
                                 🔄 Actualiser la prévisualisation
@@ -173,7 +173,7 @@
                             <button
                                 @click="generateContract"
                                 type="button"
-                                class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+                                class="px-6 py-2 bg-brand-primary text-white rounded-md hover:bg-brand-primary/90 transition disabled:opacity-50"
                                 :disabled="!form.contract_type || form.processing"
                             >
                                 <span v-if="form.processing">
@@ -193,31 +193,31 @@
             </div>
 
             <!-- Generated Contracts List -->
-            <div v-if="generatedContracts.length > 0" class="mt-8 bg-white shadow-sm rounded-lg overflow-hidden">
+            <div v-if="generatedContracts.length > 0" class="mt-8 bg-white dark:bg-gray-800 shadow-sm rounded-lg overflow-hidden">
                 <div class="p-6">
-                    <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                         Contrats générés récemment
                     </h2>
                     <div class="space-y-3">
                         <div
                             v-for="contract in generatedContracts"
                             :key="contract.id"
-                            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                            class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg"
                         >
                             <div class="flex items-center">
                                 <div class="flex-shrink-0">
-                                    <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="h-8 w-8 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
                                 </div>
                                 <div class="ml-4">
-                                    <p class="text-sm font-medium text-gray-900">{{ contract.type }}</p>
-                                    <p class="text-xs text-gray-500">Généré le {{ formatDate(contract.created_at) }}</p>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ contract.type }}</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Généré le {{ formatDate(contract.created_at) }}</p>
                                 </div>
                             </div>
                             <a
                                 :href="route('dossiers.contracts.download', [dossier.id, contract.id])"
-                                class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition"
+                                class="px-4 py-2 bg-brand-primary text-white text-sm rounded-md hover:bg-brand-primary/90 transition"
                             >
                                 Télécharger
                             </a>

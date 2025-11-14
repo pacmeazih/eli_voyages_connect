@@ -35,15 +35,34 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        $clientData = null;
+        
+        // Use User model methods for client data
+        if ($user && $user->isClient()) {
+            $client = $user->client;
+            if ($client) {
+                $activeDossier = $user->getActiveDossier();
+                $clientData = [
+                    'id' => $client->id,
+                    'client_code' => $client->client_code,
+                    'full_name' => $client->full_name,
+                    'dossier_id' => $activeDossier?->id,
+                    'has_active_dossier' => $client->hasActiveDossiers(),
+                ];
+            }
+        }
+        
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user() ? [
-                    'id' => $request->user()->id,
-                    'name' => $request->user()->name,
-                    'email' => $request->user()->email,
-                    'dark_mode' => $request->user()->dark_mode,
-                    'roles' => $request->user()->roles->pluck('name'),
-                    'permissions' => $request->user()->getAllPermissions()->pluck('name'),
+                'user' => $user ? [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'dark_mode' => $user->dark_mode,
+                    'roles' => $user->roles->pluck('name'),
+                    'permissions' => $user->getAllPermissions()->pluck('name'),
+                    'client' => $clientData,
                 ] : null,
             ],
             'flash' => [

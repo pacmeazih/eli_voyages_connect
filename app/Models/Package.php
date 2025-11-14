@@ -35,4 +35,20 @@ class Package extends Model
     {
         return $this->belongsTo(ServiceType::class);
     }
+
+    /**
+     * Get the required documents for this package
+     */
+    public function documents()
+    {
+        return $this->hasMany(PackageDocument::class)->orderBy('ordre');
+    }
+
+    /**
+     * Get the dossiers using this package
+     */
+    public function dossiers()
+    {
+        return $this->hasMany(Dossier::class);
+    }
 }

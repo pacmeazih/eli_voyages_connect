@@ -7,13 +7,17 @@ use App\Models\Dossier;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\JsonResponse;
 
 class DocumentController extends ApiController
 {
     public function store(Request $request, Dossier $dossier): JsonResponse
     {
-        $this->authorize('upload', [Document::class, $dossier]);
+        // Use Gate instead of Policy for dossier-level authorization
+        if (!Gate::allows('upload-document-to-dossier', $dossier)) {
+            abort(403, 'Vous n\'avez pas la permission d\'uploader des documents dans ce dossier.');
+        }
 
         $data = $request->validate([
             'file' => 'required|file|max:10240' // up to 10MB

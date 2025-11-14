@@ -46,4 +46,47 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the client associated with this user (for Client role)
+     */
+    public function client()
+    {
+        return $this->hasOne(Client::class, 'email', 'email');
+    }
+
+    /**
+     * Check if user has Client role
+     */
+    public function isClient(): bool
+    {
+        return $this->hasRole('Client');
+    }
+
+    /**
+     * Get active dossier for client user
+     */
+    public function getActiveDossier()
+    {
+        if (!$this->isClient() || !$this->client) {
+            return null;
+        }
+
+        return $this->client->dossiers()
+            ->whereIn('statut', ['en_cours', 'documents_requis', 'verification'])
+            ->latest()
+            ->first();
+    }
+
+    /**
+     * Get all dossiers for client user
+     */
+    public function dossiers()
+    {
+        if (!$this->isClient() || !$this->client) {
+            return collect([]);
+        }
+
+        return $this->client->dossiers;
+    }
 }

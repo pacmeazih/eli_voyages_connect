@@ -13,8 +13,8 @@ class DocumentPolicy
 
     public function upload(User $user, Dossier $dossier): bool
     {
-        // SuperAdmin or Agent or permission 'manage documents'
-        if ($user->hasRole('SuperAdmin') || $user->hasRole('Agent')) {
+        // SuperAdmin, Admin, Agent, Consultant can upload
+        if ($user->hasRole(['SuperAdmin', 'Admin', 'Agent', 'Consultant'])) {
             return true;
         }
 
@@ -22,19 +22,35 @@ class DocumentPolicy
             return true;
         }
 
-        // Additional logic: allow uploader if they are the client's owner? (placeholder)
+        // Allow clients to upload to their own dossier
+        if ($user->hasRole('Client')) {
+            // Check if user has a client record with matching email
+            $client = \App\Models\Client::where('email', $user->email)->first();
+            if ($client && $dossier->client_id === $client->id) {
+                return true;
+            }
+        }
+
         return false;
     }
 
     public function view(User $user, Document $document): bool
     {
-        // Allow SuperAdmin, agents or users with 'view documents' permission
-        if ($user->hasRole('SuperAdmin') || $user->hasRole('Agent')) {
+        // Allow SuperAdmin, Admin, Agent, Consultant
+        if ($user->hasRole(['SuperAdmin', 'Admin', 'Agent', 'Consultant'])) {
             return true;
         }
 
         if ($user->can('view documents')) {
             return true;
+        }
+
+        // Allow clients to view documents from their own dossier
+        if ($user->hasRole('Client')) {
+            $client = \App\Models\Client::where('email', $user->email)->first();
+            if ($client && $document->dossier && $document->dossier->client_id === $client->id) {
+                return true;
+            }
         }
 
         // Allow uploader to view their own uploaded document
@@ -43,5 +59,11 @@ class DocumentPolicy
         }
 
         return false;
+    }
+
+    public function download(User $user, Document $document): bool
+    {
+        // Same logic as view
+        return $this->view($user, $document);
     }
 }

@@ -4,8 +4,8 @@
             <!-- Header -->
             <div class="sm:flex sm:items-center sm:justify-between mb-6">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Dossiers</h1>
-                    <p class="mt-1 text-sm text-gray-600">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Dossiers</h1>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                         Gérez tous les dossiers clients
                     </p>
                 </div>
@@ -13,7 +13,7 @@
                     <Link
                         v-if="canCreate"
                         :href="route('dossiers.create')"
-                        class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700"
+                        class="inline-flex items-center px-4 py-2 bg-brand-primary border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-brand-primary/90 transition"
                     >
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -31,14 +31,14 @@
                             v-model="search"
                             type="text"
                             placeholder="Rechercher par référence, titre ou client..."
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-brand-primary focus:ring-brand-primary sm:text-sm"
                             @input="searchDossiers"
                         />
                     </div>
                     <div>
                         <select
                             v-model="statusFilter"
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-brand-primary focus:ring-brand-primary sm:text-sm"
                             @change="filterDossiers"
                         >
                             <option value="">Tous les statuts</option>
@@ -56,14 +56,14 @@
                 <div
                     v-for="dossier in dossiers.data"
                     :key="dossier.id"
-                    class="bg-white overflow-hidden shadow-sm hover:shadow-md transition rounded-lg cursor-pointer"
+                    class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm hover:shadow-md transition rounded-lg cursor-pointer"
                     @click="viewDossier(dossier.id)"
                 >
                     <div class="p-6">
                         <!-- Header -->
                         <div class="flex items-start justify-between">
                             <div class="flex-1">
-                                <h3 class="text-lg font-semibold text-gray-900">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                                     {{ dossier.reference }}
                                 </h3>
                                 <span
@@ -74,36 +74,36 @@
                                 </span>
                             </div>
                             <div class="ml-2">
-                                <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="h-6 w-6 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                 </svg>
                             </div>
                         </div>
 
                         <!-- Title -->
-                        <p class="mt-3 text-sm font-medium text-gray-900">
+                        <p class="mt-3 text-sm font-medium text-gray-900 dark:text-white">
                             {{ dossier.title }}
                         </p>
 
                         <!-- Client -->
-                        <div class="mt-4 flex items-center text-sm text-gray-500">
-                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <div class="mt-4 flex items-center text-sm text-gray-500 dark:text-gray-400">
+                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                             </svg>
                             {{ dossier.client?.name || 'Client non assigné' }}
                         </div>
 
                         <!-- Documents count -->
-                        <div class="mt-2 flex items-center text-sm text-gray-500">
-                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400">
+                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                             {{ dossier.documents_count || 0 }} document(s)
                         </div>
 
                         <!-- Date -->
-                        <div class="mt-4 pt-4 border-t border-gray-200">
-                            <p class="text-xs text-gray-500">
+                        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <p class="text-xs text-gray-500 dark:text-gray-400">
                                 Créé le {{ formatDate(dossier.created_at) }}
                             </p>
                         </div>
@@ -116,13 +116,13 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                 </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">Aucun dossier</h3>
-                <p class="mt-1 text-sm text-gray-500">Commencez par créer un nouveau dossier.</p>
+                <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">Aucun dossier</h3>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Commencez par créer un nouveau dossier.</p>
                 <div class="mt-6">
                     <Link
                         v-if="canCreate"
                         :href="route('dossiers.create')"
-                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-brand-primary hover:bg-brand-primary/90 transition"
                     >
                         <svg class="mr-2 -ml-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />

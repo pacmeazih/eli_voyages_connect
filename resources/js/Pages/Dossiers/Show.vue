@@ -204,6 +204,7 @@
                             <span>Documents</span>
                             <div class="flex space-x-3">
                                 <Link
+                                    v-if="canGenerateContract"
                                     :href="route('dossiers.contracts.create', dossier.id)"
                                     class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
                                 >
@@ -254,21 +255,37 @@
                                 </div>
                             </div>
                             <div class="ml-4 flex-shrink-0 flex space-x-2">
+                                <!-- View Document -->
+                                <button
+                                    v-if="canViewDocument(document)"
+                                    @click="viewDocument(document)"
+                                    class="text-brand-primary hover:text-brand-primary/80 transition-colors"
+                                    title="Voir le document"
+                                >
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </button>
+                                <!-- Download Document -->
                                 <a
                                     :href="route('documents.download', document.id)"
-                                    class="text-indigo-600 hover:text-indigo-900"
+                                    class="text-indigo-600 hover:text-indigo-900 transition-colors"
+                                    title="Télécharger le document"
                                 >
                                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                     </svg>
                                 </a>
+                                <!-- Delete Document -->
                                 <button
                                     v-if="canDeleteDocuments"
                                     @click="deleteDocument(document.id)"
-                                    class="text-red-600 hover:text-red-900"
+                                    class="text-red-600 hover:text-red-900 transition-colors"
+                                    title="Supprimer le document"
                                 >
                                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 1 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                 </button>
                             </div>
@@ -338,7 +355,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
 import VerticalLayout from '@/Layouts/VerticalLayout.vue';
 import Card from '@/Components/Card.vue';
@@ -377,6 +394,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    canGenerateContract: {
+        type: Boolean,
+        default: false,
+    },
     canValidate: {
         type: Boolean,
         default: false,
@@ -389,6 +410,14 @@ const props = defineProps({
 
 const currentTab = ref('overview');
 const showUploadModal = ref(false);
+
+// Check URL hash on mount to switch to the correct tab
+onMounted(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && tabs.find(tab => tab.id === hash)) {
+        currentTab.value = hash;
+    }
+});
 
 const tabs = [
     { id: 'overview', name: 'Aperçu' },
@@ -466,6 +495,28 @@ const deleteDocument = (documentId) => {
             preserveScroll: true,
         });
     }
+};
+
+const canViewDocument = (document) => {
+    // Can view if document has a path and is a viewable type
+    if (!document.path || !document.mime_type) return false;
+    
+    const viewableTypes = [
+        'application/pdf',
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'image/gif',
+        'image/webp',
+        'image/svg+xml',
+    ];
+    
+    return viewableTypes.includes(document.mime_type);
+};
+
+const viewDocument = (document) => {
+    // Open document in new tab using view route
+    window.open(route('documents.view', document.id), '_blank');
 };
 
 const refreshDocuments = () => {

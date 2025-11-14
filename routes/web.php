@@ -13,6 +13,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ProgressController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -67,8 +68,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return inertia('Analytics/Index');
     })->name('analytics.page');
 
+    // Progress (Client Progress Tracking)
+    Route::get('/progress', [ProgressController::class, 'index'])->name('progress.index');
+
     // Appointments
     Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+    Route::get('/appointments/confirmation/{appointment}', [AppointmentController::class, 'confirmation'])->name('appointments.confirmation');
     Route::get('/appointments/data', [AppointmentController::class, 'getAppointments'])->name('appointments.data');
     Route::get('/appointments/slots', [AppointmentController::class, 'getAvailableSlots'])->name('appointments.slots');
     Route::get('/appointments/agents', [AppointmentController::class, 'getAgents'])->name('appointments.agents');
@@ -111,12 +116,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Documents (direct access)
     Route::resource('documents', DocumentController::class)->except(['index', 'create', 'store']);
+    Route::get('/documents/{document}/view', [DocumentController::class, 'view'])->name('documents.view');
     Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
     Route::post('/documents/{document}/approve', [DocumentController::class, 'approve'])->name('documents.approve');
     Route::post('/documents/{document}/reject', [DocumentController::class, 'reject'])->name('documents.reject');
     Route::post('/documents/{document}/version', [DocumentController::class, 'version'])->name('documents.version');
 
     // Contracts
+    Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index');
     Route::prefix('dossiers/{dossier}')->group(function () {
         Route::get('/contracts/create', [ContractController::class, 'create'])->name('dossiers.contracts.create');
         Route::post('/contracts/generate', [ContractController::class, 'generate'])->name('dossiers.contracts.generate');

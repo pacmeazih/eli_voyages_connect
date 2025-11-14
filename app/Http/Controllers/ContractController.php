@@ -15,13 +15,60 @@ use Inertia\Inertia;
 
 class ContractController extends Controller
 {
-    protected ContractGeneratorService $contractService;
+    protected ContractGeneratorService $contractGeneratorService;
     protected DocuSealService $docuSeal;
+    protected ContractService $contractService;
 
-    public function __construct(ContractGeneratorService $contractService, DocuSealService $docuSeal)
-    {
-        $this->contractService = $contractService;
+    public function __construct(
+        ContractGeneratorService $contractGeneratorService,
+        DocuSealService $docuSeal,
+        ContractService $contractService
+    ) {
+        $this->contractGeneratorService = $contractGeneratorService;
         $this->docuSeal = $docuSeal;
+        $this->contractService = $contractService;
+    }
+
+    /**
+     * Display list of contracts
+     */
+    public function index()
+    {
+        $user = auth()->user();
+        
+        // For clients, show only their contracts with enriched data
+        if ($user->hasRole('Client')) {
+            $client = \App\Models\Client::where('email', $user->email)->first();
+            
+            if (!$client) {
+                return Inertia::render('Contracts/Index', [
+                    'contracts' => [],
+                    'stats' => [
+                        'total' => 0,
+                        'pending_signature' => 0,
+                        'signed' => 0,
+                        'not_sent' => 0,
+                    ],
+                ]);
+            }
+            
+            $contracts = $this->contractService->getClientContracts($client->id);
+            $stats = $this->contractService->getClientStats($client->id);
+        } else {
+            // For staff, show all contracts
+            $contracts = $this->contractService->getAllContracts();
+            $stats = [
+                'total' => $contracts->count(),
+                'pending_signature' => $contracts->where('signature_status', 'pending')->count(),
+                'signed' => $contracts->where('signature_status', 'completed')->count(),
+                'not_sent' => $contracts->where('signature_status', 'not_sent')->count(),
+            ];
+        }
+        
+        return Inertia::render('Contracts/Index', [
+            'contracts' => $contracts,
+            'stats' => $stats,
+        ]);
     }
 
     /**

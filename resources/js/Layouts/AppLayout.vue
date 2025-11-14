@@ -90,7 +90,7 @@
                                         {{ userStore.user?.name }}
                                     </p>
                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                                        {{ t(`roles.${userStore.primaryRole}`) }}
+                                        {{ userStore.primaryRole ? t(`roles.${userStore.primaryRole}`) : 'Utilisateur' }}
                                     </p>
                                 </div>
                                 

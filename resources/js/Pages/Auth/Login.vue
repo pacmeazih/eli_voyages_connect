@@ -8,7 +8,7 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
+    login: '',
     password: '',
     remember: false,
 });
@@ -20,8 +20,8 @@ const submit = () => {
 };
 
 // Demo login helper
-const loginAsDemo = (email, password) => {
-    form.email = email;
+const loginAsDemo = (login, password) => {
+    form.login = login;
     form.password = password;
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
@@ -61,18 +61,20 @@ const loginAsDemo = (email, password) => {
 
         <form @submit.prevent="submit" class="space-y-5">
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label for="login" class="block text-sm font-medium text-gray-700 mb-1">
+              Code client ou Email
+            </label>
             <input
-              id="email"
-              v-model="form.email"
-              type="email"
+              id="login"
+              v-model="form.login"
+              type="text"
               required
               autocomplete="username"
               class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              :class="{ 'border-red-500': form.errors.email }"
-              placeholder="Example@email.com"
+              :class="{ 'border-red-500': form.errors.login }"
+              placeholder="ELV-2025-001 ou email@example.com"
             />
-            <p v-if="form.errors.email" class="mt-1 text-xs text-red-600">{{ form.errors.email }}</p>
+            <p v-if="form.errors.login" class="mt-1 text-xs text-red-600">{{ form.errors.login }}</p>
           </div>
 
           <div>

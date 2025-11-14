@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('package_documents', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('package_id')->constrained()->onDelete('cascade');
+            $table->string('nom'); // Nom du document (ex: "Passeport", "Photo d'identité")
+            $table->text('description')->nullable();
+            $table->boolean('requis')->default(true); // Document obligatoire ou optionnel
+            $table->integer('ordre')->default(0); // Ordre d'affichage
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('package_documents');
+    }
+};

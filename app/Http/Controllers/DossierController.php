@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dossier;
 use App\Models\Client;
 use App\Models\User;
+use App\Services\DossierService;
 use App\Notifications\DossierCreatedNotification;
 use App\Notifications\DossierStatusChangedNotification;
 use Illuminate\Http\Request;
@@ -14,6 +15,13 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class DossierController extends Controller
 {
     use AuthorizesRequests;
+
+    protected DossierService $dossierService;
+
+    public function __construct(DossierService $dossierService)
+    {
+        $this->dossierService = $dossierService;
+    }
     /**
      * Display a listing of dossiers.
      */
@@ -117,24 +125,21 @@ class DossierController extends Controller
     {
         $this->authorize('view', $dossier);
 
-        $dossier->load(['client']);
+        // Use service to get dossier with all relations
+        $dossier = $this->dossierService->getDossierWithRelations($dossier->id);
 
-        $documents = $dossier->documents()
-            ->with('uploader')
-            ->latest()
-            ->get();
+        if (!$dossier) {
+            abort(404);
+        }
 
-        // Get activity logs
-        $activities = activity()
-            ->forSubject($dossier)
-            ->latest()
-            ->take(20)
-            ->get();
+        // Get progress using service
+        $progress = $this->dossierService->getProgress($dossier->id);
 
         return inertia('Dossiers/Show', [
             'dossier' => $dossier,
-            'documents' => $documents,
-            'activities' => $activities,
+            'documents' => $dossier->documents,
+            'activities' => $dossier->activities->take(20),
+            'progress' => $progress,
             'canEdit' => auth()->user()->can('update', $dossier),
             'canDelete' => auth()->user()->can('delete', $dossier),
             'canValidate' => auth()->user()->can('validate', $dossier),
@@ -142,6 +147,7 @@ class DossierController extends Controller
             'canChangeStatus' => auth()->user()->can('update', $dossier),
             'canUploadDocuments' => auth()->user()->hasPermissionTo('upload documents'),
             'canDeleteDocuments' => auth()->user()->hasPermissionTo('delete documents'),
+            'canGenerateContract' => auth()->user()->hasRole(['super_admin', 'admin', 'agent', 'consultant']),
         ]);
     }
 
@@ -230,13 +236,8 @@ class DossierController extends Controller
     {
         $this->authorize('approve', $dossier);
 
-        // TODO: Implement status management
-        // $dossier->update(['status' => 'approved']);
-
-        activity()
-            ->performedOn($dossier)
-            ->causedBy(auth()->user())
-            ->log('Dossier approved');
+        // Use service to update status
+        $this->dossierService->updateStatus($dossier->id, 'approuve', 'Dossier approuvé');
 
         return back()->with('success', 'Dossier approved successfully!');
     }

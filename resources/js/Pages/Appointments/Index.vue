@@ -285,44 +285,82 @@ onMounted(() => {
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Calendar -->
-                <div class="lg:col-span-2">
-                    <Card>
-                        <!-- Calendar Header -->
-                        <div class="flex items-center justify-between mb-6">
-                            <button
-                                @click="previousMonth"
-                                class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                            >
-                                <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                                </svg>
-                            </button>
-                            
-                            <div class="text-center">
-                                <h2 class="text-xl font-bold text-gray-900 dark:text-white capitalize">
-                                    {{ monthName }}
-                                </h2>
+            <!-- Prochains rendez-vous (above calendar) -->
+            <div v-if="upcomingAppointments.length > 0" class="mb-6">
+                <Card title="Prochains rendez-vous">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div v-for="apt in upcomingAppointments.slice(0, 3)" :key="apt.id"
+                            @click="viewAppointment(apt)"
+                            class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-brand-primary dark:hover:border-brand-primary cursor-pointer transition-colors"
+                        >
+                            <div class="flex items-start justify-between mb-3">
+                                <span class="text-xs font-semibold px-2 py-1 rounded" :class="statusColors[apt.status]">
+                                    {{ statusLabels[apt.status] }}
+                                </span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">
+                                    {{ apt.duration_minutes }} min
+                                </span>
                             </div>
                             
-                            <div class="flex gap-2">
-                                <button
-                                    @click="today"
-                                    class="px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
-                                >
-                                    Aujourd'hui
-                                </button>
-                                <button
-                                    @click="nextMonth"
-                                    class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                                >
-                                    <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                </button>
+                            <div class="text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                                {{ formatDate(apt.scheduled_at) }}
+                            </div>
+                            
+                            <div class="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2 mb-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                {{ formatTime(apt.scheduled_at) }}
+                            </div>
+                            
+                            <div class="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                                <span v-if="isAgent">{{ apt.client.name }}</span>
+                                <span v-else>{{ apt.agent.name }}</span>
                             </div>
                         </div>
+                    </div>
+                </Card>
+            </div>
+
+            <!-- Calendar (full width) -->
+            <Card title="Calendrier">
+                <!-- Calendar Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <button
+                        @click="previousMonth"
+                        class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    >
+                        <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white capitalize">
+                            {{ monthName }}
+                        </h2>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button
+                            @click="today"
+                            class="px-4 py-2 text-sm font-medium text-brand-primary dark:text-brand-primary hover:bg-brand-primary/10 dark:hover:bg-brand-primary/10 rounded-lg transition-colors"
+                        >
+                            Aujourd'hui
+                        </button>
+                        <button
+                            @click="nextMonth"
+                            class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                        >
+                            <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
                         <!-- Calendar Grid -->
                         <div class="grid grid-cols-7 gap-1">
@@ -336,7 +374,7 @@ onMounted(() => {
                             <div v-for="(day, index) in calendarDays" :key="index"
                                 :class="[
                                     'min-h-24 p-1 border border-gray-200 dark:border-gray-700 rounded-lg',
-                                    day?.isToday ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500' : '',
+                                    day?.isToday ? 'bg-brand-primary/10 dark:bg-brand-primary/20 border-brand-primary' : '',
                                     day?.isPast ? 'bg-gray-50 dark:bg-gray-800/50' : 'bg-white dark:bg-gray-800',
                                     day ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors' : ''
                                 ]"
@@ -361,53 +399,7 @@ onMounted(() => {
                             </div>
                         </div>
                     </Card>
-                </div>
-
-                <!-- Upcoming Appointments Sidebar -->
-                <div>
-                    <Card>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">
-                            Prochains rendez-vous
-                        </h3>
-                        
-                        <div v-if="upcomingAppointments.length === 0" class="text-center py-8 text-gray-500 dark:text-gray-400">
-                            Aucun rendez-vous à venir
-                        </div>
-
-                        <div v-else class="space-y-3">
-                            <div v-for="apt in upcomingAppointments" :key="apt.id"
-                                @click="viewAppointment(apt)"
-                                class="p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors"
-                            >
-                                <div class="flex items-start justify-between mb-2">
-                                    <span class="text-xs font-semibold px-2 py-1 rounded" :class="statusColors[apt.status]">
-                                        {{ statusLabels[apt.status] }}
-                                    </span>
-                                    <span class="text-xs text-gray-500 dark:text-gray-400">
-                                        {{ apt.duration_minutes }} min
-                                    </span>
-                                </div>
-                                
-                                <div class="text-sm font-semibold text-gray-900 dark:text-white mb-1">
-                                    {{ formatDate(apt.scheduled_at) }}
-                                </div>
-                                
-                                <div class="text-sm text-gray-600 dark:text-gray-400">
-                                    🕐 {{ formatTime(apt.scheduled_at) }}
-                                </div>
-                                
-                                <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                                    <span v-if="isAgent">👤 {{ apt.client.name }}</span>
-                                    <span v-else>👨‍💼 {{ apt.agent.name }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </Card>
-                </div>
-            </div>
-        </div>
-
-        <!-- Booking Modal -->
+        </div>        <!-- Booking Modal -->
         <div v-if="showBookingModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                 <div class="p-6">

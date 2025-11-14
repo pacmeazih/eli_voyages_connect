@@ -41,7 +41,7 @@
                             {{ userStore.user?.name }}
                         </p>
                         <p class="text-xs text-amber-600 dark:text-amber-400 font-medium">
-                            {{ t(`roles.${userStore.primaryRole}`) }}
+                            {{ userStore.primaryRole ? t(`roles.${userStore.primaryRole}`) : 'Utilisateur' }}
                         </p>
                     </div>
                 </div>
@@ -49,104 +49,175 @@
 
             <!-- Navigation Menu -->
             <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-                <!-- Dashboard -->
-                <SidebarLink 
-                    :href="route('dashboard')" 
-                    :active="route().current('dashboard')"
-                    icon="home"
-                >
-                    {{ t('nav.dashboard') }}
-                </SidebarLink>
+                <!-- Client Menu -->
+                <template v-if="userStore.isClient">
+                    <!-- Tableau de bord -->
+                    <SidebarLink 
+                        :href="route('dashboard')" 
+                        :active="route().current('dashboard')"
+                        icon="home"
+                    >
+                        Tableau de bord
+                    </SidebarLink>
 
-                <!-- Mon Dossier (for Clients) / Dossiers (for Staff) -->
-                                        <SidebarLink 
-                            v-if="userStore.isClient && userStore.clientId" 
-                            :href="route('dossiers.show', userStore.clientId)" 
-                            :active="route().current('dossiers.show')" 
-                            icon="folder"
-                        >
-                            Mon dossier
-                        </SidebarLink>
+                    <!-- Progrès -->
+                    <SidebarLink 
+                        :href="route('progress.index')" 
+                        :active="route().current('progress.index')"
+                        icon="chart"
+                    >
+                        Progrès
+                    </SidebarLink>
 
-                <SidebarLink 
-                    v-else
-                    :href="route('dossiers.index')" 
-                    :active="route().current('dossiers.*')"
-                    icon="folders"
-                >
-                    Dossiers
-                </SidebarLink>
+                    <!-- Mon dossier -->
+                    <SidebarLink 
+                        v-if="userStore.dossierId"
+                        :href="route('dossiers.show', userStore.dossierId)" 
+                        :active="route().current('dossiers.show')" 
+                        icon="folder"
+                    >
+                        Mon dossier
+                    </SidebarLink>
 
-                <!-- Clients (Staff only) -->
-                <SidebarLink 
-                    v-if="userStore.isStaff"
-                    :href="route('clients.index')" 
-                    :active="route().current('clients.*')"
-                    icon="users"
-                >
-                    Clients
-                </SidebarLink>
+                    <!-- Mes documents requis -->
+                    <SidebarLink 
+                        v-if="userStore.dossierId"
+                        :href="route('dossiers.show', userStore.dossierId) + '#documents'" 
+                        :active="false"
+                        icon="document"
+                    >
+                        Mes documents requis
+                    </SidebarLink>
 
-                <!-- Contracts (Staff only) -->
-                <SidebarLink 
-                    v-if="userStore.isStaff"
-                    :href="route('contracts.index')" 
-                    :active="route().current('contracts.*')"
-                    icon="document"
-                >
-                    Contrats
-                </SidebarLink>
+                    <!-- Prendre RDV -->
+                    <SidebarLink 
+                        :href="route('appointments.index')" 
+                        :active="route().current('appointments.*')"
+                        icon="calendar"
+                    >
+                        Prendre RDV
+                    </SidebarLink>
 
-                <!-- Analytics (Staff only) -->
-                <SidebarLink 
-                    v-if="userStore.isStaff"
-                    :href="route('analytics.page')" 
-                    :active="route().current('analytics.*')"
-                    icon="chart"
-                >
-                    {{ t('nav.analytics') }}
-                </SidebarLink>
+                    <!-- Contrats -->
+                    <SidebarLink 
+                        :href="route('contracts.index')" 
+                        :active="route().current('contracts.*')"
+                        icon="document"
+                    >
+                        Contrats
+                    </SidebarLink>
 
-                <!-- Appointments -->
-                <SidebarLink 
-                    :href="route('appointments.index')" 
-                    :active="route().current('appointments.*')"
-                    icon="calendar"
-                >
-                    {{ t('nav.appointments') }}
-                </SidebarLink>
+                    <!-- Notifications -->
+                    <SidebarLink 
+                        :href="route('notifications.page')" 
+                        :active="route().current('notifications.*')"
+                        icon="bell"
+                        :badge="unreadCount > 0 ? unreadCount : null"
+                    >
+                        Notifications
+                    </SidebarLink>
 
-                <!-- Invitations (Staff with permission) -->
-                <SidebarLink 
-                    v-if="userStore.can('invite users')"
-                    :href="route('invitations.index')" 
-                    :active="route().current('invitations.*')"
-                    icon="invite"
-                >
-                    {{ t('nav.invitations') }}
-                </SidebarLink>
+                    <!-- Profil -->
+                    <SidebarLink 
+                        :href="route('profile.edit')" 
+                        :active="route().current('profile.*')"
+                        icon="settings"
+                    >
+                        Profil
+                    </SidebarLink>
+                </template>
 
-                <!-- Divider -->
-                <div class="border-t border-gray-200 dark:border-gray-700 my-3"></div>
+                <!-- Staff Menu -->
+                <template v-else>
+                    <!-- Dashboard -->
+                    <SidebarLink 
+                        :href="route('dashboard')" 
+                        :active="route().current('dashboard')"
+                        icon="home"
+                    >
+                        {{ t('nav.dashboard') }}
+                    </SidebarLink>
 
-                <!-- Settings -->
-                <SidebarLink 
-                    :href="route('profile.edit')" 
-                    :active="route().current('profile.*')"
-                    icon="settings"
-                >
-                    {{ t('nav.profile') }}
-                </SidebarLink>
+                    <!-- Dossiers -->
+                    <SidebarLink 
+                        :href="route('dossiers.index')" 
+                        :active="route().current('dossiers.*')"
+                        icon="folders"
+                    >
+                        Dossiers
+                    </SidebarLink>
 
-                <!-- Notifications -->
-                <SidebarLink 
-                    :href="route('notifications.page')" 
-                    :active="route().current('notifications.*')"
-                    icon="bell"
-                    :badge="unreadCount > 0 ? unreadCount : null"
-                >
-                    {{ t('nav.notifications') }}
-                </SidebarLink>
+                    <!-- Clients (Staff only) -->
+                    <SidebarLink 
+                        v-if="userStore.isStaff"
+                        :href="route('clients.index')" 
+                        :active="route().current('clients.*')"
+                        icon="users"
+                    >
+                        Clients
+                    </SidebarLink>
+
+                    <!-- Contracts (Staff only) -->
+                    <SidebarLink 
+                        v-if="userStore.isStaff"
+                        :href="route('contracts.index')" 
+                        :active="route().current('contracts.*')"
+                        icon="document"
+                    >
+                        Contrats
+                    </SidebarLink>
+
+                    <!-- Analytics (Staff only) -->
+                    <SidebarLink 
+                        v-if="userStore.isStaff"
+                        :href="route('analytics.page')" 
+                        :active="route().current('analytics.*')"
+                        icon="chart"
+                    >
+                        {{ t('nav.analytics') }}
+                    </SidebarLink>
+
+                    <!-- Appointments -->
+                    <SidebarLink 
+                        :href="route('appointments.index')" 
+                        :active="route().current('appointments.*')"
+                        icon="calendar"
+                    >
+                        {{ t('nav.appointments') }}
+                    </SidebarLink>
+
+                    <!-- Invitations (Staff with permission) -->
+                    <SidebarLink 
+                        v-if="userStore.can('invite users')"
+                        :href="route('invitations.index')" 
+                        :active="route().current('invitations.*')"
+                        icon="invite"
+                    >
+                        {{ t('nav.invitations') }}
+                    </SidebarLink>
+
+                    <!-- Divider -->
+                    <div class="border-t border-gray-200 dark:border-gray-700 my-3"></div>
+
+                    <!-- Settings -->
+                    <SidebarLink 
+                        :href="route('profile.edit')" 
+                        :active="route().current('profile.*')"
+                        icon="settings"
+                    >
+                        {{ t('nav.profile') }}
+                    </SidebarLink>
+
+                    <!-- Notifications -->
+                    <SidebarLink 
+                        :href="route('notifications.page')" 
+                        :active="route().current('notifications.*')"
+                        icon="bell"
+                        :badge="unreadCount > 0 ? unreadCount : null"
+                    >
+                        {{ t('nav.notifications') }}
+                    </SidebarLink>
+                </template>
             </nav>
 
             <!-- Bottom Actions -->
@@ -157,8 +228,8 @@
                     <LanguageSwitcher compact />
                 </div>
 
-                <!-- Theme Toggle -->
-                <div class="flex items-center justify-between">
+                <!-- Theme Toggle (Staff only) -->
+                <div v-if="!userStore.isClient" class="flex items-center justify-between">
                     <span class="text-xs text-gray-500 dark:text-gray-400">Thème</span>
                     <DarkModeToggle />
                 </div>

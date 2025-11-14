@@ -63,7 +63,7 @@
 
                             <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
                                 <p class="text-sm text-gray-600 dark:text-gray-400">
-                                    Rôle: <span class="font-medium">{{ t(`roles.${userStore.primaryRole}`) }}</span>
+                                    Rôle: <span class="font-medium">{{ userStore.primaryRole ? t(`roles.${userStore.primaryRole}`) : 'Utilisateur' }}</span>
                                 </p>
                                 <button
                                     type="submit"

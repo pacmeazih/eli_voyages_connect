@@ -39,6 +39,9 @@ class DemoDataSeeder extends Seeder
         // Create Documents
         $this->createDocuments($dossiers, $users);
         
+        // Create Activities
+        $this->createActivities($dossiers, $users);
+        
         $this->command->info('');
         $this->command->info('✅ Données de démonstration créées avec succès !');
         $this->command->info('');
@@ -48,6 +51,7 @@ class DemoDataSeeder extends Seeder
         $this->command->info('   - Packages: ' . Package::count());
         $this->command->info('   - Dossiers: ' . Dossier::count());
         $this->command->info('   - Documents: ' . Document::count());
+        $this->command->info('   - Activités: ' . \Spatie\Activitylog\Models\Activity::count());
     }
 
     private function createRoles()
@@ -102,101 +106,74 @@ class DemoDataSeeder extends Seeder
         );
         $agent2->assignRole('Agent');
 
-        return collect([$superAdmin, $admin, $agent1, $agent2]);
+        // Create a client user for demo
+        $client = User::firstOrCreate(
+            ['email' => 'client@example.com'],
+            [
+                'name' => 'Jean-Baptiste KOUASSI',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
+        $client->assignRole('Client');
+
+        return collect([$superAdmin, $admin, $agent1, $agent2, $client]);
     }
 
     private function createClients()
     {
-        $this->command->info('👤 Création des clients...');
+        $this->command->info('👤 Création du client pour l\'utilisateur de démo...');
 
-        $clients = [];
+        // Create a client matching the demo user email
+        $demoClient = Client::firstOrCreate(
+            ['email' => 'client@example.com'],
+            [
+                'civilite' => 'M.',
+                'nom' => 'KOUASSI',
+                'prenom' => 'Jean-Baptiste',
+                'adresse' => '15 Rue de la Paix, Abidjan, Côte d\'Ivoire',
+                'telephone' => '+225 07 08 09 10 11',
+                'date_naissance' => '1995-03-15',
+                'lieu_naissance' => 'Abidjan',
+                'nationalite' => 'Ivoirienne',
+                'profession' => 'Ingénieur Informatique',
+                'passeport_numero' => 'CI1234567',
+                'passeport_date_emission' => '2023-01-15',
+                'passeport_date_expiration' => '2028-01-15',
+            ]
+        );
 
-        // Client 1 - Demande d'études
-        $clients[] = Client::create([
-            'civilite' => 'M.',
-            'nom' => 'KOUASSI',
-            'prenom' => 'Jean-Baptiste',
-            'adresse' => '15 Rue de la Paix, Abidjan, Côte d\'Ivoire',
-            'telephone' => '+225 07 08 09 10 11',
-            'email' => 'jb.kouassi@example.com',
-            'date_naissance' => '1995-03-15',
-            'lieu_naissance' => 'Abidjan',
-            'nationalite' => 'Ivoirienne',
-            'profession' => 'Ingénieur informatique',
-            'passeport_numero' => 'CI9876543',
-            'passeport_date_emission' => '2022-01-10',
-            'passeport_date_expiration' => '2027-01-10',
-        ]);
+        // Get existing clients from factory
+        $clients = Client::where('email', '!=', 'client@example.com')->get();
+        
+        if ($clients->isEmpty()) {
+            $this->command->warn('Aucun autre client trouvé. Création de clients supplémentaires...');
+            // Create demo clients if none exist
+            $clients = collect();
+            
+            $clients->push(Client::firstOrCreate(
+                ['email' => 'jb.kouassi@example.com'],
+                [
+                    'civilite' => 'M.',
+                    'nom' => 'KOUASSI',
+                    'prenom' => 'Jean-Baptiste',
+                    'adresse' => '15 Rue de la Paix, Abidjan, Côte d\'Ivoire',
+                    'telephone' => '+225 07 08 09 10 11',
+                    'date_naissance' => '1995-03-15',
+                    'lieu_naissance' => 'Abidjan',
+                    'nationalite' => 'Ivoirienne',
+                    'profession' => 'Ingénieur informatique',
+                    'passeport_numero' => 'CI9876543',
+                    'passeport_date_emission' => '2022-01-10',
+                    'passeport_date_expiration' => '2027-01-10',
+                ]
+            ));
+        }
 
-        // Client 2 - Demande de permis de travail
-        $clients[] = Client::create([
-            'civilite' => 'Mme',
-            'nom' => 'DIALLO',
-            'prenom' => 'Fatou',
-            'adresse' => '28 Avenue du Commerce, Conakry, Guinée',
-            'telephone' => '+224 62 55 44 33 22',
-            'email' => 'fatou.diallo@example.com',
-            'date_naissance' => '1990-07-22',
-            'lieu_naissance' => 'Conakry',
-            'nationalite' => 'Guinéenne',
-            'profession' => 'Infirmière',
-            'passeport_numero' => 'GN5544332',
-            'passeport_date_emission' => '2021-05-15',
-            'passeport_date_expiration' => '2026-05-15',
-        ]);
+        // Add the demo client to the collection
+        $clients->prepend($demoClient);
 
-        // Client 3 - Demande de visa visiteur
-        $clients[] = Client::create([
-            'civilite' => 'M.',
-            'nom' => 'MENSAH',
-            'prenom' => 'Kojo',
-            'adresse' => '42 Liberation Road, Lomé, Togo',
-            'telephone' => '+228 90 12 34 56',
-            'email' => 'kojo.mensah@example.com',
-            'date_naissance' => '1988-11-05',
-            'lieu_naissance' => 'Lomé',
-            'nationalite' => 'Togolaise',
-            'profession' => 'Entrepreneur',
-            'passeport_numero' => 'TG1122334',
-            'passeport_date_emission' => '2023-02-20',
-            'passeport_date_expiration' => '2028-02-20',
-        ]);
-
-        // Client 4 - Demande CSQ
-        $clients[] = Client::create([
-            'civilite' => 'Mme',
-            'nom' => 'TRAORÉ',
-            'prenom' => 'Aminata',
-            'adresse' => 'Quartier Hippodrome, Bamako, Mali',
-            'telephone' => '+223 76 88 99 00',
-            'email' => 'aminata.traore@example.com',
-            'date_naissance' => '1992-09-18',
-            'lieu_naissance' => 'Bamako',
-            'nationalite' => 'Malienne',
-            'profession' => 'Développeuse web',
-            'passeport_numero' => 'ML8899776',
-            'passeport_date_emission' => '2022-08-10',
-            'passeport_date_expiration' => '2027-08-10',
-        ]);
-
-        // Client 5 - Parrainage familial
-        $clients[] = Client::create([
-            'civilite' => 'M.',
-            'nom' => 'NKRUMAH',
-            'prenom' => 'Kwame',
-            'adresse' => 'East Legon, Accra, Ghana',
-            'telephone' => '+233 24 555 6677',
-            'email' => 'kwame.nkrumah@example.com',
-            'date_naissance' => '1985-04-12',
-            'lieu_naissance' => 'Accra',
-            'nationalite' => 'Ghanéenne',
-            'profession' => 'Comptable',
-            'passeport_numero' => 'GH3344556',
-            'passeport_date_emission' => '2020-11-25',
-            'passeport_date_expiration' => '2025-11-25',
-        ]);
-
-        return collect($clients);
+        return $clients;
     }
 
     private function createPackages()
@@ -414,22 +391,28 @@ class DemoDataSeeder extends Seeder
         $uploader = $users->first();
 
         foreach ($dossiers as $dossier) {
-            // 2-5 documents par dossier
-            $docCount = rand(2, 5);
+            // 3-6 documents par dossier
+            $docCount = rand(3, 6);
             
             for ($i = 0; $i < $docCount; $i++) {
                 $type = $documentTypes[array_rand($documentTypes)];
-                $filename = Str::random(20) . '.pdf';
+                $documentName = $this->getDocumentName($type, $i);
+                $filename = Str::slug($documentName) . '-' . Str::random(8) . '.pdf';
+                
+                // 30% de chance que le document soit manquant (path vide ou null)
+                $isMissing = rand(1, 100) <= 30;
                 
                 Document::create([
                     'dossier_id' => $dossier->id,
+                    'name' => $documentName,
                     'type' => $type,
-                    'name' => $this->getDocumentName($type, $i),
-                    'original_filename' => $this->getDocumentName($type, $i) . '.pdf',
-                    'path' => 'documents/' . $dossier->reference . '/' . $filename,
-                    'mime_type' => 'application/pdf',
-                    'size' => rand(100000, 5000000),
-                    'uploaded_by' => $uploader->id,
+                    'original_filename' => $isMissing ? $documentName . '.pdf' : $filename,
+                    'path' => $isMissing ? '' : 'documents/' . $dossier->reference . '/' . $filename,
+                    'mime_type' => $isMissing ? null : 'application/pdf',
+                    'size' => $isMissing ? null : rand(100000, 5000000),
+                    'description' => 'Document requis pour le traitement du dossier',
+                    'uploaded_by' => $isMissing ? null : $uploader->id,
+                    'version' => 1,
                     'created_at' => $dossier->created_at->addDays(rand(1, 10)),
                 ]);
             }
@@ -450,5 +433,91 @@ class DemoDataSeeder extends Seeder
 
         $typeNames = $names[$type] ?? ['Document'];
         return $typeNames[$index % count($typeNames)];
+    }
+
+    private function createActivities($dossiers, $users)
+    {
+        $this->command->info('📝 Création des activités de timeline...');
+
+        foreach ($dossiers as $dossier) {
+            $causer = $users->random();
+            
+            // Activity 1: Dossier créé
+            activity()
+                ->performedOn($dossier)
+                ->causedBy($causer)
+                ->withProperties(['status' => 'created'])
+                ->log('Dossier créé');
+
+            // Activity 2: Document uploadé
+            if ($dossier->created_at->diffInDays(now()) > 2) {
+                activity()
+                    ->performedOn($dossier)
+                    ->causedBy($causer)
+                    ->withProperties(['status' => 'document_uploaded'])
+                    ->createdAt($dossier->created_at->addDays(2))
+                    ->log('Document téléchargé - Passeport');
+            }
+
+            // Activity 3: Vérification documents
+            if ($dossier->status !== 'draft' && $dossier->created_at->diffInDays(now()) > 5) {
+                activity()
+                    ->performedOn($dossier)
+                    ->causedBy($causer)
+                    ->withProperties(['status' => 'verification'])
+                    ->createdAt($dossier->created_at->addDays(5))
+                    ->log('Vérification des documents en cours');
+            }
+
+            // Activity 4: Documents approuvés
+            if (in_array($dossier->status, ['in_progress', 'approved', 'completed']) && $dossier->created_at->diffInDays(now()) > 8) {
+                activity()
+                    ->performedOn($dossier)
+                    ->causedBy($causer)
+                    ->withProperties(['status' => 'approved'])
+                    ->createdAt($dossier->created_at->addDays(8))
+                    ->log('Documents approuvés');
+            }
+
+            // Activity 5: Contrat généré
+            if (in_array($dossier->status, ['in_progress', 'approved', 'completed']) && $dossier->created_at->diffInDays(now()) > 10) {
+                activity()
+                    ->performedOn($dossier)
+                    ->causedBy($causer)
+                    ->withProperties(['status' => 'contract_generated'])
+                    ->createdAt($dossier->created_at->addDays(10))
+                    ->log('Contrat de prestation généré');
+            }
+
+            // Activity 6: En cours de traitement
+            if (in_array($dossier->status, ['in_progress', 'approved', 'completed']) && $dossier->created_at->diffInDays(now()) > 15) {
+                activity()
+                    ->performedOn($dossier)
+                    ->causedBy($causer)
+                    ->withProperties(['status' => 'processing'])
+                    ->createdAt($dossier->created_at->addDays(15))
+                    ->log('Dossier en cours de traitement');
+            }
+
+            // Activity 7: Dossier approuvé
+            if (in_array($dossier->status, ['approved', 'completed']) && $dossier->created_at->diffInDays(now()) > 20) {
+                activity()
+                    ->performedOn($dossier)
+                    ->causedBy($causer)
+                    ->withProperties(['status' => 'approved'])
+                    ->createdAt($dossier->created_at->addDays(20))
+                    ->log('Dossier approuvé par les autorités');
+            }
+
+            // Activity 8: Dossier finalisé
+            if ($dossier->status === 'completed' && $dossier->created_at->diffInDays(now()) > 25) {
+                activity()
+                    ->performedOn($dossier)
+                    ->causedBy($causer)
+                    ->withProperties(['status' => 'completed'])
+                    ->createdAt($dossier->created_at->addDays(25))
+                    ->log('Dossier finalisé avec succès');
+            }
+        }
     }
 }

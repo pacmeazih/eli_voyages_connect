@@ -55,8 +55,11 @@ class DocumentService
      */
     public function downloadDocument(Document $document): \Symfony\Component\HttpFoundation\StreamedResponse
     {
-        // Check authorization (should be done in controller/policy)
-        
+        // Check if file exists
+        if (!Storage::exists($document->path)) {
+            abort(404, 'Le fichier n\'existe pas ou a été supprimé.');
+        }
+
         // Log activity
         activity()
             ->performedOn($document)

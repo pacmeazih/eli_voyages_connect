@@ -7,6 +7,7 @@ use App\Models\Dossier;
 use App\Services\DocumentService;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
@@ -109,10 +110,32 @@ class DocumentController extends Controller
      */
     public function download(Document $document)
     {
-        $this->authorize('view', $document->dossier);
-        $this->authorize('download documents');
+        $this->authorize('view', $document);
+        $this->authorize('download', $document);
 
         return $this->documentService->downloadDocument($document);
+    }
+
+    /**
+     * View document in browser (inline display for PDF and images).
+     */
+    public function view(Document $document)
+    {
+        $this->authorize('view', $document);
+
+        // Check if file exists
+        if (!Storage::exists($document->path)) {
+            abort(404, 'Document file not found');
+        }
+
+        // Get file content
+        $fileContent = Storage::get($document->path);
+        $mimeType = $document->mime_type ?? 'application/octet-stream';
+
+        // Return inline response for viewing in browser
+        return response($fileContent, 200)
+            ->header('Content-Type', $mimeType)
+            ->header('Content-Disposition', 'inline; filename="' . $document->original_filename . '"');
     }
 
     /**
